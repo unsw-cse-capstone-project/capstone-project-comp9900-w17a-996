@@ -1,10 +1,10 @@
 Week 1
 
-Group formed. I created Jira and joined the Jira and Github group. 
+Group formed. I created Jira account and joined the Jira and Github groups. 
 I discussed with group members which project topic to choose, and available software tools.
 
 Week 2
 
-I wrote some user story and learnt some knowledge about the technology we are going to use.
+I wrote the user story and learnt some knowledge about the technology we are going to use.
 I also wrote some demo about font-end part to practice.
 Next week, I plan to do the diagram for the software architecture.
