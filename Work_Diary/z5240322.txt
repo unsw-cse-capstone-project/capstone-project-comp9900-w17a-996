@@ -6,5 +6,5 @@ I discussed with group members which project topic to choose, and available soft
 Week 2
 
 I wrote the user stories and assigned the proposal content to each team member.
-Designed the framework of front-end and back-end.
-Next week, I plan to do the diagram for the software architecture.
+Designed the framework of front-end and back-end. 
+Next week, I plan to finish the proposal and keep learning framework knowledge.
