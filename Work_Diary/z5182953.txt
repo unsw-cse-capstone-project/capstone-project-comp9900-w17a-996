@@ -1,1 +1,6 @@
+Week 1
+
+Join the group, check the requirements and assessments required for the course, and understand the general framework of the course. Registered a jira account and joined the github group. In addition, discussed with the team members the code framework required by the project.
+
+Week 2
 
