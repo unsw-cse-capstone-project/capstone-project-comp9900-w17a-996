@@ -1,6 +1,11 @@
 Week 1
 
-Join the group, check the requirements and assessments required for the course, and understand the general framework of the course. Registered a jira account and joined the github group. In addition, discussed with the team members the code framework required by the project.
+Join the group, check the requirements and assessments required for the course, and understand the general framework of the course. 
+Registered a jira account and joined the github group. 
+Discussed with the team members the code framework required by the project.
 
 Week 2
+Completed the user stories with the team members.
+Learned the technical knowledge we are going to use.
+According to the assign tasks of the proposal task, I need to find examples that make the user stories of the our project more convincing next week
 
