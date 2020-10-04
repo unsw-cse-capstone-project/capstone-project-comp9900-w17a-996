@@ -8,3 +8,9 @@ Week 2
 I wrote the user story and learnt some knowledge about the technology we are going to use.
 I also wrote some demo about font-end part to practice.
 Next week, I plan to do the diagram for the software architecture.
+
+Week 3
+
+I wrote the system architecture diagram of the proposal. We had an group meeting about the project
+assignment. I will do the font-end part in this project.
+Next week, I plan to do the font-end of the user stories that we will do in the first sprint.
