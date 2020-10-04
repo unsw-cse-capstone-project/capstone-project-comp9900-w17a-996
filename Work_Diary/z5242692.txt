@@ -1,0 +1,18 @@
+Week 1
+
+Group formed. I registered group on Jira and invited my teammates and tutor to join. 
+We discussed on which project topic and develop techniques to choose. I started learning related skills that will be used.
+
+
+Week 2
+
+I wrote user stories on Jira backlog with my teammates.
+We assigned different tasks of the project proposal to different person. I checked useful tools to be used for storyboards drawing.
+
+
+Week 3
+
+I finished the "interface and flow diagram" section of the project proposal with Binbin. 
+After that, I filled in the "User story and sprint" section, then finalised the whole document and submitted.
+We assigned team roles of developing and started the first sprint. 
+I am still learning React.js. Next week, I'll pretty much dive into the actual coding.
