@@ -9,3 +9,7 @@ Completed the user stories with the team members.
 Learned the technical knowledge we are going to use.
 According to the assign tasks of the proposal task, I need to find examples that make the user stories of the our project more convincing next week.
 
+Week 3
+Completed the part of project proposal I am responsible for.
+Discuss the details of division works of code with team and I will doing the front-end with jiaqi Ma.
+Learing some knowledge about react framwork and I will begin with the first sprint next week.
