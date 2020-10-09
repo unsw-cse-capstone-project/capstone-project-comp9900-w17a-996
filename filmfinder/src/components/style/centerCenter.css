@@ -1,0 +1,21 @@
+.box_login{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    }
+
+.box_register{
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    }

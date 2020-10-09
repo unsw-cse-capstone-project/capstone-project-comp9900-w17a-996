@@ -1,22 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react'
+import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom'
+import Register from './components/register'
+import Login from './components/login'
 
-import './App.css';
-
-function App() {
-  const [initialData, setInitialData] = useState([{}])
-
-  useEffect(() => {
-    fetch('/app').then(
-      response => response.json()
-    ).then(data => setInitialData(data))
-  });
-  return (
-    <div className="App">
-      <h1>{initialData.title}</h1>
-      <br/>
-      <h2>{initialData.message}</h2>
-    </div>
-  );
+class RouterView extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+          </Switch>
+        </div>
+      </Router>
+    )
+  }
 }
 
-export default App;
+export default RouterView
