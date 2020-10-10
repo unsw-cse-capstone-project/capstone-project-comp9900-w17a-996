@@ -6,50 +6,71 @@ class Register extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="box_register">
+        <div className="center-h col-md-7 pt-5">
             <form>
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
-                <h2 className="text-info">Sign up Now!</h2>
+                <h2 className="text-info text-center">Become a Member TODAY! :D</h2>
                 <br/>
                 <div className="row">
-                  <div className="col-md-4">
-                    <h4>Username</h4>
+                  <div className="col-md-3">
+                    <label for="userName">Username*</label>
                   </div>
-                  <div className="col-md-8">
+                  <div className="col-md-9">
                   <input type="text" className="form-control" id="userName" placeholder="" required/>
                   </div>
                 </div>
-                
+                <br/>
                 <div className="row">
-                  <div className="col-md-4">
-                    <h4>Nickname</h4>
+                  <div className="col-md-3">
+                    <label for="nickName">Nickname</label>
                   </div>
-                  <div className="col-md-8">
-                  <input type="text" className="form-control" id="nickName" placeholder="" required/>
+                  <div className="col-md-9">
+                  <input type="text" className="form-control" id="nickName" placeholder="Anoymous Poet" required/>
                   </div>
                 </div>
+                <br/>
                 <div className="row">
-                  <div className="col-md-4">
-                    <h4>Email</h4>
+                  <div className="col-md-3">
+                    <label for="email">Email*</label>
                   </div>
-                  <div className="col-md-8">
+                  <div className="col-md-9">
                   <input type="email" className="form-control" id="email" placeholder="" required/>
                   </div>
                 </div>
+                <br/>
                 <div className="row">
-                  <div className="col-md-4">
-                    <h4>Password</h4>
+                  <div className="col-md-3">
+                    <label for="password">Password*</label>
                   </div>
-                  <div className="col-md-8">
+                  <div className="col-md-9">
                   <input type="password" className="form-control" id="password" placeholder="" required/>
                   </div>
                 </div>
                 <br/>
-                <div className="col-md-13">
+                <div className="row">
+                  <div className="col-md-3">
+                    <label for="confirmPassword">Confirm Password*</label>
+                  </div>
+                  <div className="col-md-9">
+                  <input type="password" className="form-control" id="confirmPassword" placeholder="" required/>
+                  </div>
+                </div>
+                <br/>
+                <div className="row">
+                  <div className="col-md-3">
+                    <label for="bio">Bio</label>
+                  </div>
+                  <div className="col-md-9">
+                  <textarea className="form-control" rows="5" cols="3" id="bio" placeholder="Add somrthing intersting..." required/>
+                  </div>
+                </div>
+                <br/>
+                <br/>
+                <div className="">
                 <a href="/#/login">
-                <button class="btn btn-lg btn-success btn-block" id="btnSignUp" type="submit">
+                <button class="btn btn-lg btn-info btn-block col-md-3 center-h" id="btnSignUp" type="submit">
               Sign up
             </button>
                 </a>

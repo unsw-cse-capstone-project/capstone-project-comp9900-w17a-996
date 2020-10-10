@@ -7,7 +7,7 @@ class Login extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="box_login">
+          <div className="box_login">
           <form className="form-signin">
             <div className="text-center">
               <h1 className="h3 mb-3 font-weight-normal">
@@ -32,7 +32,7 @@ class Login extends Component {
               required
             />
             <br/>
-            <button class="btn btn-lg btn-success btn-block" id="btnLogin" type="submit">
+            <button class="btn btn-lg btn-dark btn-block" id="btnLogin" type="submit">
               Sign in
             </button>
           </form>
@@ -44,6 +44,8 @@ class Login extends Component {
             <p className="mt-5 mb-3 text-muted">FilmFinder&copy; 2020 - 2021</p>
           </div>
         </div>
+          
+        
       </React.Fragment>
     );
   }
