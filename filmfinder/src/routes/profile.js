@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./style/centerCenter.css"
+import "../styles/centerCenter.css";
 
 class Profile extends Component {
   state = {};

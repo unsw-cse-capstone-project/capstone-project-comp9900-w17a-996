@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom'
-import Register from './components/register'
-import Login from './components/login'
-import Profile from './components/profile'
+import Register from './routes/register.js'
+import Login from './routes/login.js'
+import Profile from './routes/profile.js'
 
 class RouterView extends Component {
   render() {
