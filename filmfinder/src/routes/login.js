@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 import "../styles/centerCenter.css";
 
 class Login extends Component {
@@ -40,7 +41,7 @@ class Login extends Component {
           
           <div className="text-center">
               <br/>
-            <a href="/#/register">Not a member yet?</a>
+            <Link to="/register/">Not a member yet?</Link>
             <p className="mt-5 mb-3 text-muted">FilmFinder&copy; 2020 - 2021</p>
           </div>
         </div>

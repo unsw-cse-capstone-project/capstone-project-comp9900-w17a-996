@@ -10,7 +10,7 @@ class RouterView extends Component {
       <Router>
         <div>
           <Switch>
-            <Route exact path="/register" component={Register} />
+            <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/profile" component={Profile}/>
           </Switch>

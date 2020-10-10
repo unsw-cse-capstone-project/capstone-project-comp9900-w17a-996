@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 import "../styles/centerCenter.css";
 
 class Register extends Component {
@@ -69,11 +70,11 @@ class Register extends Component {
                 <br/>
                 <br/>
                 <div className="">
-                <a href="/#/login">
+                <Link to="/login/">
                 <button class="btn btn-lg btn-info btn-block col-md-3 center-h" id="btnSignUp" type="submit">
               Sign up
             </button>
-                </a>
+                </Link>
                 </div>
                 
               </div>

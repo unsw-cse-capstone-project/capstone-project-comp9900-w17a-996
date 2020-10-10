@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../styles/centerCenter.css";
+import { Link } from 'react-router-dom'
 
 class Profile extends Component {
   state = {};
@@ -106,11 +107,11 @@ class Profile extends Component {
                 <br/>
                 <br/>
                 <div className="col-md-3 center-h">
-                <a href="/#/login">
+                <Link to="/login/">
                 <button className="btn btn-lg btn-info btn-block" id="btnSignUp" type="submit">
               Apply Changes
             </button>
-                </a>
+                </Link>
                 </div>
                 
               </div>
