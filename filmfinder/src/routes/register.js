@@ -1,9 +1,44 @@
+import { Alert } from "bootstrap";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../styles/centerCenter.css";
 
 class Register extends Component {
-  state = {};
+  state = { username: "", email: "" };
+
+  handleClick(ev, userName, nickName, email, password, confirmPassword, bio) {
+   
+    const data = {
+      "userName": userName,
+      "nickName": nickName,
+      "email": email,
+      "password": password,
+      "confirmPassword": confirmPassword,
+      "bio": bio
+    };
+    console.log("HEllo");
+
+    fetch("/app", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  componentWillMount() {
+    
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -23,8 +58,9 @@ class Register extends Component {
                     <div className="col-md-9">
                       <input
                         type="text"
+            
                         className="form-control"
-                        id="userName"
+                        ref="userName"
                         placeholder=""
                         required="required"
                       />
@@ -39,7 +75,7 @@ class Register extends Component {
                       <input
                         type="text"
                         className="form-control"
-                        id="nickName"
+                        ref="nickName"
                         placeholder="Anoymous Poet"
                         required
                       />
@@ -54,7 +90,7 @@ class Register extends Component {
                       <input
                         type="email"
                         className="form-control"
-                        id="email"
+                        ref="email"
                         placeholder=""
                         required
                       />
@@ -69,7 +105,7 @@ class Register extends Component {
                       <input
                         type="password"
                         className="form-control"
-                        id="password"
+                        ref="password"
                         placeholder=""
                         required
                       />
@@ -84,7 +120,7 @@ class Register extends Component {
                       <input
                         type="password"
                         className="form-control"
-                        id="confirmPassword"
+                        ref="confirmPassword"
                         placeholder=""
                         required
                       />
@@ -100,7 +136,7 @@ class Register extends Component {
                         className="form-control"
                         rows="5"
                         cols="3"
-                        id="bio"
+                        ref="bio"
                         placeholder="Add somrthing intersting..."
                         required
                       />
@@ -108,17 +144,27 @@ class Register extends Component {
                   </div>
                   <br />
                   <br />
-                  
-                    <Link to="/login">
-                      <button
-                        className="btn btn-lg btn-info btn-block col-md-3 center-h form-control"
-                        id="btnSignUp"
-                        type="submit"
-                      >
-                        Sign up
-                      </button>
-                    </Link>
-                  
+
+                  <Link to="/login">
+                    <button
+                      className="btn btn-lg btn-info btn-block col-md-3 center-h form-control"
+                      onClick={(ev) =>
+                        this.handleClick(
+                          ev,
+                          this.refs.userName.value,
+                          this.refs.nickName.value,
+                          this.refs.email.value,
+                          this.refs.password.value,
+                          this.refs.confirmPassword.value,
+                          this.refs.bio.value
+                        )
+                      }
+                      id="btnSignUp"
+                      type="submit"
+                    >
+                      Sign up
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
