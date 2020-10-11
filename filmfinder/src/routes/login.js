@@ -41,7 +41,7 @@ class Login extends Component {
           
           <div className="text-center">
               <br/>
-            <Link to="/register/">Not a member yet?</Link>
+            <Link to="/register">Not a member yet?</Link>
             <p className="mt-5 mb-3 text-muted">FilmFinder&copy; 2020 - 2021</p>
           </div>
         </div>
