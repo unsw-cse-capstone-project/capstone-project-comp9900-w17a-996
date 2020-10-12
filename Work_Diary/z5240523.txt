@@ -1,0 +1,8 @@
+Week 1
+Group formed. Do the self introduction. I created Jira account and join the Jira group and git class. Choose the topic of the project.
+
+Week 2
+I wrote the user stories on the Jira together with teammates. Discuss with Chenqu about simple UI design of the website. Find tools used for UI design and draw draft of the UI.
+
+Week 3
+get data from register page and store data to the local database
