@@ -16,7 +16,6 @@ class Register extends Component {
       "confirmPassword": confirmPassword,
       "bio": bio
     };
-    console.log("HEllo");
 
     fetch("/app", {
       method: "POST",
@@ -33,10 +32,6 @@ class Register extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }
-
-  componentWillMount() {
-    
   }
 
   render() {
@@ -148,17 +143,17 @@ class Register extends Component {
                   <Link to="/login">
                     <button
                       className="btn btn-lg btn-info btn-block col-md-3 center-h form-control"
-                      onClick={(ev) =>
-                        this.handleClick(
-                          ev,
-                          this.refs.userName.value,
-                          this.refs.nickName.value,
-                          this.refs.email.value,
-                          this.refs.password.value,
-                          this.refs.confirmPassword.value,
-                          this.refs.bio.value
-                        )
-                      }
+                      // onClick={(ev) =>
+                      //   this.handleClick(
+                      //     ev,
+                      //     this.refs.userName.value,
+                      //     this.refs.nickName.value,
+                      //     this.refs.email.value,
+                      //     this.refs.password.value,
+                      //     this.refs.confirmPassword.value,
+                      //     this.refs.bio.value
+                      //   )
+                      // }
                       id="btnSignUp"
                       type="submit"
                     >

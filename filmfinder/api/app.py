@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import os.path
 
+app = Flask(__name__)
 
-a = '1'
-b = '2'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "filmFinder.db")
+app.config["DATABASE"] = db_path
 
 def connect_db():
     db = sqlite3.connect(app.config["DATABASE"], check_same_thread=False)
@@ -41,7 +43,27 @@ def api():
 
     else:
         return("ok")
-    
+
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method=='GET':
+        return('<form action="/test" method="post"><input type="submit" value=a /></form>')
+
+    elif request.method=='POST':
+        json_data = request.get_json()
+        username = json_data['inputUsername']
+        password = json_data['inputPassword']
+        db = connect_db()
+        c = db.cursor()
+
+        query_sql = "SELECT USERNAME, PASSWORD FROM USER WHERE (USERNAME = " + str(username) + " AND PASSWORD = " + str(password) + " )"
+
+        try:
+            result = c.execute(query_sql)
+            return {'isMember': 1}
+        except sqlite3.OperationalError:
+            return {'isMember': 0}
 
     # title = 'This is the project of W17A-996'
     # test_msg = 'Congratulations, your Flask successfully connects to React!'
@@ -53,11 +75,4 @@ def api():
     # }
 
 if __name__ == "__main__":
-
-    app = Flask(__name__)
-
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, "filmFinder.db")
-    app.config["DATABASE"] = db_path
-
     app.run(debug=True)
