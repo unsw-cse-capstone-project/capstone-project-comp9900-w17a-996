@@ -1,17 +1,19 @@
+import { Alert } from "bootstrap";
+import {withRouter} from 'react-router';
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../styles/centerCenter.css";
 
 class Login extends Component {
-  state = { message: null };
+  state = { message: -1 };
 
-  handleClick(ev, inputUsername, inputPassword) {
-    console.log(inputUsername, inputPassword);
+  handleChange(ev, inputUsername) {
+    console.log(inputUsername);
     var data = {
-      inputUsername: inputUsername,
-      inputPassword: inputPassword,
-    };
+      inputUsername: inputUsername
+    }
 
+    // post data to back-end
     fetch("/login", {
       method: "POST",
       headers: {
@@ -27,13 +29,39 @@ class Login extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-
-    // fetch("/login")
-    //   .then((response) => console.log(response))
-    //   .then((data) => this.setState({ data }));
-
-    // console.log("data", data);
   }
+
+  handleClick(ev, inputPassword) {
+    console.log("inputPassword",inputPassword);
+
+    // this.syncSleep(5000);
+    // receive member state from back-end
+    fetch('/login')
+      .then(result => result.json())
+      .then(data => 
+          this.checkPassword(data.password, inputPassword)
+      );
+    
+      // this.syncSleep(1000);
+      // console.log(this.state);
+   }
+
+   checkPassword(a, b) {
+     console.log(a, b)
+    if (a == b){
+      console.log("Allow Login");
+      this.props.history.push("/profile");
+    }
+    else{
+      console.log("Reject!");
+    }
+   }
+
+   syncSleep(time) {
+    const start = new Date().getTime();
+    while (new Date().getTime() - start < time) {}
+  }
+
 
   render() {
     return (
@@ -49,6 +77,12 @@ class Login extends Component {
             <input
               type="text"
               ref="inputUsername"
+              onChange = {
+                (ev) =>
+                this.handleChange(
+                  ev, this.refs.inputUsername.value
+                )
+              }
               className="form-control"
               placeholder="Username"
               required
@@ -67,7 +101,6 @@ class Login extends Component {
               onClick={(ev) =>
                 this.handleClick(
                   ev,
-                  this.refs.inputUsername.value,
                   this.refs.inputPassword.value
                 )
               }

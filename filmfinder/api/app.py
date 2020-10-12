@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import os.path
+import time
 
 app = Flask(__name__)
 
@@ -44,27 +45,34 @@ def api():
     else:
         return("ok")
 
-
-@app.route('/login', methods=['GET','POST'])
+guid = {'password': ''}
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method=='GET':
-        return('<form action="/test" method="post"><input type="submit" value=a /></form>')
-
-    elif request.method=='POST':
+    if request.method=='POST':
         json_data = request.get_json()
         username = json_data['inputUsername']
-        password = json_data['inputPassword']
+        # password = json_data['inputPassword']
         db = connect_db()
         c = db.cursor()
 
-        query_sql = "SELECT USERNAME, PASSWORD FROM USER WHERE (USERNAME = " + str(username) + " AND PASSWORD = " + str(password) + " )"
+        query_sql = "SELECT * FROM USER WHERE USERNAME = ?"
 
         try:
-            result = c.execute(query_sql)
-            return {'isMember': 1}
+            result = c.execute(query_sql, (username,)).fetchall()
+            if len(result) != 0:
+                guid['password'] = result[0][3]
+                return result[0][3]
+            else:
+                guid['password'] = ''
+                return '-'
         except sqlite3.OperationalError:
-            return {'isMember': 0}
-
+            guid['password'] = ''
+            return '-'
+    else:
+        return guid
+    # else:
+    #     # time.sleep(100)
+    #     return member_state
     # title = 'This is the project of W17A-996'
     # test_msg = 'Congratulations, your Flask successfully connects to React!'
     # return {
