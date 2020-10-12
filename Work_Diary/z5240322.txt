@@ -1,0 +1,15 @@
+Week 1
+
+Group formed. Created Jira account and joined the Jira and Github groups. 
+I discussed with group members which project topic to choose, and available software tools.
+
+Week 2
+
+I wrote the user stories and assigned the proposal content to each team member.
+Designed the framework of front-end and back-end. 
+Next week, I plan to finish the proposal and keep learning framework knowledge.
+
+Week 3
+
+In week 3, I kept learning flask framework and some basic knowledge about html, css and react.
+Next week, I plan to working on some basic functions, like user register, login, and basic database implementation before the first sprint.
