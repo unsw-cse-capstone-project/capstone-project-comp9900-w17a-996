@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import os.path
+import time
 
+app = Flask(__name__)
 
-a = '1'
-b = '2'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "filmFinder.db")
+app.config["DATABASE"] = db_path
 
 def connect_db():
     db = sqlite3.connect(app.config["DATABASE"], check_same_thread=False)
@@ -13,27 +16,6 @@ def connect_db():
 
 @app.route('/app', methods=['GET','POST'])
 def api():
-<<<<<<< HEAD
-    title = 'My People, My Homeland(2020)'
-    genre = 'melody'
-    releaseDate = '2020-11-01'
-    cost = 2
-    rating = 5
-    user = {
-                'userName': "kai",
-                'rating': 2.5,
-                'comment': "so great!"
-            }
-    return {
-        'userId': 1,
-        'title': title,
-        'genre': genre,
-        'releaseDate': releaseDate,
-        'cost': cost,
-        'rating': rating,
-        'user': user
-    }
-=======
     if request.method=='GET':
         return('<form action="/test" method="post"><input type="submit" value=a /></form>')
 
@@ -59,11 +41,37 @@ def api():
         )
         db.commit()
         return request.get_json()
-
     else:
         return("ok")
-    
 
+guid = {'password': ''}
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method=='POST':
+        json_data = request.get_json()
+        username = json_data['inputUsername']
+        # password = json_data['inputPassword']
+        db = connect_db()
+        c = db.cursor()
+
+        query_sql = "SELECT * FROM USER WHERE USERNAME = ?"
+
+        try:
+            result = c.execute(query_sql, (username,)).fetchall()
+            if len(result) != 0:
+                guid['password'] = result[0][3]
+                return result[0][3]
+            else:
+                guid['password'] = ''
+                return '-'
+        except sqlite3.OperationalError:
+            guid['password'] = ''
+            return '-'
+    else:
+        return guid
+    # else:
+    #     # time.sleep(100)
+    #     return member_state
     # title = 'This is the project of W17A-996'
     # test_msg = 'Congratulations, your Flask successfully connects to React!'
     # return {
@@ -74,12 +82,4 @@ def api():
     # }
 
 if __name__ == "__main__":
-
-    app = Flask(__name__)
-
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, "filmFinder.db")
-    app.config["DATABASE"] = db_path
-
     app.run(debug=True)
->>>>>>> f3f0494ba8bda12ca980a54487fd9c89a86d70cd

@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import "../styles/centerCenter.css";
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 class Profile extends Component {
-  state = {};
+  state = {
+    username: '',
+    nickname: '',
+    email: '',
+    bio: ''
+  };
+
+  handleClick = () => {
+    this.props.history.push("/login");
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -107,11 +117,11 @@ class Profile extends Component {
                 <br/>
                 <br/>
                 <div className="col-md-3 center-h">
-                <Link to="/login/">
-                <button className="btn btn-lg btn-info btn-block" id="btnSignUp" type="submit">
+                
+                <button className="btn btn-lg btn-info btn-block" id="btnSignUp" type="submit" onClick={this.handleClick}>
               Apply Changes
             </button>
-                </Link>
+                
                 </div>
                 
               </div>
