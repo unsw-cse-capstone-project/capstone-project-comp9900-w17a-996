@@ -41,7 +41,6 @@ def api():
         )
         db.commit()
         return request.get_json()
-
     else:
         return("ok")
 
