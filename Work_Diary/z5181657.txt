@@ -14,3 +14,8 @@ Week 3
 I wrote the system architecture diagram of the proposal. We had an group meeting about the project
 assignment. I will do the font-end part in this project.
 Next week, I plan to do the font-end of the user stories that we will do in the first sprint.
+
+Week4
+
+I finish the front-end part which is assigned to me in the first sprint. some part of them cannot connet
+with the back-end part, so I will solve this problem in next week. Also, I will go into the second sprint.
