@@ -13,6 +13,27 @@ def connect_db():
 
 @app.route('/app', methods=['GET','POST'])
 def api():
+<<<<<<< HEAD
+    title = 'My People, My Homeland(2020)'
+    genre = 'melody'
+    releaseDate = '2020-11-01'
+    cost = 2
+    rating = 5
+    user = {
+                'userName': "kai",
+                'rating': 2.5,
+                'comment': "so great!"
+            }
+    return {
+        'userId': 1,
+        'title': title,
+        'genre': genre,
+        'releaseDate': releaseDate,
+        'cost': cost,
+        'rating': rating,
+        'user': user
+    }
+=======
     if request.method=='GET':
         return('<form action="/test" method="post"><input type="submit" value=a /></form>')
 
@@ -61,3 +82,4 @@ if __name__ == "__main__":
     app.config["DATABASE"] = db_path
 
     app.run(debug=True)
+>>>>>>> f3f0494ba8bda12ca980a54487fd9c89a86d70cd
