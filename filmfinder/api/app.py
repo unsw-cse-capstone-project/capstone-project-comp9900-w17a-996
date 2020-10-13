@@ -78,6 +78,15 @@ def login():
 def home():
     return guid
 
+result = {'movie': ''}
+@app.route('/search', methods=['POST', 'GET'])
+def search():
+    if request.method == 'POST':
+        return request.get_json()
+    else:
+        return result
+    
+
 @app.route('/profile', methods=['POST'])
 def profile():
     user_data = request.get_json()

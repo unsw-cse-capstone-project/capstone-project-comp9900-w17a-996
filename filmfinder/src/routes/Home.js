@@ -62,6 +62,9 @@ class Search extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
+      
+      this.props.history.push("/result");
+    
   }
 
   render() {
