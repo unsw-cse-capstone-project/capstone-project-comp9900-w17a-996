@@ -48,7 +48,7 @@ class Login extends Component {
 
    checkPassword(a, b) {
      console.log(a, b)
-    if (a == b){
+    if (a == b && a != ''){
       console.log("Allow Login");
       this.props.history.push("/home");
     }
