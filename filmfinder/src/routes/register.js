@@ -18,7 +18,7 @@ class Register extends Component {
     };
     console.log("HEllo");
 
-    fetch("/search", {
+    fetch("/app", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
