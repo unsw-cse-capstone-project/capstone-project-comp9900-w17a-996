@@ -28,11 +28,21 @@ class MovieCard extends Component{
                 autoplay: 0,
               },
         }
+        if (this.props.title == "") {
+            var movie = "My perple, My Homeland(2020)";
+        }
+        else{
+            var movie = this.props.title;
+        }
+        
+        console.log("iiii",movie)
         return (
            <div>
                <p className="title">{this.props.title}</p>
                <div className="main">
                     <div className="stream">
+                    <img src={require(`../${movie}.jpg`)} width="100%"
+                  height="100%"/>
                         <div className="image">
                             <Image width='100%' height="100%" src={poster} className="poster"/>
                         </div>

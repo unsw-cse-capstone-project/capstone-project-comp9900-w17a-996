@@ -69,28 +69,32 @@ class Result extends Component {
 
     return (
       <React.Fragment>
-        <h1>Result List: </h1>
+        <div className="pl-5">
 
-        <div>
-          {movies.map((movie) => {
-            return (
-              <div>
-                <img src={require(`../${movie.title}.jpg`)} width="100px"
-                  height="150px"/>
-                {/* <Image
-                  width="100px"
-                  height="150px"
-                  src={poster}
-                  className="poster"
-                /> */}
-                <div onClick={(ev) => this.handleClick(ev, movie.title)}>
-                  Title: {movie.title}
-                </div>
-                <div>Genre: {movie.genre}</div>
-              </div>
-            );
-          })}
+        <h3>Result List: </h3>
+
+<div>
+  {movies.map((movie) => {
+    return (
+      <div>
+        <img src={require(`../${movie.title}.jpg`)} width="100px"
+          height="150px"/>
+        {/* <Image
+          width="100px"
+          height="150px"
+          src={poster}
+          className="poster"
+        /> */}
+        <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+          Title: {movie.title}
         </div>
+        <div>Genre: {movie.genre}</div>
+      </div>
+    );
+  })}
+</div>
+        </div>
+        
       </React.Fragment>
     );
   }
