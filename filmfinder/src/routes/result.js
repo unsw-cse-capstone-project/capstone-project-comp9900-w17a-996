@@ -4,7 +4,7 @@ class Result extends Component {
     constructor(props){
         super(props);
         this.state = {
-        username: "",
+        movies: [],
     };
     }
 
@@ -12,7 +12,7 @@ class Result extends Component {
         fetch('/search')
       .then((r) => r.json())
       .then((r) => {
-        console.log(r);
+        this.setState(r);
       });
     }
 
@@ -34,9 +34,23 @@ class Result extends Component {
     // }
 
     render() { 
+      const movies = this.state.movies;
         return ( 
             <React.Fragment>
                 <h1>Hello</h1>
+
+                <div>
+                {movies.map((movie) => {
+          return (
+            <div>
+              <div>Title: {movie.title}</div>
+              <div>Genre: {movie.genre}</div>
+              <hr />
+            </div>
+          )
+        })}
+      </div>
+        {/* <h2>{this.state.movies}</h2> */}
             </React.Fragment>
          );
     }
