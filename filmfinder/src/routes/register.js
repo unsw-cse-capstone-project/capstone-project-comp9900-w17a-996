@@ -35,9 +35,9 @@ class Register extends Component {
       });
   }
 
-  componentWillMount() {
+  // componentWillMount() {
     
-  }
+  // }
 
   render() {
     return (

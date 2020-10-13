@@ -44,7 +44,7 @@ def api():
     else:
         return("ok")
 
-guid = {'password': ''}
+guid = {'username': '', 'nickname': '', 'email': '', 'password': '', 'bio': ''}
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method=='POST':
@@ -59,7 +59,11 @@ def login():
         try:
             result = c.execute(query_sql, (username,)).fetchall()
             if len(result) != 0:
+                guid['username'] = username
+                guid['nickname'] = result[0][1]
+                guid['email'] = result[0][2]
                 guid['password'] = result[0][3]
+                guid['bio'] = result[0][4]
                 return result[0][3]
             else:
                 guid['password'] = ''
@@ -69,6 +73,30 @@ def login():
             return '-'
     else:
         return guid
+
+@app.route('/home', methods=['GET'])
+def home():
+    return guid
+
+@app.route('/profile', methods=['POST'])
+def profile():
+    user_data = request.get_json()
+    username = user_data['username']
+    db = connect_db()
+    c = db.cursor()
+
+    delete_sql = "DELETE FROM USER WHERE USERNAME = ?"
+
+    try:
+        c.execute(delete_sql, (username,))
+        c.execute(
+            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO) VALUES(?, ?, ?, ?, ?)", 
+            (user_data["username"], user_data["nickname"], user_data["email"], user_data["password"], user_data["bio"])
+        )
+        db.commit()
+        return user_data
+    except sqlite3.OperationalError:
+        return '-'
     # else:
     #     # time.sleep(100)
     #     return member_state

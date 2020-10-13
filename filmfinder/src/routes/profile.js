@@ -3,14 +3,78 @@ import "../styles/centerCenter.css";
 import { withRouter } from "react-router-dom";
 
 class Profile extends Component {
-  state = {
-    username: "",
-    nickname: "",
-    email: "",
-    bio: "",
-  };
 
-  handleClick = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "ERR",
+      nickname: "ERR",
+      password: "ERR",
+      email: "ERR",
+      bio: "Nothing to show",
+    };
+  }
+
+  componentWillMount() {
+    fetch('/home')
+            .then(r => r.json())
+            .then(r => {
+                console.log(r);
+                this.setProfile(r);
+            })
+  }
+
+  setProfile(r) {
+    if (r.username != "") {
+      this.setState(r);
+    }
+  }
+
+  handleClick(ev, nickName, email, password, confirmPassword, bio) {
+
+    var data = {
+      username: this.state.username,
+      nickname: this.state.nickname,
+      email: this.state.email,
+      password: this.state.password,
+      bio: this.state.bio
+    }
+
+    if (nickName != "") {
+      data.nickname = nickName;
+    }
+
+    if (email != "") {
+      data.email = email;
+    }
+
+    if (password != "" && password == confirmPassword) {
+      data.password = password;
+    }
+
+    if (bio != "") {
+      data.bio = bio;
+    }
+
+    console.log(data);
+
+    
+    fetch("/profile", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     this.props.history.push("/home");
   };
 
@@ -64,14 +128,14 @@ class Profile extends Component {
                   <br />
                   <div className="row">
                     <div className="col-md-3">
-                      <label for="userName">New Username</label>
+                      <label for="userName">Username (Not Changeable)</label>
                     </div>
                     <div className="col-md-9">
                       <input
                         type="text"
                         className="form-control"
                         id="userName"
-                        placeholder="Default Usename"
+                        value={this.state.username}
                         required
                       />
                     </div>
@@ -86,8 +150,8 @@ class Profile extends Component {
                       <input
                         type="text"
                         className="form-control"
-                        id="nickName"
-                        placeholder="Anoymous Poet"
+                        ref="nickName"
+                        placeholder={this.state.nickname}
                         required
                       />
                     </div>
@@ -101,8 +165,8 @@ class Profile extends Component {
                       <input
                         type="email"
                         className="form-control"
-                        id="email"
-                        placeholder="Default Email"
+                        ref="email"
+                        placeholder={this.state.email}
                         required
                       />
                     </div>
@@ -116,8 +180,8 @@ class Profile extends Component {
                       <input
                         type="password"
                         className="form-control"
-                        id="password"
-                        placeholder=""
+                        ref="password"
+                        placeholder={this.state.password}
                         required
                       />
                     </div>
@@ -131,7 +195,7 @@ class Profile extends Component {
                       <input
                         type="password"
                         className="form-control"
-                        id="confirmPassword"
+                        ref="confirmPassword"
                         placeholder=""
                         required
                       />
@@ -147,8 +211,8 @@ class Profile extends Component {
                         className="form-control"
                         rows="5"
                         cols="3"
-                        id="bio"
-                        placeholder="Nothing to show..."
+                        ref="bio"
+                        placeholder={this.state.bio}
                         required
                       />
                     </div>
@@ -160,7 +224,15 @@ class Profile extends Component {
                       className="btn btn-lg btn-info btn-block"
                       id="btnSignUp"
                       type="submit"
-                      onClick={this.handleClick}
+                      onClick={(ev) => 
+                      this.handleClick(
+                        ev,
+                        this.refs.nickName.value,
+                        this.refs.email.value,
+                        this.refs.password.value,
+                        this.refs.confirmPassword.value,
+                        this.refs.bio.value
+                      )}
                     >
                       Apply Changes
                     </button>

@@ -9,6 +9,30 @@ import {TransButton} from "../components/styledButton.js"
 
 class Search extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: ''
+    };
+  }
+
+  componentWillMount() {
+    fetch('/home')
+            .then(r => r.json())
+            .then(r => {
+                this.setUser(r.username);
+            })
+  }
+
+  setUser(name) {
+    if (name == ''){
+      this.setState({username: "Visitor"});
+    }
+    else {
+      this.setState({username: name});
+    }
+  }
+
   goLogin = () => {
     this.props.history.push("/login");
   }
@@ -33,18 +57,22 @@ class Search extends Component {
         }>
           
             <div>
-                <img src={searchImg} /> 
-                <Fragment>
-                Searching Movies...
-                </Fragment >
-                <TransButton type="primary">Search</TransButton>
+                
                 <StyledButton type="primary" onClick={ this.goProfile }>Profile</StyledButton>
                 <StyledButton type="primary">Messages</StyledButton>
                 <StyledButton type="primary" onClick={ this.goWishList }>Wishlist</StyledButton>
                 <StyledButton type="primary">History</StyledButton>
                 <StyledButton type="primary" onClick={ this.goLogin }>Login/Register</StyledButton>
+                <h1 className="mt-2">Hi, {this.state.username}</h1>
             </div>
+            {/* <img src={searchImg} /> 
+                <Fragment>
+                Searching Movies...
+                </Fragment >
+                <TransButton type="primary">Search</TransButton> */}
         </BorderSearchWarp>
+
+        
         
     );
   }
