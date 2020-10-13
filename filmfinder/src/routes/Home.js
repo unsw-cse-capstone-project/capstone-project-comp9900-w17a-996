@@ -3,6 +3,7 @@ import { BorderSearchWarp } from "../components/styledSearch";
 import { Button } from "antd";
 import { StyledButton } from "../components/styledButton.js";
 import "../styles/centerCenter.css";
+import SearchBar from "../components/Search"
 
 class Search extends Component {
   constructor(props) {
@@ -100,7 +101,8 @@ class Search extends Component {
                 <TransButton type="primary">Search</TransButton> */}
         </BorderSearchWarp>
         <div className="box_home">
-          <input type="text" ref="searchContent" className=""></input>
+          <SearchBar></SearchBar>
+          {/* <input type="text" ref="searchContent" className=""></input>
           <Button
             className="btn btn-info"
             onClick={(ev) =>
@@ -108,7 +110,7 @@ class Search extends Component {
             }
           >
             Search
-          </Button>
+          </Button> */}
         </div>
       </React.Fragment>
     );

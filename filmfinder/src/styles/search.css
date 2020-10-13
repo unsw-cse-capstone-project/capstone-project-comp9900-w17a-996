@@ -1,0 +1,8 @@
+.searchMenu{
+    background-color: white;
+    border: 1px solid rgb(92, 155, 250);
+    margin: 0;
+    outline: 0;
+    position: absolute;
+    z-index: 99999;
+}

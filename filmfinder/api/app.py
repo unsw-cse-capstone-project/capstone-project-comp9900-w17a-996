@@ -84,6 +84,8 @@ def search():
     if request.method == 'POST':
         data = request.get_json()
         search_content = data["searchContent"]
+        print("search content:", search_content)
+        print("initial result:", result)
 
         db = connect_db()
         c = db.cursor()
@@ -94,15 +96,18 @@ def search():
             idx = 1
             for title in titles:
                 title = str(title)[2: -3]
+                
+                print(title)
                 if search_content in title:
                     result["movie" + str(idx)] = title
                     idx += 1
+                print(result)
+            
         except sqlite3.OperationalError:
             pass
 
         return search_content
     else:
-
         return result
     
 
