@@ -76,8 +76,8 @@ class Result extends Component {
 <div>
   {movies.map((movie) => {
     return (
-      <div>
-        <img src={require(`../${movie.title}.jpg`)} width="100px"
+      <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+        <img src={require(`../${movie.title}.jpg`) } width="100px"
           height="150px"/>
         {/* <Image
           width="100px"
@@ -85,7 +85,7 @@ class Result extends Component {
           src={poster}
           className="poster"
         /> */}
-        <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+        <div >
           Title: {movie.title}
         </div>
         <div>Genre: {movie.genre}</div>
