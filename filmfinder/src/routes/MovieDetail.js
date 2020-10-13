@@ -22,11 +22,11 @@ class MovieDetail extends Component{
         super(props);
         this.state = {
             title: "",
+            director: "",
+            cast: "",
             genre: "",
-            releaseDate: "",
-            cost: "",
-            rating: "",
-            reviewers: "",
+            language: "",
+            date: "",
             user: {
                 userName: "",
                 rating: "",
@@ -34,13 +34,23 @@ class MovieDetail extends Component{
             }
         };
     }
+
     componentDidMount(){
-        fetch('/app')
+        fetch('/movieDetail')
             .then(r => r.json())
             .then(r => {
-                this.setState(r);
+                this.setState(r.movie);
+                // console.log(r);
             })
     }
+
+    // componentDidMount(){
+    //     fetch('/app')
+    //         .then(r => r.json())
+    //         .then(r => {
+    //             this.setState(r);
+    //         })
+    // }
     render(){
         return (
             <div>

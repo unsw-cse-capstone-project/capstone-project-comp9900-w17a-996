@@ -153,8 +153,9 @@ def profile():
 movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}}
 @app.route('/movieDetail', methods=['GET', 'POST'])
 def movieDetail():
-    title = request.get_json()["title"]
+    
     if request.method == 'POST':
+        title = request.get_json()["title"]
         # pass
         db = connect_db()
         c = db.cursor()

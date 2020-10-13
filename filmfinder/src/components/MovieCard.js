@@ -10,10 +10,11 @@ class MovieCard extends Component{
         super(props);
         this.state = {
             title: "",
+            director: "",
+            cast: "",
             genre: "",
-            releaseDate: "",
-            cost: "",
-            rating: "",
+            language: "",
+            date: "",
             user: {
                 userName: "",
                 rating: "",
@@ -40,15 +41,15 @@ class MovieCard extends Component{
                         </div>
                     </div>
                     <div className="description">
-                        <span>Directors:</span>
+        <span>Directors: {this.props.director}</span>
                         <br />
-                        <span>Actors:</span>
+        <span>Actors: {this.props.cast}</span>
                         <br />
                         <span>Genre: {this.props.genre}</span>
                         <br />
-                        <span>Country:</span>
+        <span>Language: {this.props.language}</span>
                         <br />
-                        <span>Release date: {this.props.releaseDate}</span>
+                        <span>Release date: {this.props.date}</span>
                     </div>
 
                </div>
