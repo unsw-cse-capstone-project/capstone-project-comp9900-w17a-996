@@ -6,3 +6,6 @@ I wrote the user stories on the Jira together with teammates. Discuss with Chenq
 
 Week 3
 get data from register page and store data to the local database
+
+Week 4
+add movie data table, improve search by movie title.

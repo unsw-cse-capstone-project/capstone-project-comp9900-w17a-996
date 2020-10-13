@@ -89,10 +89,10 @@ def search():
 
         db = connect_db()
         c = db.cursor()
-        query_sql = "SELECT TITLE FROM MOVIE"
+        query_sql = "SELECT * FROM MOVIE"
         
         try:
-            titles = c.execute(query_sql).fetchall()
+            movie_details = c.execute(query_sql).fetchall()
             idx = 1
             for title in titles:
                 title = str(title)[2: -3]
@@ -105,12 +105,10 @@ def search():
             
         except sqlite3.OperationalError:
             pass
-
         return search_content
     else:
         return result
     
-
 @app.route('/profile', methods=['POST'])
 def profile():
     user_data = request.get_json()
