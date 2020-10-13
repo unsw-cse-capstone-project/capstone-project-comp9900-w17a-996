@@ -81,6 +81,13 @@ def home():
 @app.route('/profile', methods=['POST'])
 def profile():
     user_data = request.get_json()
+
+    guid['username'] = user_data["username"]
+    guid['nickname'] = user_data["nickname"]
+    guid['email'] = user_data["email"]
+    guid['password'] = user_data["password"]
+    guid['bio'] = user_data["bio"]
+
     username = user_data['username']
     db = connect_db()
     c = db.cursor()
