@@ -7,6 +7,7 @@ import Register from "./routes/register.js";
 import Login from "./routes/login.js";
 import Profile from "./routes/profile.js";
 import Home from "./routes/Home";
+import Result from "./routes/result";
 
 class App extends React.Component {
   constructor(props){
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Route component={MovieDetail} path="/movie"/>
           <Route component={WishList} path="/wishList"/>
           <Route component={Home} path="/home"/>
+          <Route component={Result} path="/result"/>
         </Switch>
       </HashRouter>
     )

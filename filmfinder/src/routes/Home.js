@@ -47,7 +47,7 @@ class Search extends Component {
 
     console.log(data);
 
-    fetch("/app", {
+    fetch("/search", {
       method: "POST",
       headers: {
         Accept: "application/json",
