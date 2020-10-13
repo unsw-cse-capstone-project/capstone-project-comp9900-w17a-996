@@ -10,7 +10,7 @@ c = conn.cursor()
 
 # conn1 = sqlite3.connect("movie.db", check_same_thread=False)
 # c1 = conn1.cursor()
-c.execute("DROP TABLE MOVIE")
+# c.execute("DROP TABLE MOVIE")
 c.execute(
     "CREATE TABLE MOVIE (TITLE TEXT, DIRECTORS TEXT, ACTORS TEXT, GENRE TEXT, LANGUAGE TEXT, RELEASE_DATE TEXT)"
 )
