@@ -78,31 +78,34 @@ def login():
 def home():
     return guid
 
-result = {}
+result = {"movies": []}
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':
         data = request.get_json()
         search_content = data["searchContent"]
-        print("search content:", search_content)
-        print("initial result:", result)
-
+ 
         db = connect_db()
         c = db.cursor()
         query_sql = "SELECT * FROM MOVIE"
+        result["movies"] = []
         
         try:
             movie_details = c.execute(query_sql).fetchall()
-            idx = 1
-            for title in titles:
-                title = str(title)[2: -3]
-                
-                print(title)
-                if search_content in title:
-                    result["movie" + str(idx)] = title
-                    idx += 1
-                print(result)
-            
+
+            for detail in movie_details:
+                if search_content in detail[0]:
+                    # sub_res = {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}
+                    sub_res = {"title": "", "genre": ""}
+                    sub_res["title"] = detail[0]
+                    # sub_res["director"] = detail[1]
+                    # sub_res["cast"] = detail[2]
+                    sub_res["genre"] = detail[3]
+                    # sub_res["language"] = detail[4]
+                    # sub_res["date"] = detail[5]
+
+                    result["movies"].append(sub_res)
+                    print(result)
         except sqlite3.OperationalError:
             pass
         return search_content
