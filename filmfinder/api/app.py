@@ -84,28 +84,32 @@ def search():
     if request.method == 'POST':
         data = request.get_json()
         search_content = data["searchContent"]
-
+ 
         db = connect_db()
         c = db.cursor()
-        query_sql = "SELECT TITLE FROM MOVIE"
+        query_sql = "SELECT * FROM MOVIE"
         
         try:
-            titles = c.execute(query_sql).fetchall()
+            movie_details = c.execute(query_sql).fetchall()
             idx = 1
-            for title in titles:
-                title = str(title)[2: -3]
-                if search_content in title:
-                    result["movie" + str(idx)] = title
+            for detail in movie_details:
+                if search_content in detail[0]:
+                    sub_res = {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}
+                    sub_res["title"] = detail[0]
+                    sub_res["director"] = detail[1]
+                    sub_res["cast"] = detail[2]
+                    sub_res["genre"] = detail[3]
+                    sub_res["language"] = detail[4]
+                    sub_res["date"] = detail[5]
+
+                    result["movie" + str(idx)] = sub_res
                     idx += 1
         except sqlite3.OperationalError:
             pass
-
         return search_content
     else:
-
         return result
     
-
 @app.route('/profile', methods=['POST'])
 def profile():
     user_data = request.get_json()
