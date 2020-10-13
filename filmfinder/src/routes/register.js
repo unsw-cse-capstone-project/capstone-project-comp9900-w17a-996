@@ -18,7 +18,7 @@ class Register extends Component {
     };
     console.log("HEllo");
 
-    fetch("/app", {
+    fetch("/search", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -34,10 +34,6 @@ class Register extends Component {
         console.error("Error:", error);
       });
   }
-
-  // componentWillMount() {
-    
-  // }
 
   render() {
     return (
