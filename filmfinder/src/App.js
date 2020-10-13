@@ -3,9 +3,9 @@ import {Switch, Route, HashRouter} from 'react-router-dom';
 import './App.css';
 import MovieDetail from './routes/MovieDetail';
 import WishList from './routes/WishList';
-import Register from "./routes/Register.js";
-import Login from "./routes/Login.js";
-import Profile from "./routes/Profile.js";
+import Register from "./routes/register.js";
+import Login from "./routes/login.js";
+import Profile from "./routes/profile.js";
 import Home from "./routes/Home";
 
 class App extends React.Component {
@@ -13,7 +13,7 @@ class App extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
   render(){
     return(
       <HashRouter>
