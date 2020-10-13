@@ -78,29 +78,31 @@ def login():
 def home():
     return guid
 
-result = {'movie': ''}
-search_content = ""
+result = {}
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':
-        search_content = request.get_json["searchContent"]
-        return request.get_json()
-    else:
-        result = {}
+        data = request.get_json()
+        search_content = data["searchContent"]
+
         db = connect_db()
         c = db.cursor()
         query_sql = "SELECT TITLE FROM MOVIE"
         
         try:
             titles = c.execute(query_sql).fetchall()
+            idx = 1
             for title in titles:
-                idx = 1
                 title = str(title)[2: -3]
                 if search_content in title:
                     result["movie" + str(idx)] = title
                     idx += 1
         except sqlite3.OperationalError:
             pass
+
+        return search_content
+    else:
+
         return result
     
 
