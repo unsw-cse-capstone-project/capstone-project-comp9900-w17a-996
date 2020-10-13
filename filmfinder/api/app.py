@@ -105,7 +105,7 @@ def search():
                     # sub_res["date"] = detail[5]
 
                     result["movies"].append(sub_res)
-                    print(result)
+                    # print(result)
         except sqlite3.OperationalError:
             pass
         return search_content
@@ -149,6 +149,27 @@ def profile():
     #     'message': test_msg,
     #     'completed': False
     # }
+
+movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}}
+@app.route('/movieDetail', methods=['GET', 'POST'])
+def movieDetail():
+    title = request.get_json()["title"]
+    if request.method == 'POST':
+        # pass
+        db = connect_db()
+        c = db.cursor()
+        details = c.execute("SELECT * FROM MOVIE WHERE TITLE == ?", (title,)).fetchall()
+        print("this is detail: ", details)
+        movie_detail_res["movie"]["title"] = details[0][0]
+        movie_detail_res["movie"]["director"] = details[0][1]
+        movie_detail_res["movie"]["cast"] = details[0][2]
+        movie_detail_res["movie"]["genre"] = details[0][3]
+        movie_detail_res["movie"]["language"] = details[0][4]
+        movie_detail_res["movie"]["date"] = details[0][5]
+        print("detail result:", movie_detail_res)
+        return movie_detail_res
+    else:
+        return movie_detail_res
 
 if __name__ == "__main__":
     app.run(debug=True)

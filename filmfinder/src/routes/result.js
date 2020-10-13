@@ -37,7 +37,7 @@ class Result extends Component {
           console.error("Error:", error);
         });
 
-      window.location.href = "/#/detail";
+      window.location.href = "/#/movie";
     }
 
     // componentDidMount(){
