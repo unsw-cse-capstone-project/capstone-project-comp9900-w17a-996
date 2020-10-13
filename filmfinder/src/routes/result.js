@@ -16,13 +16,29 @@ class Result extends Component {
       });
     }
 
-    sleep(time) {
-        return new Promise(resolve => {
-          setTimeout(() => {
-            resolve();
-          }, time);
-        });
+    handleClick(ev, title) {
+      const data = {
+        title: title
       }
+
+      fetch("/movieDetail", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => console.log(response))
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      window.location.href = "/#/detail";
+    }
 
     // componentDidMount(){
     //     const reg = /([^=&s]+)[=s]([^=&s]+)/g;
@@ -43,14 +59,18 @@ class Result extends Component {
                 {movies.map((movie) => {
           return (
             <div>
-              <div>Title: {movie.title}</div>
+              <div onClick={(ev) =>
+                        this.handleClick(
+                          ev,
+                          movie.title
+                        )
+                      }>Title: {movie.title}</div>
               <div>Genre: {movie.genre}</div>
               <hr />
             </div>
           )
         })}
       </div>
-        {/* <h2>{this.state.movies}</h2> */}
             </React.Fragment>
          );
     }
