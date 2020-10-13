@@ -24,15 +24,6 @@ class Profile extends Component {
             })
   }
 
-  // componentDidMount() {
-  //   fetch('/home')
-  //           .then(r => r.json())
-  //           .then(r => {
-  //               console.log(r);
-  //               this.setProfile(r);
-  //           })
-  // }
-
   setProfile(r) {
     if (r.username != "") {
       this.setState(r);
