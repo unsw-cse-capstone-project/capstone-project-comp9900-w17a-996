@@ -73,10 +73,10 @@ class Result extends Component {
     return (
       <React.Fragment>
         <NavBar></NavBar>
-        <div className="pl-5">
+        <div className="pl-5 pt-4">
           
 
-        <h3>Result List: </h3>
+        <h4>{movies.length} result(s) found: </h4>
 
 <div>
   
