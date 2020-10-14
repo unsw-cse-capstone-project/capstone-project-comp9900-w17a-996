@@ -42,6 +42,16 @@ class Search extends Component {
         console.error("Error:", error);
       });
 
+      fetch("/search")
+      .then((r) => r.json())
+      .then((r) => {
+        this.setState(r);
+        console.log(r);
+        // this.setState({
+        //   url: r.movies.title.value
+        // });
+      });
+
     let newFound = this.state.found;
     let notFind = true;
     var re = new RegExp(value, "g");
@@ -95,7 +105,7 @@ class Search extends Component {
       <div>
         <Input
           style={{ width: "500px" }}
-          placeholder="please input the keywords"
+          placeholder="Please input the keyword of movies"
           onChange={this.searchOnChange.bind(this)}
           onPressEnter={this.onPressEnter}
           prefix={<SearchOutlined />}

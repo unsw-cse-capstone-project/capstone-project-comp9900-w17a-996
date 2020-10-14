@@ -27,10 +27,11 @@ class MovieDetail extends Component{
             genre: "",
             language: "",
             date: "",
+            rating: "3",
             user: {
                 userName: "",
-                rating: "",
-                comment: ""
+                rating: "4",
+                comment: "Nice movie, worth to Watch!"
             }
         };
     }

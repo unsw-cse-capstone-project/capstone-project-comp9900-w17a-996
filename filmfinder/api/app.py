@@ -14,6 +14,10 @@ def connect_db():
     db = sqlite3.connect(app.config["DATABASE"], check_same_thread=False)
     return db
 
+@app.route('/', methods=['GET'])
+def default():
+    return "Default Page of Backend"
+
 @app.route('/app', methods=['GET','POST'])
 def api():
     if request.method=='GET':

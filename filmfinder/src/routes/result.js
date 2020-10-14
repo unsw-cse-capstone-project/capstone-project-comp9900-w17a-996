@@ -44,7 +44,7 @@ class Result extends Component {
         console.error("Error:", error);
       });
 
-    window.location.href = "/#/movie";
+    window.location.href = "/#/movie?title=" + title;
   }
 
   handleImage(title) {

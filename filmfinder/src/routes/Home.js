@@ -91,7 +91,7 @@ class Search extends Component {
             <StyledButton type="primary" onClick={this.goLogin}>
               Login/Register
             </StyledButton>
-            <h1 className="mt-2">Hi, {this.state.username}</h1>
+            <h1 className="mt-2">Hello, {this.state.username}!</h1>
           </div>
 
           {/* <img src={searchImg} /> 

@@ -52,7 +52,7 @@ class MovieCard extends Component{
                     <div className="description">
         <span>Directors: {this.props.director}</span>
                         <br />
-        <span>Actors: {this.props.cast}</span>
+        <span>Cast: {this.props.cast}</span>
                         <br />
                         <span>Genre: {this.props.genre}</span>
                         <br />
