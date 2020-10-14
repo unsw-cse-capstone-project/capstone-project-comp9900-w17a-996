@@ -26,6 +26,6 @@ c = conn.cursor()
 #           ("Tales from the Hood 3", "Rusty Cundieff", "Tony Todd, Lynn Whitfield", "Horror", "English", "2020-10-06"))
 # conn.commit()
 
-content = c.execute("SELECT * FROM MOVIE")
+content = c.execute("SELECT * FROM USER")
 for i in content:
     print(i)

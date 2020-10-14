@@ -89,6 +89,8 @@ class Search extends Component {
     const { value } = e.target;
     console.log("Value", value);
     window.location.href = "/#/result?keyword=" + value;
+    window.event.returnValue=false;
+
   }
 
   

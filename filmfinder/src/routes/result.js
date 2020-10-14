@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import NavBar from "../components/NavBar"
-import poster from "../The Forty-Year-Old Version.jpg";
+import NavBar from "../components/NavBar";
 import { Image } from "antd";
 
 class Result extends Component {
@@ -18,10 +17,16 @@ class Result extends Component {
       .then((r) => r.json())
       .then((r) => {
         this.setState(r);
-        console.log(r);
-        // this.setState({
-        //   url: r.movies.title.value
-        // });
+        console.log("Result UI:",r);
+      });
+  }
+
+  componentWillUpdate() {
+    fetch("/search")
+      .then((r) => r.json())
+      .then((r) => {
+        this.setState(r);
+        console.log("Result UI:",r);
       });
   }
 
@@ -68,7 +73,6 @@ class Result extends Component {
 
   render() {
     const movies = this.state.movies;
-    console.log("Rendering...");
 
     return (
       <React.Fragment>
