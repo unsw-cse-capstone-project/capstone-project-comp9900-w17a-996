@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NavBar from "../components/NavBar"
 import poster from "../The Forty-Year-Old Version.jpg";
 import { Image } from "antd";
 
@@ -12,6 +13,7 @@ class Result extends Component {
   }
 
   componentWillMount() {
+    
     fetch("/search")
       .then((r) => r.json())
       .then((r) => {
@@ -66,14 +68,18 @@ class Result extends Component {
 
   render() {
     const movies = this.state.movies;
+    console.log("Rendering...");
 
     return (
       <React.Fragment>
+        <NavBar></NavBar>
         <div className="pl-5">
+          
 
         <h3>Result List: </h3>
 
 <div>
+  
   {movies.map((movie) => {
     return (
       <div onClick={(ev) => this.handleClick(ev, movie.title)}>

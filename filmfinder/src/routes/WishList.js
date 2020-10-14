@@ -14,6 +14,7 @@ import recom7 from '../rec7.jpg';
 import recom8 from '../rec8.jpg';
 import {Image} from 'antd';
 import { getKeyThenIncreaseKey } from 'antd/lib/message';
+import NavBar from "../components/NavBar";
 const { Header, Footer, Sider, Content} = Layout;
 class WishList extends Component{
     constructor(props){
@@ -119,8 +120,10 @@ class WishList extends Component{
         )})
         return(
             <div>
+                
                 <Layout className="layout">
-                    <Header>header</Header>
+                <NavBar></NavBar>
+                    {/* <Header>header</Header> */}
                     <Layout className="wishMainLayout">
                         <Sider className="wishSider">
                             <Menu theme="dark" mode='inline'>

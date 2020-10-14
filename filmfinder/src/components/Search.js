@@ -87,6 +87,7 @@ class Search extends Component {
   
   onPressEnter = (e) => {
     const { value } = e.target;
+    console.log("Value", value);
     window.location.href = "/#/result?keyword=" + value;
   }
 

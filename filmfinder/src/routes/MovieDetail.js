@@ -12,6 +12,7 @@ import RatingResult from '../components/RatingResult';
 import CommentCard from '../components/CommentCard';
 import RecommendList from '../components/RecommendList';
 import { WindowsOutlined } from '@ant-design/icons';
+import NavBar from "../components/NavBar";
 const { Header, Footer, Sider, Content} = Layout;
 const addToWishlist = () =>{
     console.log('123');
@@ -56,7 +57,8 @@ class MovieDetail extends Component{
         return (
             <div>
                 <Layout className="layout">
-                    <Header className="header">header</Header>
+                    <NavBar></NavBar>
+                    {/* <Header className="header">header</Header> */}
                         <Layout className="mainContent">     
                             <Content className="wrapper" style={{ padding: '0 150px', marginTop: 64 }}>
                                 <Layout className="detailmain">
