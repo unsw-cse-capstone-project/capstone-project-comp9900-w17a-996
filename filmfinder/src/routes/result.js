@@ -21,7 +21,7 @@ class Result extends Component {
       });
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     fetch("/search")
       .then((r) => r.json())
       .then((r) => {
