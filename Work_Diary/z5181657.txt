@@ -17,5 +17,11 @@ Next week, I plan to do the font-end of the user stories that we will do in the 
 
 Week4
 
-I finish the front-end part which is assigned to me in the first sprint. some part of them cannot connet
+I finished the front-end part which is assigned to me in the first sprint. some part of them cannot connet
 with the back-end part, so I will solve this problem in next week. Also, I will go into the second sprint.
+
+Week5
+
+We finished our first progressive demo (A), and our group had a meeting about the Retrospective.
+Through the meeting, we know what should be improved in the next sprint, and also we make it clear how to complete
+the sprint more efficiently. In the next week, we will continue to the second sprint.
