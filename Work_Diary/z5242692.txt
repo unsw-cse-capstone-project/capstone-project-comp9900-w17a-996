@@ -22,3 +22,10 @@ Week 4
 
 I finished the front-end of register, login and profile page. And finish data communication with back-end teammates.
 Merge the project from different parts. Prepare for the demo next week.
+
+
+Week 5
+
+I fixed some small bugs before the demo. Demo A finished. We held the sprint retrospective to review the first Sprint.
+I submitted the retrospective report. Then, we assigned tasks for Sprint 2 and started the sprint. 
+Next week, I will code for my part of Sprint 2 and keep on debugging the Sprint 1.
