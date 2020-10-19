@@ -22,7 +22,7 @@ class Search extends Component {
   }
 
   setUser(name) {
-    if (name == "") {
+    if (name === "") {
       this.setState({ username: "Visitor" });
     } else {
       this.setState({ username: name });
