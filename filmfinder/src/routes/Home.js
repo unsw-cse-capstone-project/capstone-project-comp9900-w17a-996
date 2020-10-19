@@ -41,6 +41,10 @@ class Search extends Component {
     this.props.history.push("/wishList");
   };
 
+  goHistory = () => {
+    this.props.history.push("/history");
+  }
+
   handleSearch(ev, searchContent) {
     const data = {
       searchContent: searchContent,
@@ -87,7 +91,7 @@ class Search extends Component {
             <StyledButton type="primary" onClick={this.goWishList}>
               Wishlist
             </StyledButton>
-            <StyledButton type="primary">History</StyledButton>
+            <StyledButton type="primary" onClick={this.goHistory}>History</StyledButton>
             <StyledButton type="primary" onClick={this.goLogin}>
               Login/Register
             </StyledButton>
