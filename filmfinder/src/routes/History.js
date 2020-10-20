@@ -8,8 +8,8 @@ const { TextArea } = Input;
 class History extends Component {
   state = {
     ModalText: "Content of the modal",
-    // visible: false,
-    confirmLoading: false,
+    editLoading: false,
+    deleteLoading:false,
     data: [
         {
           key: "1",
@@ -17,7 +17,8 @@ class History extends Component {
           reviewTime: "18:03 01/08/2020",
           rating: "4",
           review: "Not bad",
-          visible: false,
+          editVisible: false,
+          deleteVisible: false,
         },
         {
           key: "2",
@@ -25,7 +26,8 @@ class History extends Component {
           reviewTime: "23:43 25/07/2020",
           rating: "3",
           review: "All good",
-          visible: false,
+          editVisible: false,
+          deleteVisible: false,
         },
         {
           key: "3",
@@ -33,58 +35,107 @@ class History extends Component {
           reviewTime: "20:43 15/07/2020",
           rating: "5",
           review: "Funny one",
-          visible: false,
+          editVisible: false,
+          deleteVisible: false,
         },
       ],
   };
 
-  showModal(id) {
-      
+  showEditModal(id) {
     //   console.log(this.state.data.length);
       for (let i = 0; i < this.state.data.length; i++){
         // console.log(this.state.data[i].key);
           if (this.state.data[i].key === id){
-            console.log(this.state.data[i].visible);
+            console.log(this.state.data[i].editVisible);
             let refData = this.state;
-            refData.data[i].visible = true;
+            refData.data[i].editVisible = true;
             this.setState(refData);
-            // this.state.data[i].visible = true;
+            // this.state.data[i].editVisible = true;
             };
           }
   };
 
-  handleOk(id) {
+  showDeleteModal(id) {
+    //   console.log(this.state.data.length);
+      for (let i = 0; i < this.state.data.length; i++){
+        // console.log(this.state.data[i].key);
+          if (this.state.data[i].key === id){
+            console.log(this.state.data[i].deleteVisible);
+            let refData = this.state;
+            refData.data[i].deleteVisible = true;
+            this.setState(refData);
+            };
+          }
+  };
 
+  handleEditOk(id) {
     for (let i = 0; i < this.state.data.length; i++){
       // console.log(this.state.data[i].key);
         if (this.state.data[i].key === id){
 
           this.setState({
             ModalText: "The modal will be closed after two seconds",
-            confirmLoading: true,
+            editLoading: true,
           });
           
           setTimeout(() => {
             let refData = this.state;
-          refData.confirmLoading = false;
-          refData.data[i].visible = false;
+          refData.editLoading = false;
+          refData.data[i].editVisible = false;
           this.setState(refData);
           }, 1000);
 
           
-          // this.state.data[i].visible = true;
+          // this.state.data[i].editVisible = true;
           };
         }
     
   };
 
-  handleCancel(id) {
+  handleDeleteOk(id) {
+    for (let i = 0; i < this.state.data.length; i++){
+      // console.log(this.state.data[i].key);
+        if (this.state.data[i].key === id){
+
+          this.setState({
+            ModalText: "The modal will be closed after two seconds",
+            deleteLoading: true,
+          });
+          
+          setTimeout(() => {
+            let refData = this.state;
+          refData.deleteLoading = false;
+          refData.data[i].deleteVisible = false;
+          this.setState(refData);
+          }, 1000);
+
+          
+          // this.state.data[i].editVisible = true;
+          };
+        }
+    
+  };
+
+  handleEditCancel(id) {
     for (let i = 0; i < this.state.data.length; i++){
       if (this.state.data[i].key === id){
         console.log("Clicked cancel button");
-        console.log(this.state.data[i].visible);
+        console.log(this.state.data[i].editVisible);
         let refData = this.state;
-        refData.data[i].visible = false;
+        refData.data[i].editVisible = false;
+        this.setState(refData);
+    }
+  }
+
+  };
+
+  handleDeleteCancel(id) {
+    for (let i = 0; i < this.state.data.length; i++){
+      if (this.state.data[i].key === id){
+        console.log("Clicked cancel button");
+        console.log(this.state.data[i].deleteVisible);
+        let refData = this.state;
+        refData.data[i].deleteVisible = false;
         this.setState(refData);
     }
   }
@@ -132,25 +183,35 @@ class History extends Component {
               key="action"
               render={(text, record) => (
                 <Space size="middle">
-                  <h3>传值为{record.key}</h3>
+                  {/* <h3>传值为{record.key}</h3> */}
                   <Modal
                     title="Edit review"
-                    visible={record.visible}
-                    onOk={() => this.handleOk(record.key)}
-                    confirmLoading={confirmLoading}
-                    onCancel={() => this.handleCancel(record.key)}
+                    visible={record.editVisible}
+                    onOk={() => this.handleEditOk(record.key)}
+                    confirmLoading={this.state.editLoading}
+                    onCancel={() => this.handleEditCancel(record.key)}
                   >
                       <h1>{record.key}</h1>
                     <TextArea rows={4} defaultValue={record.review} />
                   </Modal>
 
-                  {/* <Button type="primary">Edit</Button> */}
-                  <Button type="primary" onClick={() => this.showModal(record.key)}>
+                  <Modal
+                    title="Delete confirm"
+                    visible={record.deleteVisible}
+                    onOk={() => this.handleDeleteOk(record.key)}
+                    confirmLoading={this.state.deleteLoading}
+                    onCancel={() => this.handleDeleteCancel(record.key)}
+                  >
+                      <h1>{record.key}</h1>
+                    <p>Are you sure to delete?</p>
+                  </Modal>
+
+                  <Button type="primary" onClick={() => this.showEditModal(record.key)}>
                     测试Edit~
                   </Button>
 
                     
-                  <Button type="primary" danger>
+                  <Button type="primary" danger onClick={() => this.showDeleteModal(record.key)}>
                     Delete
                   </Button>
                 </Space>
