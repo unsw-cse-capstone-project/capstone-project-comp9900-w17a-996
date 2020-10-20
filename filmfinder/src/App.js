@@ -9,6 +9,8 @@ import Profile from "./routes/profile.js";
 import Home from "./routes/Home";
 import Result from "./routes/result";
 import History from './routes/History.js';
+import RegisterSuccess from "./routes/registerSuccess.js";
+import RegisterFail from "./routes/registerFail.js";
 
 class App extends React.Component {
   constructor(props){
@@ -28,6 +30,8 @@ class App extends React.Component {
           <Route component={Home} path="/home"/>
           <Route component={Result} path="/result"/>
           <Route path="/history" component={History} />
+          <Route path="/register.success=True" component={RegisterSuccess}/>
+          <Route path="/register.success=False" component={RegisterFail}/>
         </Switch>
       </HashRouter>
     )

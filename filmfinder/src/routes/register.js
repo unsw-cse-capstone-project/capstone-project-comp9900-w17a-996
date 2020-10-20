@@ -32,6 +32,10 @@ class Register extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+      setTimeout(() => {
+      window.location.href = "/#/register.success=True";
+      }, 1000);
   }
 
   render() {
@@ -140,7 +144,7 @@ class Register extends Component {
                   <br />
                   <br />
 
-                  <Link to="/login">
+                  
                     <button
                       className="btn btn-lg btn-info btn-block col-md-3 center-h form-control"
                       onClick={(ev) =>
@@ -159,7 +163,7 @@ class Register extends Component {
                     >
                       Sign up
                     </button>
-                  </Link>
+                  
                 </div>
               </div>
             </div>

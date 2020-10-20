@@ -1,12 +1,18 @@
 import React, { Component } from "react";
+import { message} from 'antd';
 import { Link } from "react-router-dom";
 import "../styles/centerCenter.css";
 
+
 class Login extends Component {
-  state = { message: -1 };
+  state = { message: -1,
+    confirmLoading: false,
+   };
 
   handleClick(inputUsername, inputPassword) {
     console.log(inputUsername, inputPassword);
+
+    this.setState({confirmLoading: true});
     var data = {
       inputUsername: inputUsername
     }
@@ -35,6 +41,7 @@ class Login extends Component {
           // console.log(data)
           this.checkPassword(data.password, inputPassword)
       );
+      this.setState({confirmLoading: false})
       }, 1000);
   }
 
@@ -46,8 +53,11 @@ class Login extends Component {
     }
     else{
       console.log("Reject!");
+      message.error('Incorrect username or password!');
     }
-   }
+   };
+
+   
 
   render() {
     return (
