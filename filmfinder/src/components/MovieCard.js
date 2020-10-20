@@ -30,7 +30,7 @@ class MovieCard extends Component{
               },
         };
 
-        if (this.props.title == ""){
+        if (this.props.title === ""){
             var url_1 = "My perple, My Homeland(2020)";
         }
         else{

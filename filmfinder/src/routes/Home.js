@@ -22,7 +22,7 @@ class Search extends Component {
   }
 
   setUser(name) {
-    if (name == "") {
+    if (name === "") {
       this.setState({ username: "Visitor" });
     } else {
       this.setState({ username: name });
@@ -40,6 +40,10 @@ class Search extends Component {
   goWishList = () => {
     this.props.history.push("/wishList");
   };
+
+  goHistory = () => {
+    this.props.history.push("/history");
+  }
 
   handleSearch(ev, searchContent) {
     const data = {
@@ -87,7 +91,7 @@ class Search extends Component {
             <StyledButton type="primary" onClick={this.goWishList}>
               Wishlist
             </StyledButton>
-            <StyledButton type="primary">History</StyledButton>
+            <StyledButton type="primary" onClick={this.goHistory}>History</StyledButton>
             <StyledButton type="primary" onClick={this.goLogin}>
               Login/Register
             </StyledButton>

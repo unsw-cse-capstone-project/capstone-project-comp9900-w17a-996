@@ -8,6 +8,7 @@ import Login from "./routes/login.js";
 import Profile from "./routes/profile.js";
 import Home from "./routes/Home";
 import Result from "./routes/result";
+import History from './routes/History.js';
 
 class App extends React.Component {
   constructor(props){
@@ -26,6 +27,7 @@ class App extends React.Component {
           <Route component={WishList} path="/wishList"/>
           <Route component={Home} path="/home"/>
           <Route component={Result} path="/result"/>
+          <Route path="/history" component={History} />
         </Switch>
       </HashRouter>
     )
