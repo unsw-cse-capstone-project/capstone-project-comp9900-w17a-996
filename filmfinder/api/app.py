@@ -68,6 +68,7 @@ def login():
                 guid['email'] = result[0][2]
                 guid['password'] = result[0][3]
                 guid['bio'] = result[0][4]
+                print(guid)
                 return result[0][3]
             else:
                 guid['password'] = ''

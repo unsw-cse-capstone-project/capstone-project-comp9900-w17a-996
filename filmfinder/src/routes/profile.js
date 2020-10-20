@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../styles/centerCenter.css";
-import { withRouter } from "react-router-dom";
 
 class Profile extends Component {
 
@@ -25,7 +24,7 @@ class Profile extends Component {
   }
 
   setProfile(r) {
-    if (r.username != "") {
+    if (r.username !== "") {
       this.setState(r);
     }
   }
@@ -40,19 +39,19 @@ class Profile extends Component {
       bio: this.state.bio
     }
 
-    if (nickName != "") {
+    if (nickName !== "") {
       data.nickname = nickName;
     }
 
-    if (email != "") {
+    if (email !== "") {
       data.email = email;
     }
 
-    if (password != "" && password == confirmPassword) {
+    if (password !== "" && password === confirmPassword) {
       data.password = password;
     }
 
-    if (bio != "") {
+    if (bio !== "") {
       data.bio = bio;
     }
 

@@ -151,7 +151,6 @@ class History extends Component {
   }
 
   render() {
-    const { confirmLoading } = this.state;
     return (
       <React.Fragment>
         <Navbar />
