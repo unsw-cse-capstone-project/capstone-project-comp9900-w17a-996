@@ -5,39 +5,47 @@ import { Table, Button, Space, Rate, Modal, Input } from "antd";
 const { Column } = Table;
 const { TextArea } = Input;
 
+
 class History extends Component {
+
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
+
   state = {
+    
     ModalText: "Content of the modal",
     editLoading: false,
     deleteLoading:false,
     data: [
-        {
-          key: "1",
-          movieName: "My People, my hometown",
-          reviewTime: "18:03 01/08/2020",
-          rating: "4",
-          review: "Not bad",
-          editVisible: false,
-          deleteVisible: false,
-        },
-        {
-          key: "2",
-          movieName: "Batman",
-          reviewTime: "23:43 25/07/2020",
-          rating: "3",
-          review: "All good",
-          editVisible: false,
-          deleteVisible: false,
-        },
-        {
-          key: "3",
-          movieName: "Jonny English",
-          reviewTime: "20:43 15/07/2020",
-          rating: "5",
-          review: "Funny one",
-          editVisible: false,
-          deleteVisible: false,
-        },
+        // {
+        //   key: "1",
+        //   movieName: "My People, my hometown",
+        //   reviewTime: "18:03 01/08/2020",
+        //   rating: "4",
+        //   review: "Not bad",
+        //   editVisible: false,
+        //   deleteVisible: false,
+        // },
+        // {
+        //   key: "2",
+        //   movieName: "Batman",
+        //   reviewTime: "23:43 25/07/2020",
+        //   rating: "3",
+        //   review: "All good",
+        //   editVisible: false,
+        //   deleteVisible: false,
+        // },
+        // {
+        //   key: "3",
+        //   movieName: "Jonny English",
+        //   reviewTime: "20:43 15/07/2020",
+        //   rating: "5",
+        //   review: "Funny one",
+        //   editVisible: false,
+        //   deleteVisible: false,
+        // },
       ],
   };
 
@@ -68,10 +76,37 @@ class History extends Component {
           }
   };
 
-  handleEditOk(id) {
+  handleEditOk(ev, id) {
+    console.log(this.myRef.current.state.value);
+    
+
     for (let i = 0; i < this.state.data.length; i++){
       // console.log(this.state.data[i].key);
         if (this.state.data[i].key === id){
+          
+          console.log(this.state.data[i].movieName);
+
+          const data = {
+            "editedReview": this.myRef.current.state.value,
+            "movieTitle": this.state.data[i].movieName,
+            "operator": 'e'
+          }
+      
+          fetch("/history", {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => console.log(response))
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
 
           this.setState({
             ModalText: "The modal will be closed after two seconds",
@@ -96,6 +131,29 @@ class History extends Component {
     for (let i = 0; i < this.state.data.length; i++){
       // console.log(this.state.data[i].key);
         if (this.state.data[i].key === id){
+          
+          console.log(this.state.data[i].movieName);
+          
+          const data = {
+            "movieTitle": this.state.data[i].movieName,
+            "operator": 'd'
+          }
+          
+          fetch("/history", {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => console.log(response))
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
 
           this.setState({
             ModalText: "The modal will be closed after two seconds",
@@ -146,11 +204,12 @@ class History extends Component {
     fetch("/history")
       .then((r) => r.json())
       .then((r) => {
-        console.log(r);
+        this.setState(r);
       });
   }
 
   render() {
+    
     return (
       <React.Fragment>
         <Navbar />
@@ -182,16 +241,16 @@ class History extends Component {
               key="action"
               render={(text, record) => (
                 <Space size="middle">
-                  {/* <h3>传值为{record.key}</h3> */}
+                  
                   <Modal
                     title="Edit review"
                     visible={record.editVisible}
-                    onOk={() => this.handleEditOk(record.key)}
+                    onOk={(ev) => this.handleEditOk(ev, record.key)}
                     confirmLoading={this.state.editLoading}
                     onCancel={() => this.handleEditCancel(record.key)}
                   >
                       <h1>{record.key}</h1>
-                    <TextArea rows={4} defaultValue={record.review} />
+                    <TextArea rows={4} defaultValue={record.review} ref={this.myRef} />
                   </Modal>
 
                   <Modal

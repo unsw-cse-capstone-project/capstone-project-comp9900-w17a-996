@@ -180,7 +180,7 @@ def movieDetail():
 @app.route('/history', methods=['GET', 'POST'])
 def history():
     if request.method == 'POST':
-        return "-"
+        return request.get_json()
     else:
         review_res = []
         db = connect_db()
@@ -193,7 +193,7 @@ def history():
             for review in reviews:
                 item = {"movieName": review[1], 
                         "reviewTime": review[4], 
-                        "raing": review[3],
+                        "rating": review[3],
                         "review": review[2],
                         "editVisible": False,
                         "deleteVisible": False}
