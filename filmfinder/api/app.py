@@ -177,5 +177,39 @@ def movieDetail():
     else:
         return movie_detail_res
 
+@app.route('/history', methods=['GET', 'POST'])
+def history():
+    if request.method == 'POST':
+        return "-"
+    else:
+        review_res = []
+        db = connect_db()
+        c = db.cursor()
+        review_search_sql = "SELECT  * FROM REVIEW WHERE USER = ?"
+        user = guid["username"]
+        try:
+            
+            reviews = c.execute(review_search_sql, (user,)).fetchall()
+            for review in reviews:
+                item = {"movieName": review[1], 
+                        "reviewTime": review[4], 
+                        "raing": review[3],
+                        "review": review[2],
+                        "editVisible": False,
+                        "deleteVisible": False}
+                
+                review_res.append(item)
+        except sqlite3.OperationalError:
+            pass
+
+        # sort by time
+        review_res = sorted(review_res, key=lambda x: x["reviewTime"], reverse=True)
+
+        # add key:counter
+        counter = 1
+        for review in review_res:
+            review[key] = str(counter)
+            counter += 1
+        return review_res
 if __name__ == "__main__":
     app.run(debug=True)
