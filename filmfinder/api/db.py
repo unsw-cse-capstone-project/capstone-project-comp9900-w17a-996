@@ -1,15 +1,16 @@
 import sqlite3
-
+import datetime, time
 conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
 c = conn.cursor()
 
-# content = c.execute("SELECT * FROM USER")
-# for i in content:
-#     print(i)
+"""user"""
+print("User:")
+content = c.execute("SELECT * FROM USER")
+for i in content:
+    print(i)
 
 
-# conn1 = sqlite3.connect("movie.db", check_same_thread=False)
-# c1 = conn1.cursor()
+"""movie part"""
 # c.execute("DROP TABLE MOVIE")
 # c.execute(
 #     "CREATE TABLE MOVIE (TITLE TEXT, DIRECTORS TEXT, ACTORS TEXT, GENRE TEXT, LANGUAGE TEXT, RELEASE_DATE TEXT)"
@@ -25,7 +26,23 @@ c = conn.cursor()
 # c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
 #           ("Tales from the Hood 3", "Rusty Cundieff", "Tony Todd, Lynn Whitfield", "Horror", "English", "2020-10-06"))
 # conn.commit()
+print("Movie:")
+movies = c.execute("SELECT * FROM MOVIE")
+for i in movies:
+    print(i)
 
-content = c.execute("SELECT * FROM USER")
-for i in content:
+
+"""review part"""
+c.execute("DROP TABLE REVIEW")
+c.execute(
+    "CREATE TABLE REVIEW (USER TEXT, MOVIE TEXT, COMMENT TEXT, RATE TEXT, TIME TEXT)"
+)
+c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)",
+          ("Kong", "Clouds", "Clouds comment from Kong", "4", str(datetime.datetime.now())[:19]))
+c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)",
+          ("Kong", "Tales from the Hood 3", "Tales comment from Kong", "3", str(datetime.datetime.now())[:19]))
+conn.commit()
+print("Review:")
+reviews = c.execute("SELECT * FROM REVIEW")
+for i in movies:
     print(i)
