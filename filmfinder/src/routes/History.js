@@ -146,7 +146,7 @@ class History extends Component {
     fetch("/history")
       .then((r) => r.json())
       .then((r) => {
-        this.setUser(r.username);
+        console.log(r);
       });
   }
 

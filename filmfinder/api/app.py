@@ -208,8 +208,8 @@ def history():
         # add key:counter
         counter = 1
         for review in review_res:
-            review[key] = str(counter)
+            review["key"] = str(counter)
             counter += 1
-        return review_res
+        return {"data": review_res}
 if __name__ == "__main__":
     app.run(debug=True)
