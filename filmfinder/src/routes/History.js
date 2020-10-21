@@ -259,7 +259,7 @@ class History extends Component {
                     confirmLoading={this.state.editLoading}
                     onCancel={() => this.handleEditCancel(record.key)}
                   >
-                      <h1>{record.key}</h1>
+                      {/* <h1>{record.key}</h1> */}
                     <TextArea rows={4} defaultValue={record.review} ref={this.myRef} />
                   </Modal>
 
@@ -270,12 +270,12 @@ class History extends Component {
                     confirmLoading={this.state.deleteLoading}
                     onCancel={() => this.handleDeleteCancel(record.key)}
                   >
-                      <h1>{record.key}</h1>
+                      {/* <h1>{record.key}</h1> */}
                     <p>Are you sure to delete?</p>
                   </Modal>
 
                   <Button type="primary" onClick={() => this.showEditModal(record.key)}>
-                    测试Edit~
+                    Edit
                   </Button>
 
                     
