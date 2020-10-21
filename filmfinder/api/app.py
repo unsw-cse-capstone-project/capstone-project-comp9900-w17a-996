@@ -179,14 +179,32 @@ def movieDetail():
 
 @app.route('/history', methods=['GET', 'POST'])
 def history():
+    db = connect_db()
+    c = db.cursor()
+    user = guid["username"]
     if request.method == 'POST':
+        data = request.get_json()
+        movie = data["movieTitle"]
+        # edit
+        if data["operator"] == "e":
+            edit_review_sql = "UPDATE REVIEW SET COMMENT = ? WHERE USER = ? AND MOVIE = ?"
+            c.execute(edit_review_sql, (data["editedReview"], user, movie, ))
+            db.commit()
+        # delete
+        else:
+            del_review_sql = "DELETE FROM REVIEW WHERE USER = ? AND MOVIE = ?"
+            c.execute(del_review_sql, (user, movie, ))
+            db.commit()
+        # test code
+        # query = "SELECT * FROM REVIEW"
+        # content = c.execute(query).fetchall()
+        # print(content)
         return request.get_json()
     else:
         review_res = []
-        db = connect_db()
-        c = db.cursor()
+
         review_search_sql = "SELECT  * FROM REVIEW WHERE USER = ?"
-        user = guid["username"]
+        
         try:
             
             reviews = c.execute(review_search_sql, (user,)).fetchall()
