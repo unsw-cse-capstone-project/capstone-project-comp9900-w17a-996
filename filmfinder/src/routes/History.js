@@ -118,10 +118,11 @@ class History extends Component {
           refData.editLoading = false;
           refData.data[i].editVisible = false;
           this.setState(refData);
+          this.renderAgain();
           }, 1000);
 
           
-          // this.state.data[i].editVisible = true;
+          //this.state.data[i].editVisible = true;
           };
         }
     
@@ -133,7 +134,7 @@ class History extends Component {
         if (this.state.data[i].key === id){
           
           console.log(this.state.data[i].movieName);
-          
+
           const data = {
             "movieTitle": this.state.data[i].movieName,
             "operator": 'd'
@@ -165,6 +166,7 @@ class History extends Component {
           refData.deleteLoading = false;
           refData.data[i].deleteVisible = false;
           this.setState(refData);
+          this.renderAgain();
           }, 1000);
 
           
@@ -201,6 +203,14 @@ class History extends Component {
   };
 
   componentWillMount() {
+    fetch("/history")
+      .then((r) => r.json())
+      .then((r) => {
+        this.setState(r);
+      });
+  }
+
+  renderAgain() {
     fetch("/history")
       .then((r) => r.json())
       .then((r) => {
