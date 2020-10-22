@@ -1,39 +1,41 @@
 import React from 'react';
 import {Switch, Route, HashRouter} from 'react-router-dom';
-
 import './App.css';
-import MovieDetial from './routes/MovieDetail';
+import MovieDetail from './routes/MovieDetail';
 import WishList from './routes/WishList';
+import Register from "./routes/register.js";
+import Login from "./routes/login.js";
+import Profile from "./routes/profile.js";
+import Home from "./routes/Home";
+import Result from "./routes/result";
+import History from './routes/History.js';
+import RegisterSuccess from "./routes/registerSuccess.js";
+import RegisterFail from "./routes/registerFail.js";
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
   }
+
   render(){
     return(
       <HashRouter>
         <Switch>
-          <Route component={MovieDetial} path="/movie"/>
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile" component={Profile} />
+          <Route component={MovieDetail} path="/movie"/>
           <Route component={WishList} path="/wishList"/>
+          <Route component={Home} path="/home"/>
+          <Route component={Result} path="/result"/>
+          <Route path="/history" component={History} />
+          <Route path="/register.success=True" component={RegisterSuccess}/>
+          <Route path="/register.success=False" component={RegisterFail}/>
         </Switch>
       </HashRouter>
     )
   }
-  /*const [initialData, setInitialData] = useState([{}])
-
-  useEffect(() => {
-    fetch('/app').then(
-      response => response.json()
-    ).then(data => setInitialData(data))
-  });
-  return (
-    <div className="App">
-      <h1>{initialData.title}</h1>
-      <br/>
-      <h2>{initialData.message}</h2>
-    </div>
-  );*/
 }
 
 export default App;

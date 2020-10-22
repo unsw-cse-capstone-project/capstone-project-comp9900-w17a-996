@@ -10,8 +10,10 @@ import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import RatingResult from '../components/RatingResult';
 import CommentCard from '../components/CommentCard';
+import AddComment from '../components/AddComment';
 import RecommendList from '../components/RecommendList';
 import { WindowsOutlined } from '@ant-design/icons';
+import NavBar from "../components/NavBar";
 const { Header, Footer, Sider, Content} = Layout;
 const addToWishlist = () =>{
     console.log('123');
@@ -22,30 +24,46 @@ class MovieDetail extends Component{
         super(props);
         this.state = {
             title: "",
+            director: "",
+            cast: "",
             genre: "",
-            releaseDate: "",
-            cost: "",
-            rating: "",
-            reviewers: "",
+            language: "",
+            date: "",
+            rating: "3",
             user: {
                 userName: "",
-                rating: "",
-                comment: ""
+                rating: "4",
+                comment: "Nice movie, worth to Watch!"
             }
         };
     }
+
     componentDidMount(){
-        fetch('/app')
-            .then(r => r.json())
+        fetch('/movieDetail')
             .then(r => {
-                this.setState(r);
+                console.log(r);
+                return r.json();
+ 
+            })
+            .then(r => {
+                this.setState(r.movie);
+                console.log(r);
             })
     }
+
+    // componentDidMount(){
+    //     fetch('/app')
+    //         .then(r => r.json())
+    //         .then(r => {
+    //             this.setState(r);
+    //         })
+    // }
     render(){
         return (
             <div>
                 <Layout className="layout">
-                    <Header className="header">header</Header>
+                    <NavBar></NavBar>
+                    {/* <Header className="header">header</Header> */}
                         <Layout className="mainContent">     
                             <Content className="wrapper" style={{ padding: '0 150px', marginTop: 64 }}>
                                 <Layout className="detailmain">
@@ -65,6 +83,7 @@ class MovieDetail extends Component{
                                                   <CommentCard {...this.state.user}/>
                                                   <CommentCard {...this.state.user}/>
                                                   <CommentCard {...this.state.user}/>
+                                                  <AddComment/>
                                               </div>
                                           </div>
                                     </Content>

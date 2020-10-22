@@ -1,15 +1,18 @@
 import React, { ReactDOM, MountNode, createElement, useState} from 'react';
 import "../styles/moviecard.css";
 import 'bootstrap/dist/css/bootstrap.css';
-import { Comment, Tooltip, Avatar} from 'antd';
+import { Comment, Tooltip, Avatar,Tag} from 'antd';
 import moment from 'moment';
 import RatingResult from './RatingResult';
-import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import AddReply from '../components/AddReply';
+import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, MessageOutlined} from '@ant-design/icons';
+
 const CommentCard = (props) => {
 
         const [likes, setLikes] = useState(0);
         const [dislikes, setDislikes] = useState(0);
         const [action, setAction] = useState(null);
+        const [reply, setReply] = useState(false);
 
         const like = () => {
             setLikes(1);
@@ -22,6 +25,15 @@ const CommentCard = (props) => {
             setDislikes(1);
             setAction('disliked');
         };
+        const addReply = () => {
+            console.log(reply);
+            if(reply === true){
+                setReply(false);
+            }
+            else{
+                setReply(true);
+            }
+        }
         const actions = [
             <Tooltip key="comment-basic-like" title="Like">
             <span onClick={like}>
@@ -35,7 +47,7 @@ const CommentCard = (props) => {
                 <span className="comment-action">{dislikes}</span>
             </span>
             </Tooltip>,
-            <span key="comment-basic-reply-to">Reply to</span>,
+            <span key="comment-basic-reply-to" onClick={addReply}>Reply to</span>,
         ];
 
         return (
@@ -49,9 +61,12 @@ const CommentCard = (props) => {
                 />
             }
             content={
-                    <p>
-                        {props.comment}
-                    </p>
+                    <div id='toReply'>
+                        <p>
+                            {props.comment}
+                        </p>
+                        {createElement(reply === true ? AddReply : MessageOutlined)}
+                    </div>
             }
             datetime={
                 <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
@@ -59,6 +74,7 @@ const CommentCard = (props) => {
                 </Tooltip>
             }
             />
+            
         );
     
     

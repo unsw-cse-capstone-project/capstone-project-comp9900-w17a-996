@@ -3,7 +3,7 @@ import "../styles/wishList.css";
 import "../styles/movie.css";
 import { Layout, Button, Divider, Menu, Breadcrumb} from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import poster from '../poster.jpg';
+import poster from '../My perple, My Homeland(2020).jpg';
 import recom1 from '../rec1.jpg';
 import recom2 from '../rec2.jpg';
 import recom3 from '../rec3.jpg';
@@ -14,6 +14,7 @@ import recom7 from '../rec7.jpg';
 import recom8 from '../rec8.jpg';
 import {Image} from 'antd';
 import { getKeyThenIncreaseKey } from 'antd/lib/message';
+import NavBar from "../components/NavBar";
 const { Header, Footer, Sider, Content} = Layout;
 class WishList extends Component{
     constructor(props){
@@ -119,8 +120,10 @@ class WishList extends Component{
         )})
         return(
             <div>
+                
                 <Layout className="layout">
-                    <Header>header</Header>
+                <NavBar></NavBar>
+                    {/* <Header>header</Header> */}
                     <Layout className="wishMainLayout">
                         <Sider className="wishSider">
                             <Menu theme="dark" mode='inline'>

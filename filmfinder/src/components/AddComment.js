@@ -1,5 +1,8 @@
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
+import React, { Component } from 'react';
+import CommentCard from '../components/CommentCard';
+import Rating from '../components/Rating';
 
 const { TextArea } = Input;
 
@@ -25,11 +28,12 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-class Com extends React.Component {
+class AddComment extends Component {
   state = {
     comments: [],
     submitting: false,
     value: '',
+    rating: 0
   };
 
   handleSubmit = () => {
@@ -42,14 +46,17 @@ class Com extends React.Component {
     });
 
     setTimeout(() => {
+      //console.log(this.state.rating);
       this.setState({
         submitting: false,
         value: '',
+        rating: 0,
         comments: [
           {
-            author: 'Han Solo',
+            userName: 'Han Solo',
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: <p>{this.state.value}</p>,
+            comment: this.state.value,
+            rating: this.state.rating,
             datetime: moment().fromNow(),
           },
           ...this.state.comments,
@@ -58,37 +65,45 @@ class Com extends React.Component {
     }, 1000);
   };
 
-  handleChange = e => {
-    this.setState({
-      value: e.target.value,
-    });
-  };
+    handleChange = e => {
+      this.setState({
+        value: e.target.value,
+      });
+    };
 
-  render() {
-    const { comments, submitting, value } = this.state;
+    getRating = (rates) => {
+      //console.log(rates.state.value);
+      this.setState({
+           rating: rates.state.value
+      })
+    }
 
-    return (
-      <>
-        {comments.length > 0 && <CommentList comments={comments} />}
-        <Comment
-          avatar={
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              alt="Han Solo"
-            />
-          }
-          content={
-            <Editor
-              onChange={this.handleChange}
-              onSubmit={this.handleSubmit}
-              submitting={submitting}
-              value={value}
-            />
-          }
-        />
-      </>
-    );
-  }
+    render() {
+      const { comments, submitting, value,rating} = this.state;
+      return (
+        <>
+          {comments.length > 0 && <CommentCard {...this.state.comments[0]} />}
+          <Rating parent={ this }/>
+          <Comment
+            avatar={
+              <Avatar
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                alt="Han Solo"
+              />
+            
+            }
+            content={
+              <Editor
+                onChange={this.handleChange}
+                onSubmit={this.handleSubmit}
+                submitting={submitting}
+                value={value}
+              />
+            }
+          />
+        </>
+      );
+    }
 }
 
-ReactDOM.render(<Com />, mountNode);
+export default AddComment;
