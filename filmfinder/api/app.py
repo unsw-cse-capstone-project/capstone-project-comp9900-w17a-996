@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify
 import sqlite3
 import os.path
 import time
+import datetime
 
 app = Flask(__name__)
 
@@ -237,7 +238,17 @@ def checkReview():
     c = db.cursor()
     # user = guid["username"]
     if request.method == 'POST':
-        
+        data = request.get_json()
+        movieTitle = data['movieTitle']
+        rating = data['rating']
+        review = data['review']
+        userName = guid['username']
+        time = str(datetime.datetime.now())[:19]
+
+        c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)", 
+        (userName, movieTitle,review,rating,time))
+        db.commit()
+
         return request.get_json()
     else:
         review_res = []

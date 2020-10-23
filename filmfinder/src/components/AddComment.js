@@ -36,7 +36,7 @@ class AddComment extends Component {
     rating: 0
   };
 
-  handleSubmit = () => {
+  handleSubmit(movieTitle) {
     if (!this.state.value) {
       return;
     }
@@ -46,27 +46,56 @@ class AddComment extends Component {
     });
 
     setTimeout(() => {
-      //console.log(this.state.rating);
+      console.log(this.state);
+      
+
+      const data = {
+        movieTitle: movieTitle,
+        rating: this.state.rating,
+        review: this.state.value,
+      }
+
+      console.log(data);
+
       this.setState({
         submitting: false,
         value: '',
         rating: 0,
-        comments: [
-          {
-            userName: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            comment: this.state.value,
-            rating: this.state.rating,
-            datetime: moment().fromNow(),
-          },
-          ...this.state.comments,
-        ],
+        // comments: [
+        //   {
+        //     userName: 'Han Solo',
+        //     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        //     comment: this.state.value,
+        //     rating: this.state.rating,
+        //     datetime: moment().fromNow(),
+        //   },
+        //   ...this.state.comments,
+        // ],
       });
+
+      fetch("/checkReview", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => console.log(response))
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }, 1000);
+
+    window.location.href = "/#/movie?title=" + movieTitle;
   };
 
     handleChange = e => {
       this.setState({
+        title: e.target.title,
         value: e.target.value,
       });
     };
@@ -79,11 +108,13 @@ class AddComment extends Component {
     }
 
     render() {
+      const {title} = this.props;
       const { comments, submitting, value,rating} = this.state;
       return (
         <>
           {comments.length > 0 && <CommentCard {...this.state.comments[0]} />}
           <Rating parent={ this }/>
+      {/* <h3>Title is {this.props.title}</h3> */}
           <Comment
             avatar={
               <Avatar
@@ -95,7 +126,7 @@ class AddComment extends Component {
             content={
               <Editor
                 onChange={this.handleChange}
-                onSubmit={this.handleSubmit}
+                onSubmit={() => this.handleSubmit(title)}
                 submitting={submitting}
                 value={value}
               />
