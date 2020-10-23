@@ -84,15 +84,15 @@ class MovieDetail extends Component {
   };
 
   componentDidUpdate() {
-    fetch("/checkReview")
-    .then((r) => {
-      console.log(r);
-      return r.json();
-    })
-    .then((r) => {
-      this.setState(r);
-      console.log(r);
-    });
+    // fetch("/checkReview")
+    // .then((r) => {
+    //   console.log(r);
+    //   return r.json();
+    // })
+    // .then((r) => {
+    //   this.setState(r);
+    //   console.log(r);
+    // });
   }
 
   componentDidMount() {

@@ -4,6 +4,7 @@ import sqlite3
 import os.path
 import time
 import datetime
+import json
 
 app = Flask(__name__)
 
@@ -42,9 +43,11 @@ def api():
         # email = user_data["email"]
         # password = user_data["password"]
         # bio = user_data["bio"]
+        wishlists = {'Absurdist':{}, 'Action':{}, 'Adventure':{},'Comedy':{}, 'Crime':{},'Drama':{},'Fantasy':{},'Historical':{},'Horror':{},'Science fiction':{}}
+        wishlists = json.dumps(wishlists)
         c.execute(
             "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)", 
-            (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"], "")
+            (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"], wishlists)
         )
         db.commit()
         return request.get_json()
@@ -293,6 +296,39 @@ def checkReview():
             counter += 1
         print(review_res)
         return {"user": review_res}
+
+"""movie page, add to wish list function, add to db"""
+@app.route('/addtoWishList', methods=['POST'])
+def addtoWishList():
+    db = connect_db()
+    c = db.cursor()
+    userName = guid['username']
+    if request.method == 'POST':
+        data = request.get_json()
+        movie = data["title"]
+        wishlists = data["type"]
+        
+        search_wishlist_sql = "SELECT WISHLIST FROM USER WHERE USERNAME == ?"
+        
+        str_json = c.execute(search_wishlist_sql, (userName,)).fetchall()[0]
+        print("this is a str json:", str_json[0], type(str_json[0]))
+
+        dic_json = json.loads(str_json[0])
+
+        for wishlist in wishlists:
+            dic_json[wishlist][movie] = str(datetime.datetime.now())[:19]
+        
+        new_str_json = json.dumps(dic_json)
+
+        update_sql = "UPDATE USER SET WISHLIST = ? WHERE USERNAME = ?"
+
+        c.execute(update_sql, (new_str_json, userName,))
+
+        db.commit()
+        return "-"
+
+    else:
+        return "-"
 
 if __name__ == "__main__":
     app.run(debug=True)

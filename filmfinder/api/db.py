@@ -7,9 +7,9 @@ c = conn.cursor()
 
 """user"""
 # c.execute("DROP TABLE USER")
-c.execute(
-                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT)"
-            )
+# c.execute(
+#                 "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT)"
+#             )
 c.execute(
             "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)",
             ("Kong", "wukong", "12345@qq.com", "12345", "this is a test bio", "")
