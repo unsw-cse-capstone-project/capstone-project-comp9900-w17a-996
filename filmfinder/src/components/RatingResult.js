@@ -6,6 +6,7 @@ class RatingResult extends React.Component{
         super(props);
         this.state={};
     }
+    
     render(){
         let rating = parseFloat(this.props.rating);
         console.log(rating);

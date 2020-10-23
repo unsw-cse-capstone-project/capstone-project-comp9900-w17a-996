@@ -1,8 +1,7 @@
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
 import React, { Component } from 'react';
-import CommentCard from '../components/CommentCard';
-import Rating from '../components/Rating';
+
 
 const { TextArea } = Input;
 
@@ -28,12 +27,11 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-class AddComment extends Component {
+class AddReply extends Component {
   state = {
     comments: [],
     submitting: false,
     value: '',
-    rating: 0
   };
 
   handleSubmit = () => {
@@ -50,13 +48,11 @@ class AddComment extends Component {
       this.setState({
         submitting: false,
         value: '',
-        rating: 0,
         comments: [
           {
-            userName: 'Han Solo',
+            author: 'Han Solo',
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            comment: this.state.value,
-            rating: this.state.rating,
+            content: <p>{this.state.value}</p>,
             datetime: moment().fromNow(),
           },
           ...this.state.comments,
@@ -71,19 +67,12 @@ class AddComment extends Component {
       });
     };
 
-    getRating = (rates) => {
-      //console.log(rates.state.value);
-      this.setState({
-           rating: rates.state.value
-      })
-    }
 
     render() {
-      const { comments, submitting, value,rating} = this.state;
+      const { comments, submitting, value} = this.state;
       return (
         <>
-          {comments.length > 0 && <CommentCard {...this.state.comments[0]} />}
-          <Rating parent={ this }/>
+          {comments.length > 0 && <CommentList comments={comments} />}
           <Comment
             avatar={
               <Avatar
@@ -106,4 +95,4 @@ class AddComment extends Component {
     }
 }
 
-export default AddComment;
+export default AddReply;

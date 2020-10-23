@@ -10,6 +10,7 @@ import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import RatingResult from '../components/RatingResult';
 import CommentCard from '../components/CommentCard';
+import AddComment from '../components/AddComment';
 import RecommendList from '../components/RecommendList';
 import { WindowsOutlined } from '@ant-design/icons';
 import NavBar from "../components/NavBar";
@@ -39,10 +40,14 @@ class MovieDetail extends Component{
 
     componentDidMount(){
         fetch('/movieDetail')
-            .then(r => r.json())
+            .then(r => {
+                console.log(r);
+                return r.json();
+ 
+            })
             .then(r => {
                 this.setState(r.movie);
-                // console.log(r);
+                console.log(r);
             })
     }
 
@@ -78,6 +83,7 @@ class MovieDetail extends Component{
                                                   <CommentCard {...this.state.user}/>
                                                   <CommentCard {...this.state.user}/>
                                                   <CommentCard {...this.state.user}/>
+                                                  <AddComment/>
                                               </div>
                                           </div>
                                     </Content>
