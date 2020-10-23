@@ -20,104 +20,144 @@ class WishList extends Component{
     constructor(props){
         super(props);
         this.state={
-            movieList:[poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8],
-            genre: 'genre'
+            Absurdist: [], 
+            Action: [],
+            Adventure: ['Clouds'],
+            Comedy: [],
+            Crime: [],
+            Drama: [],
+            Fantasy: [],
+            Historical: [],
+            Horror: [],
+            "Science\xa0fiction": [],
+            movieList: [],
+            genre: 'genre',
         }
     }
+
+    componentDidMount(){
+        fetch("/wishlist")
+      .then((r) => r.json())
+      .then((r) => {
+          console.log(r);
+        this.setState(r);
+      })
+    }
+
     handleClickByDelete(index){
         let arr = this.state.movieList;
-        arr.splice(index,1);
+        arr.splice(index, 1);
         this.setState({
             movieList: this.state.movieList
         })
     }
+
     menuChangeByClick(e){
         let index = Number(e.key);
         console.log(index);
-        let mList = this.state.movieList;
-        mList.splice(index,1);
+
+        // let mList = this.state;
+        // mList.splice(index,1);
+        
         if (index === 1){
-            let newList = [recom3]
+            let newList = this.state.Absurdist;
             this.setState({
                 movieList: newList,
                 genre: 'Absurdist'
             })
         }else if (index === 2){
-            let newList = [recom1,recom2]
+            let newList = this.state.Action;
             this.setState({
                 movieList: newList,
                 genre: 'Action'
             })
         }
         else if (index === 3){
-            let newList = [recom5,recom6]
+            let newList = this.state.Adventure;
             this.setState({
                 movieList: newList,
                 genre: 'Adventure'
             })
         }
         else if (index === 4){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state.Comedy;
             this.setState({
                 movieList: newList,
                 genre: 'Comedy'
             })
         }
         else if (index === 5){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state.Crime;
             this.setState({
                 movieList: newList,
                 genre: 'Crime'
             })
         }
         else if (index === 6){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state.Drama;
             this.setState({
                 movieList: newList,
                 genre: 'Drama'
             })
         }
         else if (index === 7){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state.Fantasy;
             this.setState({
                 movieList: newList,
                 genre: 'Fantasy'
             })
         }
         else if (index === 8){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state.Historical;
             this.setState({
                 movieList: newList,
                 genre: 'Historical'
             })
         }
         else if (index === 9){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state.Horror;
             this.setState({
                 movieList: newList,
                 genre: 'Horror'
             })
         }
         else if (index === 10){
-            let newList = [poster,recom1,recom2,recom3,recom4,recom5,recom6,recom7,recom8]
+            let newList = this.state["Science fiction"];
             this.setState({
                 movieList: newList,
                 genre: 'Science fiction'
             })
         }
-
     }
+
+    gotoDetail(title){
+        window.location.href = "/#/movie?title=" + title;
+    }
+
     render(){
-        const movies = this.state.movieList.map((k,i) => {
-            return(<div className="movieItem" key={i}>
-                <div className="movie">
-                    <div className="wishmage">
-                        <Image width='100%' height="100%" src={k} className="wishPoster"/>
+        const movieList = this.state.movieList;
+        const movies = movieList.map((movie) => 
+            {
+                return (
+                    <div onClick={() => (this.gotoDetail(movie))}>
+                        <h5>{movie}</h5>
+                        <Button type="primary">Delete</Button>
                     </div>
-                    <Button type="primary" onClick={this.handleClickByDelete.bind(this,i)}>delete</Button>
-                </div>
-            </div>
-        )})
+                )
+            }
+        //     return(<div className="movieItem" key={i}>
+        //         <div className="movie">
+                        
+        //             {/* <div className="wishmage">
+        //                 <Image width='100%' height="100%" src={k} className="wishPoster"/>
+        //             </div>
+        //             <Button type="primary" onClick={this.handleClickByDelete.bind(this,i)}>delete</Button> */}
+        //         </div>
+        //     </div>
+        // )})
+    )
+
+
         return(
             <div>
                 

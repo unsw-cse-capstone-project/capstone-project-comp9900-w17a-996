@@ -330,5 +330,26 @@ def addtoWishList():
     else:
         return "-"
 
+"""wishlist page, send wishlists data to front-end"""
+@app.route('/wishlist', methods=['POST', 'GET'])
+def wishlist():
+    db = connect_db()
+    c = db.cursor()
+    userName = guid['username']
+    if request.method == "POST":
+        return "-"
+    else:
+        pass
+        get_list_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
+
+        str_json = c.execute(get_list_sql, (userName,)).fetchall()[0][0]
+        dict_json = json.loads(str_json)
+
+        res = {}
+        for k, v in dict_json.items():
+            res[k] = list(v.keys())
+        print(res.values())
+        return res
+
 if __name__ == "__main__":
     app.run(debug=True)
