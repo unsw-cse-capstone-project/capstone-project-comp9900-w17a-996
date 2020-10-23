@@ -15,7 +15,6 @@ class History extends Component {
   }
 
   state = {
-    
     ModalText: "Content of the modal",
     editLoading: false,
     deleteLoading:false,
@@ -122,11 +121,10 @@ class History extends Component {
           refData.data[i].editVisible = false;
           this.setState(refData);
           this.renderAgain();
-          console.log(this.state);
-          
+          // window.location.href = "/#/movie?title=" + title;
           }, 1000);
 
-          
+          console.log(this.state);
           //this.state.data[i].editVisible = true;
           };
         }
@@ -227,6 +225,7 @@ class History extends Component {
     fetch("/history")
       .then((r) => r.json())
       .then((r) => {
+        console.log(r);
         this.setState(r);
       });
   }
@@ -253,9 +252,19 @@ class History extends Component {
               dataIndex="rating"
               key="rating"
               render={(text, record) => (
-                <Rate disabled defaultValue={record.rating} />
+                <Rate defaultValue={record.rating} value={record.rating}/>
               )}
             />
+
+            {/* <Column
+              title="Rating"
+              dataIndex="rating"
+              key="rating"      
+              render={(text, record) => (
+              <h1>{record.rating}</h1>
+              )}
+            /> */}
+            
             <Column title="Review Content" dataIndex="review" key="review" />
 
             <Column
