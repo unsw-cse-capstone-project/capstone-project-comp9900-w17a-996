@@ -30,13 +30,10 @@ class MovieDetail extends Component{
             language: "",
             date: "",
             rating: "3",
-            user: {
-                userName: "",
-                rating: "4",
-                comment: "Nice movie, worth to Watch!"
+            user: [],
             }
         };
-    }
+    
 
     componentDidMount(){
         fetch('/movieDetail')
@@ -48,7 +45,18 @@ class MovieDetail extends Component{
             .then(r => {
                 this.setState(r.movie);
                 console.log(r);
+            });
+
+        fetch('/checkReview')
+            .then(r => {
+                console.log(r);
+                return r.json();
+ 
             })
+            .then(r => {
+                this.setState(r);
+                console.log(r);
+            });
     }
 
     // componentDidMount(){
@@ -59,6 +67,8 @@ class MovieDetail extends Component{
     //         })
     // }
     render(){
+        const comments = this.state.user;
+        const commentItems = comments.map((commentItem) => <CommentCard {...commentItem}/>);
         return (
             <div>
                 <Layout className="layout">
@@ -75,14 +85,7 @@ class MovieDetail extends Component{
                                               <Divider orientation="left">Comments</Divider>
                                               <div className="comments">
                                                   <br />
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
-                                                  <CommentCard {...this.state.user}/>
+                                                        <ul>{commentItems}</ul>
                                                   <AddComment/>
                                               </div>
                                           </div>

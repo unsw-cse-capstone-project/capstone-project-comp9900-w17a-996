@@ -40,6 +40,8 @@ c.execute(
 c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)",
           ("Kong", "Clouds", "Clouds comment from Kong", "4", str(datetime.datetime.now())[:19]))
 c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)",
+          ("Binbin", "Clouds", "Clouds comment from Binbin", "2", "2020-10-21 22:10:52"))
+c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)",
           ("Kong", "Tales from the Hood 3", "Tales comment from Kong", "3", "2020-10-21 23:13:56"))
 conn.commit()
 print("Review:")

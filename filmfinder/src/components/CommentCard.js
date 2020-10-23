@@ -53,7 +53,7 @@ const CommentCard = (props) => {
         return (
             <Comment
             actions={actions}
-            author={<div><a>kaqia</a> <RatingResult rating={props.rating}/></div>}
+            author={<div><a>{props.userName}</a> <RatingResult rating={props.rating}/></div>}
             avatar={
                 <Avatar
                 src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -63,14 +63,14 @@ const CommentCard = (props) => {
             content={
                     <div id='toReply'>
                         <p>
-                            {props.comment}
+                            {props.review}
                         </p>
                         {createElement(reply === true ? AddReply : MessageOutlined)}
                     </div>
             }
             datetime={
                 <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().fromNow()}</span>
+                <span>{props.reviewTime}</span>
                 </Tooltip>
             }
             />

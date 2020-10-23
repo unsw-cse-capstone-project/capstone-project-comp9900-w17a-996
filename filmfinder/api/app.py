@@ -165,14 +165,14 @@ def movieDetail():
         db = connect_db()
         c = db.cursor()
         details = c.execute("SELECT * FROM MOVIE WHERE TITLE == ?", (title,)).fetchall()
-        print("this is detail: ", details)
+        # print("this is detail: ", details)
         movie_detail_res["movie"]["title"] = details[0][0]
         movie_detail_res["movie"]["director"] = details[0][1]
         movie_detail_res["movie"]["cast"] = details[0][2]
         movie_detail_res["movie"]["genre"] = details[0][3]
         movie_detail_res["movie"]["language"] = details[0][4]
         movie_detail_res["movie"]["date"] = details[0][5]
-        print("detail result:", movie_detail_res)
+        # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
         return movie_detail_res
@@ -229,5 +229,47 @@ def history():
             review["key"] = str(counter)
             counter += 1
         return {"data": review_res}
+
+
+@app.route('/checkReview', methods=['GET', 'POST'])
+def checkReview():
+    db = connect_db()
+    c = db.cursor()
+    # user = guid["username"]
+    if request.method == 'POST':
+        
+        return request.get_json()
+    else:
+        review_res = []
+        movie_title = movie_detail_res['movie']['title']
+        print("movie title:", movie_title)
+
+        review_search_sql = "SELECT * FROM REVIEW WHERE MOVIE = ?"
+        
+        try:
+            reviews = c.execute(review_search_sql, (movie_title,)).fetchall()
+            print("reviews", reviews)
+            for review in reviews:
+                item = {"userName": review[0], 
+                        "reviewTime": review[4], 
+                        "rating": review[3],
+                        "review": review[2],
+                        }
+                
+                review_res.append(item)
+        except sqlite3.OperationalError:
+            pass
+
+        # sort by time
+        review_res = sorted(review_res, key=lambda x: x["reviewTime"], reverse=True)
+
+        # add key:counter
+        counter = 1
+        for review in review_res:
+            review["key"] = str(counter)
+            counter += 1
+        print(review_res)
+        return {"user": review_res}
+
 if __name__ == "__main__":
     app.run(debug=True)
