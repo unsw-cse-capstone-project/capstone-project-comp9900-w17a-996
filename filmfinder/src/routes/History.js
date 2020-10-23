@@ -10,6 +10,7 @@ class History extends Component {
 
   constructor(props) {
     super(props);
+    this.myRating = React.createRef();
     this.myRef = React.createRef();
   }
 
@@ -88,6 +89,7 @@ class History extends Component {
 
           const data = {
             "editedReview": this.myRef.current.state.value,
+            "editedRating": this.myRating.current.state.value,
             "movieTitle": this.state.data[i].movieName,
             "operator": 'e'
           }
@@ -115,10 +117,13 @@ class History extends Component {
           
           setTimeout(() => {
             let refData = this.state;
+            // refData.data[i].rating = this.myRating.current.state.value;
           refData.editLoading = false;
           refData.data[i].editVisible = false;
           this.setState(refData);
           this.renderAgain();
+          console.log(this.state);
+          
           }, 1000);
 
           
@@ -210,6 +215,14 @@ class History extends Component {
       });
   }
 
+  // componentWillUpdate() {
+  //   fetch("/history")
+  //     .then((r) => r.json())
+  //     .then((r) => {
+  //       this.setState(r);
+  //     });
+  // }
+
   renderAgain() {
     fetch("/history")
       .then((r) => r.json())
@@ -260,6 +273,7 @@ class History extends Component {
                     onCancel={() => this.handleEditCancel(record.key)}
                   >
                       {/* <h1>{record.key}</h1> */}
+                      <Rate defaultValue={record.rating} ref={this.myRating}></Rate>
                     <TextArea rows={4} defaultValue={record.review} ref={this.myRef} />
                   </Modal>
 
