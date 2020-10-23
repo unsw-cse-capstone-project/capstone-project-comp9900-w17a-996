@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Modal, Checkbox} from 'antd';
 import { Link } from "react-router-dom";
 import "../styles/movie.css";
 import PmRibbon from "pm-ribbon";
@@ -15,14 +16,17 @@ import RecommendList from "../components/RecommendList";
 import { WindowsOutlined } from "@ant-design/icons";
 import NavBar from "../components/NavBar";
 const { Header, Footer, Sider, Content } = Layout;
-const addToWishlist = () => {
-  console.log("123");
-  window.location.href = "/#/wishList";
-};
+
+const plainOptions = ['Absurdist', 'Action', 'Adventure', 'Comedy', 'Crime', 'Drama', 'Fantasy', 'Historical', 'Horror', 'Science fiction'];
+
 class MovieDetail extends Component {
   constructor(props) {
     super(props);
+    this.myWish = React.createRef();
     this.state = {
+    ModalText: 'Please select the wishlist(s) to add:',
+    visible: false,
+    confirmLoading: false,
       title: "",
       director: "",
       cast: "",
@@ -33,6 +37,51 @@ class MovieDetail extends Component {
       user: [],
     };
   }
+
+
+  handleOk = () => {
+    this.setState({
+      ModalText: 'The modal will be closed after two seconds',
+      confirmLoading: true,
+    });
+
+    console.log(this.myWish.current.state.value);
+
+    const data = {
+      title: this.state.title,
+      type: this.myWish.current.state.value,
+    }
+
+    fetch("/addtoWishList", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        confirmLoading: false,
+      });
+    }, 2000);
+  };
+
+  handleCancel = () => {
+    console.log('Clicked cancel button');
+    this.setState({
+      visible: false,
+    });
+  };
 
   componentDidUpdate() {
     fetch("/checkReview")
@@ -68,6 +117,20 @@ class MovieDetail extends Component {
       });
   }
 
+  addToWishlist = () => {
+    console.log("123");
+
+    this.setState({
+      visible: true,
+    });
+
+    
+  };
+
+  onChange(checkedValues) {
+    console.log('checked = ', checkedValues);
+  }
+
   // componentDidMount(){
   //     fetch('/app')
   //         .then(r => r.json())
@@ -80,6 +143,8 @@ class MovieDetail extends Component {
     const commentItems = comments.map((commentItem) => (
       <CommentCard {...commentItem} />
     ));
+    const { visible, confirmLoading, ModalText } = this.state;
+
     return (
       <div>
         <Layout className="layout">
@@ -127,7 +192,7 @@ class MovieDetail extends Component {
                     </div>
                     <div className="wishShare">
                       <div className="wish">
-                        <Button onClick={addToWishlist} type="primary" block>
+                        <Button onClick={this.addToWishlist} type="primary" block>
                           <div>
                             <PlusOutlined
                               style={{ fontSize: "25px", marginRight: "10px" }}
@@ -162,6 +227,16 @@ class MovieDetail extends Component {
           </Layout>
           <Footer className="footer">footer</Footer>
         </Layout>
+        <Modal
+          title="Select your wishlist"
+          visible={visible}
+          onOk={this.handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={this.handleCancel}
+        >
+          <p>{ModalText}</p>
+          <Checkbox.Group options={plainOptions} onChange={this.onChange} ref={this.myWish} />
+        </Modal>
       </div>
     );
   }
