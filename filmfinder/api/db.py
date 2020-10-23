@@ -1,9 +1,20 @@
 import sqlite3
 import datetime, time
+import json
+
 conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
 c = conn.cursor()
 
 """user"""
+# c.execute("DROP TABLE USER")
+c.execute(
+                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT)"
+            )
+c.execute(
+            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)",
+            ("Kong", "wukong", "12345@qq.com", "12345", "this is a test bio", "")
+        )
+conn.commit()
 print("User:")
 content = c.execute("SELECT * FROM USER").fetchall()
 for i in content:
@@ -48,3 +59,11 @@ print("Review:")
 reviews = c.execute("SELECT * FROM REVIEW").fetchall()
 for i in reviews:
     print(i)
+
+
+# temp = {"genre1": {"movie1": "time", "movie2": "time"}, "genre2": {"movie3": "time3", "movie4": "time4"}}
+# str_json = json.dumps(temp)
+# print(type(str_json), str_json, str_json[0])
+# dict_json = json.loads(str_json)
+# print(dict_json["genre1"]["movie1"])
+

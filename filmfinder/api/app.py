@@ -11,6 +11,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "filmFinder.db")
 app.config["DATABASE"] = db_path
 
+"""connect to data base"""
 def connect_db():
     db = sqlite3.connect(app.config["DATABASE"], check_same_thread=False)
     return db
@@ -19,6 +20,7 @@ def connect_db():
 def default():
     return "Default Page of Backend"
 
+"""register page, create user table and insert a new user"""
 @app.route('/app', methods=['GET','POST'])
 def api():
     if request.method=='GET':
@@ -29,7 +31,7 @@ def api():
         c = db.cursor()
         try:
             c.execute(
-                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT)"
+                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
@@ -41,14 +43,15 @@ def api():
         # password = user_data["password"]
         # bio = user_data["bio"]
         c.execute(
-            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO) VALUES(?, ?, ?, ?, ?)", 
-            (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"])
+            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)", 
+            (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"], "")
         )
         db.commit()
         return request.get_json()
     else:
         return("ok")
 
+"""login page, get user name and password then check with data in db"""
 guid = {'username': '', 'nickname': '', 'email': '', 'password': '', 'bio': ''}
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -84,6 +87,7 @@ def login():
 def home():
     return guid
 
+"""search movie, get input from search bar and return related movies"""
 result = {"movies": []}
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -117,7 +121,8 @@ def search():
         return search_content
     else:
         return result
-    
+
+"""profile page, update user info"""
 @app.route('/profile', methods=['POST'])
 def profile():
     user_data = request.get_json()
@@ -137,8 +142,8 @@ def profile():
     try:
         c.execute(delete_sql, (username,))
         c.execute(
-            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO) VALUES(?, ?, ?, ?, ?)", 
-            (user_data["username"], user_data["nickname"], user_data["email"], user_data["password"], user_data["bio"])
+            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)", 
+            (user_data["username"], user_data["nickname"], user_data["email"], user_data["password"], user_data["bio"], "")
         )
         db.commit()
         return user_data
@@ -156,6 +161,7 @@ def profile():
     #     'completed': False
     # }
 
+"""movie page, get movie name then post movie detils"""
 movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}}
 @app.route('/movieDetail', methods=['GET', 'POST'])
 def movieDetail():
@@ -177,6 +183,7 @@ def movieDetail():
         return movie_detail_res
     else:
         return movie_detail_res
+
 
 @app.route('/history', methods=['GET', 'POST'])
 def history():
@@ -236,7 +243,7 @@ def history():
             counter += 1
         return {"data": review_res}
 
-
+"""history page, get user name and user action then post comments, rating"""
 @app.route('/checkReview', methods=['GET', 'POST'])
 def checkReview():
     db = connect_db()
