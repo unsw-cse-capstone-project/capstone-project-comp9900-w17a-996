@@ -45,10 +45,12 @@ class WishList extends Component{
     }
 
     handleClickByDelete(index){
+        console.log(index);
         let arr = this.state.movieList;
         arr.splice(index, 1);
+        console.log(arr);
         this.setState({
-            movieList: this.state.movieList
+            movieList: arr,
         })
     }
 
@@ -136,13 +138,17 @@ class WishList extends Component{
 
     render(){
         const movieList = this.state.movieList;
-        const movies = movieList.map((movie) => 
+        const movies = movieList.map((movie,i) => 
             {
                 return (
-                    <div onClick={() => (this.gotoDetail(movie))}>
+                    <div>
+                        <div onClick={() => (this.gotoDetail(movie))}>
                         <h5>{movie}</h5>
-                        <Button type="primary">Delete</Button>
+                        
                     </div>
+                    <Button type="primary" onClick={() => this.handleClickByDelete(i)}>Delete</Button>
+                    </div>
+                    
                 )
             }
         //     return(<div className="movieItem" key={i}>
