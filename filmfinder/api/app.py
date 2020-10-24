@@ -43,7 +43,7 @@ def api():
         # email = user_data["email"]
         # password = user_data["password"]
         # bio = user_data["bio"]
-        wishlists = {'Absurdist':{}, 'Action':{}, 'Adventure':{},'Comedy':{}, 'Crime':{},'Drama':{},'Fantasy':{},'Historical':{},'Horror':{},'Science fiction':{}}
+        wishlists = {'0':{}, '1':{}, '2':{},'3':{}, '4':{},'5':{},'6':{},'7':{},'8':{},'9':{}}
         wishlists = json.dumps(wishlists)
         c.execute(
             "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)", 
