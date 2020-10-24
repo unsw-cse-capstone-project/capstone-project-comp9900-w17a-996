@@ -26,7 +26,7 @@ class HotMovies extends Component {
         "#www.wechat.com/",
         "#www.instagram.com/",
       ],
-      hotMovies: props.hotMovies,
+      hotMovies: [],
     };
   }
 
@@ -57,9 +57,19 @@ class HotMovies extends Component {
     position: "relative",
     left: "40px",
   };
+
   handle() {
     const w = window.open("about:blank");
     w.location.href = "你的地址";
+  }
+
+  componentDidMount(){
+    fetch("/hotmovie")
+    .then((r) => r.json())
+    .then((r) => {
+      console.log(r);
+      this.setState(r);
+    });
   }
 
   handleClick(ev, title) {

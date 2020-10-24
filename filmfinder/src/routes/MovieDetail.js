@@ -34,6 +34,7 @@ class MovieDetail extends Component {
       language: "",
       date: "",
       rating: "3",
+      url: "",
       user: [],
     };
   }

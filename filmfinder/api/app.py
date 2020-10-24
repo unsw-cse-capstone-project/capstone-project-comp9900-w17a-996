@@ -4,6 +4,7 @@ import sqlite3
 import os.path
 import time
 import datetime
+import recommendation
 import json
 
 app = Flask(__name__)
@@ -182,6 +183,7 @@ def movieDetail():
         movie_detail_res["movie"]["genre"] = details[0][3]
         movie_detail_res["movie"]["language"] = details[0][4]
         movie_detail_res["movie"]["date"] = details[0][5]
+        movie_detail_res["movie"]["url"] = details[0][6]
         # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
@@ -373,6 +375,19 @@ def wishlist():
             res[k] = list(v.keys())
         # print(res.values())
         return res
+
+@app.route('/hotmovie', methods=['GET'])
+def hotmovie():
+    db = connect_db()
+    c = db.cursor()
+    hot_movie ={}
+    movie_list = []
+    movies = c.execute("SELECT * FROM MOVIE").fetchall()
+    for n in range(len(movies)):
+        movie_list.append(movies[n][0])
+    
+    hot_movie['hotMovies'] = recommendation.sort_film(movie_list)
+    return hot_movie
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -11,21 +11,17 @@ class Search extends Component {
     super(props);
     this.state = {
       username: "",
-      hotMovies: [
-        { title: 'Tales from the Hood 3', rating: "9" },
-        { title: 'The Trial of the Chicago 7', rating: "9.2" },
-        { title: 'Clouds', rating: "10" },
-        { title: '我和我的家乡', rating: "10"},
-      ],
+      hotMovies: [{title: "1", rating: "1"}],
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch("/home")
       .then((r) => r.json())
       .then((r) => {
         this.setUser(r.username);
       });
+
   }
 
   setUser(name) {
@@ -43,6 +39,10 @@ class Search extends Component {
   goProfile = () => {
     this.props.history.push("/profile");
   };
+
+  goMessage = () => {
+    console.log(this.state);
+  }
 
   goWishList = () => {
     this.props.history.push("/wishList");
@@ -94,7 +94,7 @@ class Search extends Component {
             <StyledButton type="primary" onClick={this.goProfile}>
               Profile
             </StyledButton>
-            <StyledButton type="primary">Messages</StyledButton>
+            <StyledButton type="primary" onClick={this.goMessage}>Messages</StyledButton>
             <StyledButton type="primary" onClick={this.goWishList}>
               Wishlist
             </StyledButton>
@@ -113,7 +113,7 @@ class Search extends Component {
         </BorderSearchWarp>
         <div className="box_home">
           <SearchBar></SearchBar>
-          <HotMovies {...this.state}/>
+          <HotMovies />
           {/* <input type="text" ref="searchContent" className=""></input>
           <Button
             className="btn btn-info"

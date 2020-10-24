@@ -46,7 +46,7 @@ class MovieCard extends Component{
                             <img width='100%' height="100%" src={require(`../${url_1}.jpg`)} />
                         </div>
                         <div className="video">
-                            <iframe id="test" width="100%" height="100%" src="https://www.youtube.com/embed/LaThRLnFxxw?autoplay=0&loop=1&playlist=EMfebeQg2Z4&muted=1" frameBorder="0" allowFullScreen={true} allowtransparency='yes'></iframe>
+                            <iframe id="test" width="100%" height="100%" src={this.props.url} frameBorder="0" allowFullScreen={true} allowtransparency='yes'></iframe>
                         </div>
                     </div>
                     <div className="description">

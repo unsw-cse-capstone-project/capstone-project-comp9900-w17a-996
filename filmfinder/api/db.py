@@ -23,19 +23,37 @@ for i in content:
 
 """movie part"""
 c.execute("DROP TABLE MOVIE")
+# c.execute(
+#     "CREATE TABLE MOVIE (TITLE TEXT, DIRECTORS TEXT, ACTORS TEXT, GENRE TEXT, LANGUAGE TEXT, RELEASE_DATE TEXT)"
+# )
+# c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
+#               ("My perple, My Homeland(2020)", "Yimou Zhang", "Lei Huang, Wei Fan", "melody", "Chinese", "2020-10-01"))
+# c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
+#           ("The Trial of the Chicago 7", "Aaron Sorkin", "Eddie Redmayne, Alex Sharp", "History, Drama", "English", "2020-10-16"))
+# c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
+#           ("Clouds", "Justin Baldoni", "Fin Argus, Sabrina Carpenter", "Music, Drama, Biography", "English", "2020-10-16"))
+# c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
+#           ("The Forty-Year-Old Version", "Radha Blank", "Welker White, Reed Birney", "Comedy, Music, Drama", "English", "2020-10-09"))
+# c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
+#           ("Tales from the Hood 3", "Rusty Cundieff", "Tony Todd, Lynn Whitfield", "Horror", "English", "2020-10-06"))
 c.execute(
-    "CREATE TABLE MOVIE (TITLE TEXT, DIRECTORS TEXT, ACTORS TEXT, GENRE TEXT, LANGUAGE TEXT, RELEASE_DATE TEXT)"
+    "CREATE TABLE MOVIE (TITLE TEXT, DIRECTORS TEXT, ACTORS TEXT, GENRE TEXT, LANGUAGE TEXT, RELEASE_DATE TEXT, URL TEXT, MAINGENRE TEXT)"
 )
-c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
-              ("My perple, My Homeland(2020)", "Yimou Zhang", "Lei Huang, Wei Fan", "melody", "Chinese", "2020-10-01"))
-c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
-          ("The Trial of the Chicago 7", "Aaron Sorkin", "Eddie Redmayne, Alex Sharp", "History, Drama", "English", "2020-10-16"))
-c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
-          ("Clouds", "Justin Baldoni", "Fin Argus, Sabrina Carpenter", "Music, Drama, Biography", "English", "2020-10-16"))
-c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
-          ("The Forty-Year-Old Version", "Radha Blank", "Welker White, Reed Birney", "Comedy, Music, Drama", "English", "2020-10-09"))
-c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE) VALUES(?, ?, ?, ?, ?, ?)",
-          ("Tales from the Hood 3", "Rusty Cundieff", "Tony Todd, Lynn Whitfield", "Horror", "English", "2020-10-06"))
+c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE, URL, MAINGENRE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+            ("My perple, My Homeland(2020)", "Yimou Zhang", "Lei Huang, Wei Fan", "Melody", 
+              "Chinese", "2020-10-01", "https://www.youtube.com/embed/LaThRLnFxxw?autoplay=0&loop=1&playlist=EMfebeQg2Z4&muted=1","Melody"))
+c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE, URL, MAINGENRE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+            ("The Trial of the Chicago 7", "Aaron Sorkin", "Eddie Redmayne, Alex Sharp", "History, Drama", 
+            "English", "2020-10-16", "https://www.youtube.com/embed/FVb6EdKDBfU", "History"))
+c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE, URL, MAINGENRE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+            ("Clouds", "Justin Baldoni", "Fin Argus, Sabrina Carpenter", "Music, Drama, Biography", 
+            "English", "2020-10-16", "https://www.youtube.com/embed/OWEgUhWU4g4", "Music"))
+c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE, URL, MAINGENRE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+            ("The Forty-Year-Old Version", "Radha Blank", "Welker White, Reed Birney", "Comedy, Music, Drama", 
+            "English", "2020-10-09", "https://www.youtube.com/embed/RRpGNnaDzeE", "Music"))
+c.execute("INSERT INTO MOVIE (TITLE, DIRECTORS, ACTORS, GENRE, LANGUAGE, RELEASE_DATE, URL, MAINGENRE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+            ("Tales from the Hood 3", "Rusty Cundieff", "Tony Todd, Lynn Whitfield", "Horror", 
+            "English", "2020-10-06" , "https://www.youtube.com/embed/Je0tug204FI", "Horror"))
 conn.commit()
 print("Movie:")
 movies = c.execute("SELECT * FROM MOVIE").fetchall()
