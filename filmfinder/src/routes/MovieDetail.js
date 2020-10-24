@@ -17,7 +17,7 @@ import { WindowsOutlined } from "@ant-design/icons";
 import NavBar from "../components/NavBar";
 const { Header, Footer, Sider, Content } = Layout;
 
-const plainOptions = ['Absurdist', 'Action', 'Adventure', 'Comedy', 'Crime', 'Drama', 'Fantasy', 'Historical', 'Horror', 'Science fiction'];
+const plainOptions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 class MovieDetail extends Component {
   constructor(props) {
