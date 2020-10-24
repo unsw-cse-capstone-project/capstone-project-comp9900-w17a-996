@@ -5,13 +5,14 @@ import { StyledButton } from "../components/styledButton.js";
 import "../styles/centerCenter.css";
 import SearchBar from "../components/Search";
 import HotMovies from "../components/HotMovies";
+import Carousel from "../components/Carousel";
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      hotMovies: [{title: "1", rating: "1"}],
+      hotMovies: [{ title: "1", rating: "1" }],
     };
   }
 
@@ -21,7 +22,6 @@ class Search extends Component {
       .then((r) => {
         this.setUser(r.username);
       });
-
   }
 
   setUser(name) {
@@ -42,7 +42,7 @@ class Search extends Component {
 
   goMessage = () => {
     console.log(this.state);
-  }
+  };
 
   goWishList = () => {
     this.props.history.push("/wishList");
@@ -50,7 +50,7 @@ class Search extends Component {
 
   goHistory = () => {
     this.props.history.push("/history");
-  }
+  };
 
   handleSearch(ev, searchContent) {
     const data = {
@@ -74,14 +74,14 @@ class Search extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-      
-      this.props.history.push("/result");
-    
+
+    this.props.history.push("/result");
   }
 
   render() {
     return (
       <React.Fragment>
+        <div>
         <BorderSearchWarp
           border={{
             width: "1px",
@@ -90,30 +90,42 @@ class Search extends Component {
             rodius: "10px",
           }}
         >
-          <div>
-            <StyledButton type="primary" onClick={this.goProfile}>
-              Profile
-            </StyledButton>
-            <StyledButton type="primary" onClick={this.goMessage}>Messages</StyledButton>
-            <StyledButton type="primary" onClick={this.goWishList}>
-              Wishlist
-            </StyledButton>
-            <StyledButton type="primary" onClick={this.goHistory}>History</StyledButton>
-            <StyledButton type="primary" onClick={this.goLogin}>
-              Login/Register
-            </StyledButton>
-            <h1 className="mt-2">Hello, {this.state.username}!</h1>
-          </div>
-
-          {/* <img src={searchImg} /> 
-                <Fragment>
-                Searching Movies...
-                </Fragment >
-                <TransButton type="primary">Search</TransButton> */}
+        
+          <StyledButton type="primary" onClick={this.goProfile}>
+            Profile
+          </StyledButton>
+          <StyledButton type="primary" onClick={this.goMessage}>
+            Messages
+          </StyledButton>
+          <StyledButton type="primary" onClick={this.goWishList}>
+            Wishlist
+          </StyledButton>
+          <StyledButton type="primary" onClick={this.goHistory}>
+            History
+          </StyledButton>
+          <StyledButton type="primary" onClick={this.goLogin}>
+            Login/Register
+          </StyledButton>
+          <h1 className="mt-2">Hello, {this.state.username}!</h1>
+        
         </BorderSearchWarp>
-        <div className="box_home">
-          <SearchBar></SearchBar>
+        </div>
+        
+        <div className="box_search">
+          <SearchBar />
+        </div>
+        <br/>
+        <br/>
+        <br/>
+
+        
+
+        <div>
+          <Carousel />
+        </div>
+        <div className="box_search">
           <HotMovies />
+
           {/* <input type="text" ref="searchContent" className=""></input>
           <Button
             className="btn btn-info"

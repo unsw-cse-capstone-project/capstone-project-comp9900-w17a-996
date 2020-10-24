@@ -68,3 +68,13 @@
 .site-result-demo-error-icon {
   color: red;
 }
+
+.box_search {
+  width: 600px;
+  height: 300px;
+  position: absolute;
+  left: 0;
+  
+  right: 0;
+  margin: auto;
+}
