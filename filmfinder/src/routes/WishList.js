@@ -31,7 +31,7 @@ class WishList extends Component{
             "8": [],
             "9": [],
             movieList: [],
-            genre: 'genre',
+            genre: '...',
             thisList: ""
         }
     }
@@ -94,69 +94,69 @@ class WishList extends Component{
             let newList = this.state[0];
             this.setState({
                 movieList: newList,
-                genre: 'Absurdist'
+                genre: 'Zero'
             })
         }else if (index === 2){
             let newList = this.state[1];
             this.setState({
                 movieList: newList,
-                genre: 'Action'
+                genre: 'One'
             })
         }
         else if (index === 3){
             let newList = this.state[2];
             this.setState({
                 movieList: newList,
-                genre: 'Adventure'
+                genre: 'Two'
             })
         }
         else if (index === 4){
             let newList = this.state[3];
             this.setState({
                 movieList: newList,
-                genre: 'Comedy'
+                genre: 'Three'
             })
         }
         else if (index === 5){
             let newList = this.state[4];
             this.setState({
                 movieList: newList,
-                genre: 'Crime'
+                genre: 'Four'
             })
         }
         else if (index === 6){
             let newList = this.state[5];
             this.setState({
                 movieList: newList,
-                genre: 'Drama'
+                genre: 'Five'
             })
         }
         else if (index === 7){
             let newList = this.state[6];
             this.setState({
                 movieList: newList,
-                genre: 'Fantasy'
+                genre: 'Six'
             })
         }
         else if (index === 8){
             let newList = this.state[7];
             this.setState({
                 movieList: newList,
-                genre: 'Historical'
+                genre: 'Seven'
             })
         }
         else if (index === 9){
             let newList = this.state[8];
             this.setState({
                 movieList: newList,
-                genre: 'Horror'
+                genre: 'Eight'
             })
         }
         else if (index === 10){
             let newList = this.state[9];
             this.setState({
                 movieList: newList,
-                genre: 'Science fiction'
+                genre: 'Nine'
             })
         }
     }
@@ -202,22 +202,22 @@ class WishList extends Component{
                     <Layout className="wishMainLayout">
                         <Sider className="wishSider">
                             <Menu theme="dark" mode='inline'>
-                                <Menu.Item key="1" onClick={this.menuChangeByClick.bind(this)}>Absurdist</Menu.Item>
-                                <Menu.Item key="2" onClick={this.menuChangeByClick.bind(this)}>Action</Menu.Item>
-                                <Menu.Item key="3" onClick={this.menuChangeByClick.bind(this)}>Adventure</Menu.Item>
-                                <Menu.Item key="4" onClick={this.menuChangeByClick.bind(this)}>Comedy</Menu.Item>
-                                <Menu.Item key="5" onClick={this.menuChangeByClick.bind(this)}>Crime</Menu.Item>
-                                <Menu.Item key="6" onClick={this.menuChangeByClick.bind(this)}>Drama</Menu.Item>
-                                <Menu.Item key="7" onClick={this.menuChangeByClick.bind(this)}>Fantasy</Menu.Item>
-                                <Menu.Item key="8" onClick={this.menuChangeByClick.bind(this)}>Historical</Menu.Item>
-                                <Menu.Item key="9" onClick={this.menuChangeByClick.bind(this)}>Horror</Menu.Item>
-                                <Menu.Item key="10" onClick={this.menuChangeByClick.bind(this)}>Science fiction</Menu.Item>
+                                <Menu.Item key="1" onClick={this.menuChangeByClick.bind(this)}>Zero</Menu.Item>
+                                <Menu.Item key="2" onClick={this.menuChangeByClick.bind(this)}>One</Menu.Item>
+                                <Menu.Item key="3" onClick={this.menuChangeByClick.bind(this)}>Two</Menu.Item>
+                                <Menu.Item key="4" onClick={this.menuChangeByClick.bind(this)}>Three</Menu.Item>
+                                <Menu.Item key="5" onClick={this.menuChangeByClick.bind(this)}>Four</Menu.Item>
+                                <Menu.Item key="6" onClick={this.menuChangeByClick.bind(this)}>Five</Menu.Item>
+                                <Menu.Item key="7" onClick={this.menuChangeByClick.bind(this)}>Six</Menu.Item>
+                                <Menu.Item key="8" onClick={this.menuChangeByClick.bind(this)}>Seven</Menu.Item>
+                                <Menu.Item key="9" onClick={this.menuChangeByClick.bind(this)}>Eight</Menu.Item>
+                                <Menu.Item key="10" onClick={this.menuChangeByClick.bind(this)}>Nine</Menu.Item>
                             </Menu>
                         </Sider>
                         <Layout className="wishContentLayout">
                             <Breadcrumb className="bread">
                                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                                <Breadcrumb.Item>List</Breadcrumb.Item>
+                                <Breadcrumb.Item>Wishlist</Breadcrumb.Item>
                                 <Breadcrumb.Item>{this.state.genre}</Breadcrumb.Item>
                             </Breadcrumb>
                             <Content className="wishContent">
