@@ -196,9 +196,10 @@ def history():
     if request.method == 'POST':
         data = request.get_json()
         movie = data["movieTitle"]
-        new_rating = data["editedRating"]
+        
         # edit
         if data["operator"] == "e":
+            new_rating = data["editedRating"]
             edit_review_sql = "UPDATE REVIEW SET COMMENT = ? WHERE USER = ? AND MOVIE = ?"
             c.execute(edit_review_sql, (data["editedReview"], user, movie, ))
             # db.commit()
@@ -337,7 +338,7 @@ def wishlist():
     c = db.cursor()
     userName = guid['username']
     if request.method == "POST":
-        return "-"
+        return request.get_json()
     else:
         pass
         get_list_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"

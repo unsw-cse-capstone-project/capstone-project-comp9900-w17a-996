@@ -20,18 +20,19 @@ class WishList extends Component{
     constructor(props){
         super(props);
         this.state={
-            Absurdist: [], 
-            Action: [],
-            Adventure: ['Clouds'],
-            Comedy: [],
-            Crime: [],
-            Drama: [],
-            Fantasy: [],
-            Historical: [],
-            Horror: [],
-            "Science\xa0fiction": [],
+            "0": [],
+            "1": [], 
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
             movieList: [],
             genre: 'genre',
+            thisList: ""
         }
     }
 
@@ -48,7 +49,31 @@ class WishList extends Component{
         console.log(index);
         let arr = this.state.movieList;
         arr.splice(index, 1);
+        console.log("thislist", this.state.thisList - 1);
         console.log(arr);
+        
+
+        const data = {
+            listid: this.state.thisList - 1,
+            content: arr,
+        }
+
+        fetch("/wishlist", {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => console.log(response))
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+
         this.setState({
             movieList: arr,
         })
@@ -58,73 +83,77 @@ class WishList extends Component{
         let index = Number(e.key);
         console.log(index);
 
+        this.setState({
+            thisList: e.key,
+        })
+
         // let mList = this.state;
         // mList.splice(index,1);
         
         if (index === 1){
-            let newList = this.state.Absurdist;
+            let newList = this.state[0];
             this.setState({
                 movieList: newList,
                 genre: 'Absurdist'
             })
         }else if (index === 2){
-            let newList = this.state.Action;
+            let newList = this.state[1];
             this.setState({
                 movieList: newList,
                 genre: 'Action'
             })
         }
         else if (index === 3){
-            let newList = this.state.Adventure;
+            let newList = this.state[2];
             this.setState({
                 movieList: newList,
                 genre: 'Adventure'
             })
         }
         else if (index === 4){
-            let newList = this.state.Comedy;
+            let newList = this.state[3];
             this.setState({
                 movieList: newList,
                 genre: 'Comedy'
             })
         }
         else if (index === 5){
-            let newList = this.state.Crime;
+            let newList = this.state[4];
             this.setState({
                 movieList: newList,
                 genre: 'Crime'
             })
         }
         else if (index === 6){
-            let newList = this.state.Drama;
+            let newList = this.state[5];
             this.setState({
                 movieList: newList,
                 genre: 'Drama'
             })
         }
         else if (index === 7){
-            let newList = this.state.Fantasy;
+            let newList = this.state[6];
             this.setState({
                 movieList: newList,
                 genre: 'Fantasy'
             })
         }
         else if (index === 8){
-            let newList = this.state.Historical;
+            let newList = this.state[7];
             this.setState({
                 movieList: newList,
                 genre: 'Historical'
             })
         }
         else if (index === 9){
-            let newList = this.state.Horror;
+            let newList = this.state[8];
             this.setState({
                 movieList: newList,
                 genre: 'Horror'
             })
         }
         else if (index === 10){
-            let newList = this.state["Science fiction"];
+            let newList = this.state[9];
             this.setState({
                 movieList: newList,
                 genre: 'Science fiction'
