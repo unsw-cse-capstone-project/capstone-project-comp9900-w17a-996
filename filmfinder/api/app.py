@@ -166,7 +166,7 @@ def profile():
     # }
 
 """movie page, get movie name then post movie detils"""
-movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}}
+movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": "", "rating": ""}}
 @app.route('/movieDetail', methods=['GET', 'POST'])
 def movieDetail():
     
@@ -184,6 +184,7 @@ def movieDetail():
         movie_detail_res["movie"]["language"] = details[0][4]
         movie_detail_res["movie"]["date"] = details[0][5]
         movie_detail_res["movie"]["url"] = details[0][6]
+        movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
         # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
