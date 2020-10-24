@@ -12,6 +12,10 @@ import History from './routes/History.js';
 import RegisterSuccess from "./routes/registerSuccess.js";
 import RegisterFail from "./routes/registerFail.js";
 
+import Dropdwon from "./components/DropDown";
+import HotMovies from "./components/HotMovies";
+import Carousel from "./components/Carousel";
+
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -32,6 +36,10 @@ class App extends React.Component {
           <Route path="/history" component={History} />
           <Route path="/register.success=True" component={RegisterSuccess}/>
           <Route path="/register.success=False" component={RegisterFail}/>
+
+          <Route path="/dropdown" component={Dropdwon}/>
+          <Route path="/hotmovies" component={HotMovies}/>
+          <Route path="/carousel" component={Carousel}/>
         </Switch>
       </HashRouter>
     )

@@ -3,13 +3,20 @@ import { BorderSearchWarp } from "../components/styledSearch";
 import { Button } from "antd";
 import { StyledButton } from "../components/styledButton.js";
 import "../styles/centerCenter.css";
-import SearchBar from "../components/Search"
+import SearchBar from "../components/Search";
+import HotMovies from "../components/HotMovies";
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
+      hotMovies: [
+        { title: 'Tales from the Hood 3', rating: "9" },
+        { title: 'The Trial of the Chicago 7', rating: "9.2" },
+        { title: 'Clouds', rating: "10" },
+        { title: '我和我的家乡', rating: "10"},
+      ],
     };
   }
 
@@ -106,6 +113,7 @@ class Search extends Component {
         </BorderSearchWarp>
         <div className="box_home">
           <SearchBar></SearchBar>
+          <HotMovies {...this.state}/>
           {/* <input type="text" ref="searchContent" className=""></input>
           <Button
             className="btn btn-info"
