@@ -337,19 +337,41 @@ def wishlist():
     db = connect_db()
     c = db.cursor()
     userName = guid['username']
+
+    get_list_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
+
+    str_json = c.execute(get_list_sql, (userName,)).fetchall()[0][0]
+    dict_json = json.loads(str_json)
+
     if request.method == "POST":
+        data = request.get_json()
+        keep_movie = data["content"]
+        listID = str(data["listid"])
+        print("dict+json:   ", dict_json)
+        all_movie = list(dict_json[listID].keys())
+        for movie in all_movie:
+            if movie not in keep_movie:
+                del dict_json[listID][movie]
+        print("new dic_json:   ", dict_json)
+        new_str = json.dumps(dict_json)
+
+        update_sql = "UPDATE USER SET WISHLIST = ? WHERE USERNAME = ?"
+        c.execute(update_sql, (new_str, userName,))
+
+        db.commit()
+
         return request.get_json()
     else:
         pass
-        get_list_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
+        # get_list_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
 
-        str_json = c.execute(get_list_sql, (userName,)).fetchall()[0][0]
-        dict_json = json.loads(str_json)
+        # str_json = c.execute(get_list_sql, (userName,)).fetchall()[0][0]
+        # dict_json = json.loads(str_json)
 
         res = {}
         for k, v in dict_json.items():
             res[k] = list(v.keys())
-        print(res.values())
+        # print(res.values())
         return res
 
 if __name__ == "__main__":
