@@ -4,9 +4,11 @@ import React from 'react';
 class RatingResult extends React.Component{
     constructor(props){
         super(props);
-        this.state={};
+        this.state={
+            
+        };
     }
-    
+
     render(){
         let rating = parseFloat(this.props.rating);
         console.log(rating);

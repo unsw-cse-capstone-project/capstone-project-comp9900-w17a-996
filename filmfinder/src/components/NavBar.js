@@ -32,9 +32,7 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand">
-            FilmFinder
-          </a>
+          <a class="navbar-brand">FilmFinder</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -57,6 +55,11 @@ class NavBar extends Component {
               <li class="nav-item">
                 <a class="nav-link" href="#/wishList">
                   Wishlist
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#/history">
+                  History
                 </a>
               </li>
               <li class="nav-item dropdown">
@@ -88,12 +91,7 @@ class NavBar extends Component {
                 </div>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  
-                  tabindex="-1"
-                  aria-disabled="true"
-                >
+                <a class="nav-link active" tabindex="-1" aria-disabled="true">
                   G' day, {this.state.username}!
                 </a>
               </li>

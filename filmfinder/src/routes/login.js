@@ -91,7 +91,7 @@ class Login extends Component {
           </form>
           <button
               type="button"
-              className="btn btn-lg btn-dark btn-block"
+              className="btn btn-lg btn-outline-dark btn-block"
               onClick={() => (this.handleClick(this.refs.inputUsername.value, this.refs.inputPassword.value))}
               ref="btnLogin"
               type="submit"

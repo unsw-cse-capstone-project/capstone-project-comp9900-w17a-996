@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../styles/centerCenter.css";
+import NavBar from "../components/NavBar";
 
 class Profile extends Component {
 
@@ -80,6 +81,7 @@ class Profile extends Component {
   render() {
     return (
       <React.Fragment>
+        <NavBar/>
         <div className="row col-md-12">
           <nav
             id="sidebarMenu"

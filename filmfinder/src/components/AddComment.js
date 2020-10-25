@@ -90,7 +90,7 @@ class AddComment extends Component {
         });
     }, 1000);
 
-    window.location.href = "/#/movie?title=" + movieTitle;
+    // window.location.href = "/#/movie?title=" + movieTitle;
   };
 
     handleChange = e => {

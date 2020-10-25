@@ -50,6 +50,7 @@ class History extends Component {
   };
 
   showEditModal(id) {
+    console.log(this.state.data);
     //   console.log(this.state.data.length);
       for (let i = 0; i < this.state.data.length; i++){
         // console.log(this.state.data[i].key);
@@ -64,7 +65,7 @@ class History extends Component {
   };
 
   showDeleteModal(id) {
-    //   console.log(this.state.data.length);
+    
       for (let i = 0; i < this.state.data.length; i++){
         // console.log(this.state.data[i].key);
           if (this.state.data[i].key === id){
@@ -252,7 +253,7 @@ class History extends Component {
               dataIndex="rating"
               key="rating"
               render={(text, record) => (
-                <Rate defaultValue={record.rating} value={record.rating}/>
+                <Rate disabled allowHalf defaultValue={0} value={parseFloat(record.rating)}/>
               )}
             />
 
@@ -282,7 +283,7 @@ class History extends Component {
                     onCancel={() => this.handleEditCancel(record.key)}
                   >
                       {/* <h1>{record.key}</h1> */}
-                      <Rate defaultValue={record.rating} ref={this.myRating}></Rate>
+                      <Rate allowHalf defaultValue={parseFloat(record.rating)} ref={this.myRating}></Rate>
                     <TextArea rows={4} defaultValue={record.review} ref={this.myRef} />
                   </Modal>
 

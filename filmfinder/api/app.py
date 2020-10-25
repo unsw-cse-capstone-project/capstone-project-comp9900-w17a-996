@@ -188,6 +188,7 @@ def movieDetail():
         # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
+        
         return movie_detail_res
 
 
@@ -299,7 +300,10 @@ def checkReview():
             review["key"] = str(counter)
             counter += 1
         print(review_res)
-        return {"user": review_res}
+
+        title = movie_detail_res["movie"]["title"]
+        movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
+        return {"user": review_res, "rating": movie_detail_res["movie"]["rating"]}
 
 """movie page, add to wish list function, add to db"""
 @app.route('/addtoWishList', methods=['POST'])

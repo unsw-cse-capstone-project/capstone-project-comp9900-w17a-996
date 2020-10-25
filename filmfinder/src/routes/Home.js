@@ -7,12 +7,12 @@ import SearchBar from "../components/Search";
 import HotMovies from "../components/HotMovies";
 import Carousel from "../components/Carousel";
 
-class Search extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      hotMovies: [{ title: "1", rating: "1" }],
+      hotMovies: [],
     };
   }
 
@@ -29,6 +29,15 @@ class Search extends Component {
       this.setState({ username: "Visitor" });
     } else {
       this.setState({ username: name });
+    }
+  }
+
+  displayUser = (name) => {
+    if (name === "Visitor") {
+      return "Hello visitor, please sign in."
+    }
+    else {
+      return "Signed in as " + name;
     }
   }
 
@@ -81,8 +90,36 @@ class Search extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-        <BorderSearchWarp
+        <nav className="site-header sticky-top py-1">
+          <div className="container d-flex flex-column flex-md-row justify-content-between">
+            {/* <a className="py-2" aria-label="Product">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#010d20fb" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
+    </a> */}
+            <a className="py-2 text-muted">FilmFinder&copy; </a>
+            <a className="py-2 d-none d-md-inline-block" href="#/profile">
+              Profile
+            </a>
+            <a className="py-2 d-none d-md-inline-block">Messages</a>
+            <a className="py-2 d-none d-md-inline-block" href="#/wishList">
+              Wishlist
+            </a>
+            <a className="py-2 d-none d-md-inline-block" href="#/history">
+              History
+            </a>
+            <a className="py-2 d-none d-md-inline-block" href="#/login">
+              Login/Register
+            </a>
+            {/* <a className="py-2 d-none d-md-inline-block" href="#">Pricing</a>
+    <a className="py-2 d-none d-md-inline-block" href="#">Cart</a> */}
+          </div>
+        </nav>
+        <div className="box_id mr-5">
+          <h5>{this.displayUser(this.state.username)}</h5>
+        </div>
+
+        {/* <div> */}
+
+        {/* <BorderSearchWarp
           border={{
             width: "1px",
             color: "#d9e3f0",
@@ -91,34 +128,32 @@ class Search extends Component {
           }}
         >
         
-          <StyledButton type="primary" onClick={this.goProfile}>
+          <button type="button" className="btn btn-outline-info" onClick={this.goProfile}>
             Profile
-          </StyledButton>
-          <StyledButton type="primary" onClick={this.goMessage}>
+          </button>
+          <Button type="primary" onClick={this.goMessage}>
             Messages
-          </StyledButton>
-          <StyledButton type="primary" onClick={this.goWishList}>
+          </Button>
+          <Button type="primary" onClick={this.goWishList}>
             Wishlist
-          </StyledButton>
-          <StyledButton type="primary" onClick={this.goHistory}>
+          </Button>
+          <Button type="primary" onClick={this.goHistory}>
             History
-          </StyledButton>
-          <StyledButton type="primary" onClick={this.goLogin}>
+          </Button>
+          <Button type="primary" onClick={this.goLogin}>
             Login/Register
-          </StyledButton>
-          <h1 className="mt-2">Hello, {this.state.username}!</h1>
+          </Button>
+          
         
-        </BorderSearchWarp>
-        </div>
-        
+        </BorderSearchWarp> */}
+        {/* </div> */}
+
         <div className="box_search">
           <SearchBar />
         </div>
-        <br/>
-        <br/>
-        <br/>
-
-        
+        <br />
+        <br />
+        <br />
 
         <div>
           <Carousel />
@@ -141,4 +176,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default Home;

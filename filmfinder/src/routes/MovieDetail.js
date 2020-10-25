@@ -84,15 +84,25 @@ class MovieDetail extends Component {
   };
 
   componentDidUpdate() {
-    // fetch("/checkReview")
-    // .then((r) => {
-    //   console.log(r);
-    //   return r.json();
-    // })
-    // .then((r) => {
-    //   this.setState(r);
-    //   console.log(r);
-    // });
+    // fetch("/movieDetail")
+    //   .then((r) => {
+    //     console.log(r);
+    //     return r.json();
+    //   })
+    //   .then((r) => {
+    //     this.setState(r.movie);
+    //     console.log(r);
+    //   });
+
+    fetch("/checkReview")
+    .then((r) => {
+      console.log(r);
+      return r.json();
+    })
+    .then((r) => {
+      this.setState(r);
+      console.log(r);
+    });
   }
 
   componentDidMount() {
@@ -186,7 +196,7 @@ class MovieDetail extends Component {
                         </div>
                         <div className="rate">
                           <RatingResult rating={this.state.rating} />
-                          <p>{this.state.reviewers} people rated</p>
+                          <p>{this.state.user.length} people rated</p>
                         </div>
                       </div>
                     </div>

@@ -118,7 +118,7 @@ class HotMovies extends Component {
             {mapList.map((movie)=>{
                 return(
                    <a onClick={(ev) => this.handleClick(ev, movie.title)}>
-                       <div style={this.stylesLink}>title:{movie.title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rating:{movie.rating}</div>
+                       <div style={this.stylesLink}>{movie.title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rating:{movie.rating}</div>
                        
                        </a> 
                     

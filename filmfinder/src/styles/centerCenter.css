@@ -78,3 +78,12 @@
   right: 0;
   margin: auto;
 }
+
+.btn_color {
+  color: #1976D2;;
+}
+
+.box_id {
+  flex: 1;
+   text-align: right;
+}

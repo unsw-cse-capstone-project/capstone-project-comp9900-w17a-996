@@ -146,7 +146,7 @@ class Register extends Component {
 
                   
                     <button
-                      className="btn btn-lg btn-info btn-block col-md-3 center-h form-control"
+                      className="btn btn-lg btn-outline-info btn-block col-md-3 center-h form-control"
                       onClick={(ev) =>
                         this.handleClick(
                           ev,
