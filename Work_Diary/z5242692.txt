@@ -29,3 +29,8 @@ Week 5
 I fixed some small bugs before the demo. Demo A finished. We held the sprint retrospective to review the first Sprint.
 I submitted the retrospective report. Then, we assigned tasks for Sprint 2 and started the sprint. 
 Next week, I will code for my part of Sprint 2 and keep on debugging the Sprint 1.
+
+
+Week 6
+I finished my coding part of Sprint 2 and fixed some bugs left from Sprint 1.
+Merge our code together, Sprint 2 finished. Next week, we will hold Sprint 2 retro meeting and start Sprint 3.
