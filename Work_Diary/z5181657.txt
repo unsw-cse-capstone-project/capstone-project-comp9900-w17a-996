@@ -25,3 +25,9 @@ Week5
 We finished our first progressive demo (A), and our group had a meeting about the Retrospective.
 Through the meeting, we know what should be improved in the next sprint, and also we make it clear how to complete
 the sprint more efficiently. In the next week, we will continue to the second sprint.
+
+Week6
+
+In this week, we start the second sprint, and assgin the user stories to everyone. Before doing the 2nd sprint, 
+we also had a meeting to discuss the data structure and some functions in 1st sprint that should be improved.
+In the next week, we will do the third sprint to finish what 2nd sprint left and do some new functions as well.
