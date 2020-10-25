@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
 import React, { Component } from "react";
 
 class HotMovies extends Component {
@@ -26,7 +30,15 @@ class HotMovies extends Component {
         "#www.wechat.com/",
         "#www.instagram.com/",
       ],
+<<<<<<< HEAD
       hotMovies: [],
+=======
+      mapList: [
+        { name: '我和我的祖国', rating: "9" , title:'123'},
+        { name: '信条', rating: "9.2", title:'234' },
+        { name: '我和我的家乡', rating: "10" ,title:'567'},
+      ],
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
     };
   }
 
@@ -57,12 +69,16 @@ class HotMovies extends Component {
     position: "relative",
     left: "40px",
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
   handle() {
     const w = window.open("about:blank");
     w.location.href = "你的地址";
   }
 
+<<<<<<< HEAD
   componentDidMount(){
     fetch("/hotmovie")
     .then((r) => r.json())
@@ -72,11 +88,14 @@ class HotMovies extends Component {
     });
   }
 
+=======
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
   handleClick(ev, title) {
     const data = {
       title: title,
     }
 
+<<<<<<< HEAD
     fetch("/movieDetail", {
       method: "POST",
       headers: {
@@ -93,6 +112,8 @@ class HotMovies extends Component {
         console.error("Error:", error);
       });
 
+=======
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
     window.location.href = "/#/movie?title=" + title;
 }
     
@@ -106,7 +127,11 @@ class HotMovies extends Component {
         
     //   </ul>
     // ));
+<<<<<<< HEAD
    const mapList = this.state.hotMovies;
+=======
+   const mapList = this.state.mapList;
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
     return (
       <div>
           
@@ -118,7 +143,11 @@ class HotMovies extends Component {
             {mapList.map((movie)=>{
                 return(
                    <a onClick={(ev) => this.handleClick(ev, movie.title)}>
+<<<<<<< HEAD
                        <div style={this.stylesLink}>{movie.title} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rating:{movie.rating}</div>
+=======
+                       <div style={this.stylesLink}>name:{movie.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rating:{movie.rating}</div>
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
                        
                        </a> 
                     
@@ -177,4 +206,8 @@ class HotMovies extends Component {
   }
 }
 
+<<<<<<< HEAD
 export default HotMovies;
+=======
+export default HotMovies;
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33

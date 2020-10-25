@@ -14,6 +14,7 @@ Week 3
 I wrote the system architecture diagram of the proposal. We had an group meeting about the project
 assignment. I will do the font-end part in this project.
 Next week, I plan to do the font-end of the user stories that we will do in the first sprint.
+<<<<<<< HEAD
 
 Week4
 
@@ -31,3 +32,5 @@ Week6
 In this week, we start the second sprint, and assgin the user stories to everyone. Before doing the 2nd sprint, 
 we also had a meeting to discuss the data structure and some functions in 1st sprint that should be improved.
 In the next week, we will do the third sprint to finish what 2nd sprint left and do some new functions as well.
+=======
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33

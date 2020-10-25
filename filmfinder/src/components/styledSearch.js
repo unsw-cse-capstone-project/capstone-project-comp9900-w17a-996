@@ -19,13 +19,27 @@ div{
 `
 
 export const BorderSearchWarp=styled(SearchWarp)`
+<<<<<<< HEAD
+=======
+
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
 border-width:${props=>props.border.width};
 border-color:${props=>props.border.color};
 border-style:${props=>props.border.style};
 // 这行是searchingmovies样式
 font-size:.9rem;
   color:#d9e3f0
+<<<<<<< HEAD
     
 }
 `
   
+=======
+
+
+`
+
+
+
+   
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33

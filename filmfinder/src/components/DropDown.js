@@ -1,14 +1,26 @@
 import React from 'react';
+<<<<<<< HEAD
 // import searchImg from "../images/searchbar.png"
+=======
+import searchImg from "../images/searchbar.png"
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
 // import './style.css';
 
 
 
+<<<<<<< HEAD
 // const homeImage = {
 //     backgroundSize: '100% 100%', //记得这里100%
 //     background: 'url(${ homeImage })',
 //     backgroundImage: 'url(' + searchImg + ')'
 //   }
+=======
+const homeImage = {
+    backgroundSize: '100% 100%', //记得这里100%
+    background: 'url(${ homeImage })',
+    backgroundImage: 'url(' + searchImg + ')'
+  }
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
 
 
 class Dropdown extends React.Component {

@@ -1,8 +1,10 @@
+<<<<<<< HEAD
 import 'bootstrap/dist/js/bootstrap.bundle.min';  
+=======
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

@@ -26,4 +26,10 @@ export const TransHotMovies = styled.div`
     cursor: pointer;
     
     
+<<<<<<< HEAD
 `
+=======
+
+`
+
+>>>>>>> 623abc30eba6bbd6937576f530f15c7efa94ed33
