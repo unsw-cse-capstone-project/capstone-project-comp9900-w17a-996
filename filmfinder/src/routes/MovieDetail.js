@@ -240,12 +240,12 @@ class MovieDetail extends Component {
         <Modal
           title="Select your wishlist"
           visible={visible}
-          onOk={this.handleOk}
+          onOk={this.handleOk.bind(this)}
           confirmLoading={confirmLoading}
-          onCancel={this.handleCancel}
+          onCancel={this.handleCancel.bind(this)}
         >
           <p>{ModalText}</p>
-          <Checkbox.Group options={plainOptions} onChange={this.onChange} ref={this.myWish} />
+          <Checkbox.Group options={plainOptions} onChange={this.onChange.bind(this)} ref={this.myWish} />
         </Modal>
       </div>
     );
