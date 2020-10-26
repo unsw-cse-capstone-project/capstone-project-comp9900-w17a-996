@@ -45,11 +45,9 @@ class MovieDetail extends Component {
       confirmLoading: true,
     });
 
-    console.log(this.myWish.current.state.value);
-
     const data = {
       title: this.state.title,
-      type: this.myWish.current.state.value,
+      type: this.myWish
     }
 
     fetch("/addtoWishList", {
@@ -138,6 +136,7 @@ class MovieDetail extends Component {
   };
 
   onChange(checkedValues) {
+    this.myWish = checkedValues;
     console.log('checked = ', checkedValues);
   }
 
