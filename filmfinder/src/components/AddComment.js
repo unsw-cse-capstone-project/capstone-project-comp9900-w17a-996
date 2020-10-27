@@ -45,17 +45,37 @@ class AddComment extends Component {
       submitting: true,
     });
 
+    const data = {
+      movieTitle: movieTitle,
+      rating: this.state.rating,
+      review: this.state.value,
+    }
+
+    fetch("/checkReview", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     setTimeout(() => {
       console.log(this.state);
       
 
-      const data = {
-        movieTitle: movieTitle,
-        rating: this.state.rating,
-        review: this.state.value,
-      }
+      
 
       console.log(data);
+
+      
 
       this.setState({
         submitting: false,
@@ -63,7 +83,7 @@ class AddComment extends Component {
         rating: 0,
         // comments: [
         //   {
-        //     userName: 'Han Solo',
+        //     userName: '',
         //     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         //     comment: this.state.value,
         //     rating: this.state.rating,
@@ -73,21 +93,7 @@ class AddComment extends Component {
         // ],
       });
 
-      fetch("/checkReview", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => console.log(response))
-        .then((data) => {
-          console.log("Success:", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      this.props.setPare();
     }, 1000);
 
     // window.location.href = "/#/movie?title=" + movieTitle;

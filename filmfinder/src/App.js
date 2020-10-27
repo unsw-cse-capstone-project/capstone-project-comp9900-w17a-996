@@ -15,6 +15,7 @@ import RegisterFail from "./routes/registerFail.js";
 import Dropdwon from "./components/DropDown";
 import HotMovies from "./components/HotMovies";
 import Carousel from "./components/Carousel";
+import OtherProfile from "./routes/OtherProfile.js";
 
 class App extends React.Component {
   constructor(props){
@@ -40,6 +41,7 @@ class App extends React.Component {
           <Route path="/dropdown" component={Dropdwon}/>
           <Route path="/hotmovies" component={HotMovies}/>
           <Route path="/carousel" component={Carousel}/>
+          <Route path="/otherProfile" component={OtherProfile}/>
         </Switch>
       </HashRouter>
     )
