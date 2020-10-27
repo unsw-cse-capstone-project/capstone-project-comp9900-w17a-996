@@ -68,7 +68,7 @@ const CommentCard = (props) => {
             content={
                     <div id='toReply'>
                         <p>
-                            {props.comment}
+                            {props.review}
                         </p>
                         {createElement(reply === true ? AddReply : MessageOutlined)}
                     </div>
