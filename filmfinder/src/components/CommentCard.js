@@ -50,6 +50,10 @@ const CommentCard = (props) => {
             <span key="comment-basic-reply-to" onClick={addReply}>Reply to</span>,
         ];
 
+        const goOtherProfile = (user) => {
+            window.location.href = "/#/otherProfile?username=" + user;
+        }       
+
         return (
             <Comment
             actions={actions}
@@ -58,12 +62,13 @@ const CommentCard = (props) => {
                 <Avatar
                 src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                 alt={props.userName}
+                onClick={() => (goOtherProfile(props.userName))}
                 />
             }
             content={
                     <div id='toReply'>
                         <p>
-                            {props.review}
+                            {props.comment}
                         </p>
                         {createElement(reply === true ? AddReply : MessageOutlined)}
                     </div>

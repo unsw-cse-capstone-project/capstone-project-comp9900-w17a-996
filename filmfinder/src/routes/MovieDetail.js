@@ -39,6 +39,18 @@ class MovieDetail extends Component {
     };
   }
 
+  setPare = () => {
+    console.log("My child is calling me.");
+    fetch("/checkReview")
+      .then((r) => {
+        console.log(r);
+        return r.json();
+      })
+      .then((r) => {
+        this.setState(r);
+        console.log(r);
+      });
+  }
 
   handleOk = () => {
     this.setState({
@@ -80,28 +92,6 @@ class MovieDetail extends Component {
       visible: false,
     });
   };
-
-  componentDidUpdate() {
-    // fetch("/movieDetail")
-    //   .then((r) => {
-    //     console.log(r);
-    //     return r.json();
-    //   })
-    //   .then((r) => {
-    //     this.setState(r.movie);
-    //     console.log(r);
-    //   });
-
-    fetch("/checkReview")
-    .then((r) => {
-      console.log(r);
-      return r.json();
-    })
-    .then((r) => {
-      this.setState(r);
-      console.log(r);
-    });
-  }
 
   componentDidMount() {
     fetch("/movieDetail")
@@ -174,7 +164,7 @@ class MovieDetail extends Component {
                     <div className="comments">
                       <br />
                       <ul>{commentItems}</ul>
-                      <AddComment title={this.state.title}/>
+                      <AddComment title={this.state.title} setPare={this.setPare}/>
                       
                     </div>
                   </div>
