@@ -51,7 +51,19 @@ const CommentCard = (props) => {
         ];
 
         const goOtherProfile = (user) => {
+            fetch("/home")
+      .then((r) => r.json())
+      .then((r) => {
+        // this.setState(r);
+        console.log("guid:",r.username);
+        if (r.username === user) {
+            window.location.href = "/#/profile";
+        }
+        else{
             window.location.href = "/#/otherProfile?username=" + user;
+        }
+      });
+            
         }       
 
         return (

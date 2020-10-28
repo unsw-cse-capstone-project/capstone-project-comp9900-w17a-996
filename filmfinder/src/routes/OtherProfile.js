@@ -13,7 +13,7 @@ class OtherProfile extends Component {
 
     render() { 
         return ( <React.Fragment>
-            <h3>This is the profile for {this.state.userName}</h3>
+            <h3>This is the profile page of {this.state.userName}</h3>
         </React.Fragment> );
     }
 }
