@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Button, Tooltip } from 'antd';
-import { UserAddOutlined, StopOutlined } from '@ant-design/icons';
+import { UserAddOutlined,UndoOutlined, StopOutlined } from '@ant-design/icons';
 
 function BlockAction(b){
     if(b){
@@ -16,7 +16,7 @@ export default function BlockButton(props){
 
     return(
         <div>
-            {block ? (<Button className="blocked" icon={<StopOutlined />} onClick={() => {
+            {block ? (<Button className="blocked" icon={<UndoOutlined />} onClick={() => {
                 console.log(props.block);
                 if(block){
                     setblock(false);
@@ -25,9 +25,9 @@ export default function BlockButton(props){
                     setblock(true);
                 }
             }}>
-                    Block
+                    Unblock
                     </Button>) 
-                    : <Button className="unblock" type="primary" onClick={() => {
+                    : <Button className="unblock" type="primary" icon={<StopOutlined />} onClick={() => {
                         console.log(props.block);
                         if(block){
                             setblock(false);
@@ -36,7 +36,7 @@ export default function BlockButton(props){
                             setblock(true);
                         }
                     }}>
-                        Unblock
+                        Block
                     </Button>
             }
         </div>
