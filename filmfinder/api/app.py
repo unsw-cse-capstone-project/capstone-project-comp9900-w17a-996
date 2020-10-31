@@ -381,19 +381,22 @@ def wishlist():
         # print(res.values())
         return res
 
+
+otherUserName = {"content": ""}
 """user browse others wish list"""
 @app.route("/otherWishList", methods=['POST', 'GET'])
 def otherWishList():
     db = connect_db()
     c = db.cursor()
     
-    otherName = ""
+    
     # get another username from front end
     if request.method == "POST":
         data = request.get_json()
-        otherName = data["otherName"]
-        return otherName
+        otherUserName["content"] = data["otherName"]
+        return "-"
     else:
+        otherName = otherUserName["content"]
         search_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
 
         str_json = c.execute(search_sql, (otherName,)).fetchall()[0][0]
@@ -409,23 +412,25 @@ def otherWishList():
 
         return {"wishlist": result}
 
+
+otherUserName = {"content": ""}
 """user browse other review"""
 @app.route("/otherReview", methods=["POST", "GET"])
 def otherReview():
     db = connect_db()
     c = db.cursor()
     
-    otherName = ""
     # get another username from front end
     if request.method == "POST":
         data = request.get_json()
-        otherName = data["otherName"]
-        return otherName
+        otherUserName["content"] = data["otherName"]
+        return "-"
     else:
-        search_sql = "SELECT * FROM USER WHERE USERNAME = ?"
+        otherName = otherUserName["content"]
+        search_sql = "SELECT * FROM REVIEW WHERE USER = ?"
 
         data = c.execute(search_sql, (otherName,)).fetchall()
-
+        print(data)
         review_res = []
 
         try:
