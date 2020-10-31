@@ -84,4 +84,8 @@ for i in reviews:
 # print(type(str_json), str_json, str_json[0])
 # dict_json = json.loads(str_json)
 # print(dict_json["genre1"]["movie1"])
+otherName = "Kong"
+search_sql = "SELECT * FROM REVIEW WHERE USER = ?"
+res = c.execute(search_sql, (otherName,)).fetchall()
+print(res)
 

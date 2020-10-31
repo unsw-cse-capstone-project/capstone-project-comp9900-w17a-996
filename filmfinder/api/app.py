@@ -381,9 +381,9 @@ def wishlist():
         # print(res.values())
         return res
 
-"""user browse others review list"""
-@app.route("/otherReview", methods=['POST', 'GET'])
-def otherReivew():
+"""user browse others wish list"""
+@app.route("/otherWishList", methods=['POST', 'GET'])
+def otherWishList():
     db = connect_db()
     c = db.cursor()
     
@@ -399,7 +399,57 @@ def otherReivew():
         str_json = c.execute(search_sql, (otherName,)).fetchall()[0][0]
         dict_json = json.loads(str_json)
 
-        return dict_json
+        
+        result = []
+        for key, value in dict_json.items():
+            res = {}
+            res["title"] = key
+            res["movies"] = list(value.keys())
+            result.append(res)
+
+        return {"wishlist": result}
+
+"""user browse other review"""
+@app.route("/otherReview", methods=["POST", "GET"])
+def otherReview():
+    db = connect_db()
+    c = db.cursor()
+    
+    otherName = ""
+    # get another username from front end
+    if request.method == "POST":
+        data = request.get_json()
+        otherName = data["otherName"]
+        return otherName
+    else:
+        search_sql = "SELECT * FROM USER WHERE USERNAME = ?"
+
+        data = c.execute(search_sql, (otherName,)).fetchall()
+
+        review_res = []
+
+        try:
+            
+            reviews = c.execute(search_sql, (otherName,)).fetchall()
+            for review in reviews:
+                item = {"movieName": review[1], 
+                        "reviewTime": review[4], 
+                        "rating": review[3],
+                        "review": review[2]}
+                
+                review_res.append(item)
+        except sqlite3.OperationalError:
+            pass
+
+        # sort by time
+        review_res = sorted(review_res, key=lambda x: x["reviewTime"], reverse=True)
+
+        # add key:counter
+        counter = 1
+        for review in review_res:
+            review["key"] = str(counter)
+            counter += 1
+        return {"data": review_res}
 
 
 @app.route('/hotmovie', methods=['GET'])
