@@ -2,23 +2,11 @@ import React, { Component } from 'react';
 import { List } from 'antd';
 
 class OtherWishlist extends Component {
-    state = { titles: [
-        {
-            title: 'Ant Design Title 1',
-          },
-          {
-            title: 'Ant Design Title 2',
-          },
-          {
-            title: 'Ant Design Title 3',
-          },
-          {
-            title: 'Ant Design Title 4',
-          },
-    ] }
+    state = { wishlist:[] }
 
     componentDidMount() {
-      fetch("/otherWishList")
+      setTimeout(() => {
+        fetch("/otherWishList")
         .then((r) => {
           console.log(r);
           return r.json();
@@ -28,18 +16,20 @@ class OtherWishlist extends Component {
           console.log(r);
         });
         
-      }
+      });
+    }
+      
 
     render() { 
         return ( <React.Fragment>
             <List
     itemLayout="horizontal"
-    dataSource={this.state.titles}
+    dataSource={this.state.wishlist}
     renderItem={item => (
       <List.Item>
-        <List.Item.Meta
+        <List.Item.Meta className="ml-5"
           title={<a href="https://ant.design">{item.title}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          description={item.movies}
         />
       </List.Item>
     )}
