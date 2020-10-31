@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import FollowButton from "../components/FollowButton";
+import BlockButton from "../components/BlockButton";
+
 class OtherProfile extends Component {
     state = { userName: '' }
 
@@ -14,6 +17,8 @@ class OtherProfile extends Component {
     render() { 
         return ( <React.Fragment>
             <h3>This is the profile page of {this.state.userName}</h3>
+            <FollowButton/>
+            <BlockButton/>
         </React.Fragment> );
     }
 }
