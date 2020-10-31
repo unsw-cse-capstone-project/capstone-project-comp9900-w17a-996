@@ -17,8 +17,8 @@ class OtherProfile extends Component {
     render() { 
         return ( <React.Fragment>
             <h3>This is the profile page of {this.state.userName}</h3>
-            <FollowButton/>
-            <BlockButton/>
+            <FollowButton follow=""/>
+            <BlockButton block=""/>
         </React.Fragment> );
     }
 }
