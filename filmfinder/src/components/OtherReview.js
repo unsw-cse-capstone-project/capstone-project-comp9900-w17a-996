@@ -20,6 +20,19 @@ class OtherReview extends Component {
     ],
   };
 
+  componentDidMount() {
+    setTimeout(() => {fetch("/otherReview")
+    .then((r) => {
+      console.log(r);
+      return r.json();
+    })
+    .then((r) => {
+      // this.setState(r);
+      console.log(r);
+    });},1000);
+    
+  }
+
   render() {
     return (
       <React.Fragment>

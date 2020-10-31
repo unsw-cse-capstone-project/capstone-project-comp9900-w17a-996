@@ -392,7 +392,7 @@ def otherReivew():
     if request.method == "POST":
         data = request.get_json()
         otherName = data["otherName"]
-        return "-"
+        return otherName
     else:
         search_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
 
