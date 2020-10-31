@@ -381,6 +381,27 @@ def wishlist():
         # print(res.values())
         return res
 
+"""user browse others review list"""
+@app.route("/otherReview", methods=['POST', 'GET'])
+def otherReivew():
+    db = connect_db()
+    c = db.cursor()
+    
+    otherName = ""
+    # get another username from front end
+    if request.method == "POST":
+        data = request.get_json()
+        otherName = data["otherName"]
+        return "-"
+    else:
+        search_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
+
+        str_json = c.execute(search_sql, (otherName,)).fetchall()[0][0]
+        dict_json = json.loads(str_json)
+
+        return dict_json
+
+
 @app.route('/hotmovie', methods=['GET'])
 def hotmovie():
     db = connect_db()
