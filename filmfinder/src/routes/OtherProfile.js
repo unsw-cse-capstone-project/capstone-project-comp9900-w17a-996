@@ -29,6 +29,22 @@ class OtherProfile extends Component {
           console.error("Error:", error);
         });
 
+        fetch("/otherWishList", {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => console.log(response))
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+
       this.setState({
           userName: username
       })

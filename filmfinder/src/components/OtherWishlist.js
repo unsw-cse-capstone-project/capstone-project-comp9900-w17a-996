@@ -17,6 +17,18 @@ class OtherWishlist extends Component {
           },
     ] }
 
+    componentDidMount() {
+      fetch("/otherWishList")
+        .then((r) => {
+          console.log(r);
+          return r.json();
+        })
+        .then((r) => {
+          this.setState(r);
+          console.log(r);
+        });
+        
+      }
 
     render() { 
         return ( <React.Fragment>

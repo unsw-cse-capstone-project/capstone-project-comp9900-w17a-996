@@ -5,31 +5,23 @@ const { Column } = Table;
 class OtherReview extends Component {
   state = {
     data: [
-      {
-        movieName: "1",
-        reviewTime: "2020",
-        rating: 2,
-        review: "ya",
-      },
-      {
-        movieName: "2",
-        reviewTime: "2019",
-        rating: 3,
-        review: "No",
-      },
+      
     ],
   };
 
   componentDidMount() {
-    setTimeout(() => {fetch("/otherReview")
+    setTimeout(() => {
+      fetch("/otherReview")
     .then((r) => {
       console.log(r);
       return r.json();
     })
     .then((r) => {
-      // this.setState(r);
+      this.setState(r);
       console.log(r);
-    });},1000);
+    });
+    },500);
+  
     
   }
 
