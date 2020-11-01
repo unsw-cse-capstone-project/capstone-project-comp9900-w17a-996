@@ -1,6 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Button, Tooltip } from "antd";
-import { UserAddOutlined, CheckOutlined } from "@ant-design/icons";
+import { UserAddOutlined, CheckOutlined, SecurityScanTwoTone } from "@ant-design/icons";
 
 function FollowAction(f) {
   if (f) {
@@ -12,10 +12,11 @@ function FollowAction(f) {
 
 export default function FollowButton(props) {
   const [follow, setFollow] = useState(props.follow);
-  // console.log("Follow: ", follow);
-  // console.log("***",props.username);
 
-  
+  useEffect(() => { setFollow(props.follow)},[]);
+
+  console.log("Child Data: ", follow);
+  // console.log("***",props.username);
 
   return (
     <div>

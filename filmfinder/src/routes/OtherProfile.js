@@ -17,27 +17,44 @@ class OtherProfile extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const query = this.props.location.search;
     const username = query.split("=")[1];
+    let followState = undefined;
+    let blockState = undefined;
 
+  
     fetch("/followUser")
       .then((r) => r.json())
       .then((r) => {
-        this.setState({
-          follow: this.setStatus(r.isfollower)
-        });
+        
         console.log("Follow state:", r);
+        if (r.isfollower) {
+          followState = '1';
+        }
       });
+    
+      console.log(this.state.follow);
 
     fetch("/blockUser")
       .then((r) => r.json())
       .then((r) => {
-        this.setState({
-          follow: this.setStatus(r.isblocker)
-        });
+
         console.log("Block state:", r);
+        if (r.isblocker) {
+          blockState = '1';
+        }
       });
+
+      setTimeout(() => {
+        console.log(followState, blockState);
+        this.setState({
+          userName: username,
+          follow: followState,
+          block: blockState,
+        });
+        console.log("Father Data: ",this.state);
+      }, 500);
 
     let data = { otherName: username };
 
@@ -72,10 +89,6 @@ class OtherProfile extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-
-    this.setState({
-      userName: username,
-    });
   }
 
   render() {
@@ -85,7 +98,7 @@ class OtherProfile extends Component {
           <h3>This is the profile page of {this.state.userName}</h3>
         </div>
         <div className="row center-h">
-          <FollowButton follow={this.state.follow} username={this.state.userName} />
+          <FollowButton{...this.state} />
           
           <BlockButton block={this.state.block} username={this.state.userName} />
         </div>

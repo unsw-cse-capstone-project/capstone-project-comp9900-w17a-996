@@ -5,6 +5,16 @@ import { List } from 'antd';
 
 class MyBlock extends Component {
     state = { blocks: [{'user': 'hi'}, {'user': 'ho'}] }
+
+    componentDidMount() {
+      fetch("/blocklist")
+      .then((r) => r.json())
+      .then((r) => {
+        
+        console.log("BL:",r);
+      });
+    }
+
     render() { 
         return ( <React.Fragment>
             <NavBar />
