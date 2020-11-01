@@ -6,7 +6,15 @@ import { List } from 'antd';
 class MyFollowing extends Component {
     state = { followings: [{'user': 'hi'}, {'user': 'ho'}] }
 
-
+    componentDidMount() {
+      fetch("/followinglist")
+      .then((r) => r.json())
+      .then((r) => {
+        
+        console.log("FGL:",r);
+        this.setState(r);
+      });
+    }
 
     render() { 
         return ( <React.Fragment>

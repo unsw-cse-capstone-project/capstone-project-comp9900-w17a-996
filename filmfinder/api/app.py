@@ -608,7 +608,7 @@ def blocklist():
     return {"blocks": res}
 
 @app.route('/followinglist', methods=['GET', 'POST'])
-def blocklist():
+def followinglist():
     db = connect_db()
     c = db.cursor()
 
