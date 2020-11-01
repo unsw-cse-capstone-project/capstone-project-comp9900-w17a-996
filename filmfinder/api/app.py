@@ -588,6 +588,24 @@ def recommendmovie():
     recommendation_list['recommendmovie'] = recommendation.recommend(userName)
     return recommendation_list
 
+@app.route('/blocklist', methods=['GET', 'POST'])
+def blocklist():
+    db = connect_db()
+    c = db.cursor()
+
+    user = guid["username"]
+    sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
+
+    blockers = c.execute(sql, (user, )).fetchall()[0][0]
+    b_l = blockers.split(" ")
+
+    b_l = b_l[1:]
+
+    res = []
+    for b in b_l:
+        res.append({"user": b})
+
+    return {"blocks": res}
 
 if __name__ == "__main__":
     app.run(debug=True)
