@@ -607,5 +607,24 @@ def blocklist():
 
     return {"blocks": res}
 
+@app.route('/followinglist', methods=['GET', 'POST'])
+def blocklist():
+    db = connect_db()
+    c = db.cursor()
+
+    user = guid["username"]
+    sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
+
+    followers = c.execute(sql, (user, )).fetchall()[0][0]
+    f_l = followers.split(" ")
+
+    f_l = f_l[1:]
+
+    res = []
+    for f in f_l:
+        res.append({"user": f})
+
+    return {"followings": res}
+
 if __name__ == "__main__":
     app.run(debug=True)
