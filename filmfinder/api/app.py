@@ -498,25 +498,25 @@ def followUser():
         print("data", data)
         # return "-"
     # else:
-        
+        me = guid["username"]
         user = follow_block_action["user"]
         action = follow_block_action["action"]
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
 
-        followers = c.execute(sql, (user, )).fetchall()[0][0]
+        followers = c.execute(sql, (me, )).fetchall()[0][0]
         # print("data", data)
         print("followers:", followers)
         if action == "f":
             followers = followers + " " + user
             update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
-            c.execute(update_sql, (followers, user))
+            c.execute(update_sql, (followers, me))
             db.commit()
         else:
             f_l = followers.split(" ")
             f_l.remove(user)
             followers = " ".join(f_l)
             update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
-            c.execute(update_sql, (followers, user))
+            c.execute(update_sql, (followers, me))
             db.commit()
         return "-"
     else:
@@ -527,8 +527,8 @@ def followUser():
         print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         followers = c.execute(sql, (user, )).fetchall()[0][0]
         f_l = followers.split(" ")
-        
-        if user in f_l:
+        otheruser = otherUserName["content"]
+        if otheruser in f_l:
             return {"isfollower": True}
         else:
             return {"isfollower": False}
@@ -549,23 +549,23 @@ def blockUser():
         # return "-"
     # else:
         
-
+        me = guid["username"]
         user = follow_block_action["user"]
         action = follow_block_action["action"]
         sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
 
-        blockers = c.execute(sql, (user, )).fetchall()[0][0]
+        blockers = c.execute(sql, (me, )).fetchall()[0][0]
         if action == "b":
             blockers = blockers + " " + user
             update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
-            c.execute(update_sql, (blockers, user))
+            c.execute(update_sql, (blockers, me))
             db.commit()
         else:
             b_l = blockers.split(" ")
             b_l.remove(user)
             blockers = " ".join(b_l)
             update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
-            c.execute(update_sql, (blockers, user))
+            c.execute(update_sql, (blockers, me))
             db.commit()
         return "-"
     else:
@@ -575,7 +575,8 @@ def blockUser():
         print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         blockers = c.execute(sql, (user, )).fetchall()[0][0]
         b_l = blockers.split(" ")
-        if user in b_l:
+        otheruser = otherUserName["content"]
+        if otheruser in b_l:
             return {"isblocker": True}
         else:
             return {"isblocker": False}
