@@ -520,8 +520,11 @@ def followUser():
             db.commit()
         return "-"
     else:
-        user = follow_block_action["user"]
+        user = guid['username']
+        # user = follow_block_action["user"]
+        print("user", user)
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
+        print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         followers = c.execute(sql, (user, )).fetchall()[0][0]
         f_l = followers.split(" ")
         
@@ -566,8 +569,10 @@ def blockUser():
             db.commit()
         return "-"
     else:
-        user = follow_block_action["user"]
+        user = guid['username']
+        # user = follow_block_action["user"]
         sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
+        print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         blockers = c.execute(sql, (user, )).fetchall()[0][0]
         b_l = blockers.split(" ")
         if user in b_l:
