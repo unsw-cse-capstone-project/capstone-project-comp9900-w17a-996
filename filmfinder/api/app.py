@@ -552,5 +552,13 @@ def blockUser():
         return "-"
 
 
+@app.route('/recommendmovie', methods=['GET'])
+def recommendmovie():
+    userName = guid['username']
+    recommendation_list = {}
+    recommendation_list['recommendmovie'] = recommendation.recommend(userName)
+    return recommendation_list
+
+
 if __name__ == "__main__":
     app.run(debug=True)
