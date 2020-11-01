@@ -31,13 +31,26 @@ def api():
     elif request.method=='POST':
         db = connect_db()
         c = db.cursor()
+
+        # create User table
         try:
             c.execute(
-                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT)"
+                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT, FOLLOW TEXT, BLOCK TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
             pass 
+
+        # create Review table
+        try:
+            c.execute(
+                "CREATE TABLE REVIEW (USER TEXT, MOVIE TEXT, COMMENT TEXT, RATE TEXT, TIME TEXT)"
+            )
+            db.commit()
+        except sqlite3.OperationalError:
+            pass 
+
+        
         user_data = request.get_json()
         # username = user_data["userName"]
         # nickname = user_data["nickName"]
@@ -47,8 +60,8 @@ def api():
         wishlists = {'0':{}, '1':{}, '2':{},'3':{}, '4':{},'5':{},'6':{},'7':{},'8':{},'9':{}}
         wishlists = json.dumps(wishlists)
         c.execute(
-            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)", 
-            (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"], wishlists)
+            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST, FOLLOW, BLOCK) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", 
+            (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"], wishlists, "", "")
         )
         db.commit()
         return request.get_json()
@@ -146,8 +159,8 @@ def profile():
     try:
         c.execute(delete_sql, (username,))
         c.execute(
-            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST) VALUES(?, ?, ?, ?, ?, ?)", 
-            (user_data["username"], user_data["nickname"], user_data["email"], user_data["password"], user_data["bio"], "")
+            "INSERT INTO USER (USERNAME, NICKNAME, EMAIL, PASSWORD, BIO, WISHLIST, FOLLOW, BLOCK) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", 
+            (user_data["username"], user_data["nickname"], user_data["email"], user_data["password"], user_data["bio"], "", "", "")
         )
         db.commit()
         return user_data
@@ -469,6 +482,73 @@ def hotmovie():
     
     hot_movie['hotMovies'] = recommendation.sort_film(movie_list)
     return hot_movie
+
+"""follow another user"""
+follow_block_action = {"action": "", "user": ""}
+@app.route("/followUser", methods=["GET", "POST"])
+def followUser():
+
+    if request.method == "POST":
+        data = request.get_json()
+        follow_block_action["action"] = data["action"]
+        follow_block_action["user"] = data["user"]
+        return "-"
+    else:
+        db = connect_db()
+        c = db.cursor()
+
+        user = follow_block_action["user"]
+        action = follow_block_action["action"]
+        sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
+
+        followers = c.execute(sql, (user, ))
+        print("followers:", followers)
+        if action == "f":
+            followers = followers + "," + user
+            update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
+            c.execute(update_sql, (followers, user))
+            db.commit()
+        else:
+            f_l = followers.split(",")
+            f_l.remove(user)
+            followers = ",".join(f_l)
+            update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
+            c.execute(update_sql, (followers, user))
+            db.commit()
+
+
+""""block another user"""
+@app.route("/blockUser", methods=["GET", "POST"])
+def blockUser():
+
+    if request.method == "POST":
+        data = request.get_json()
+        follow_block_action["action"] = data["action"]
+        follow_block_action["user"] = data["user"]
+        return "-"
+    else:
+        db = connect_db()
+        c = db.cursor()
+
+        user = follow_block_action["user"]
+        action = follow_block_action["action"]
+        sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
+
+        blockers = c.execute(sql, (user, ))
+        if action == "b":
+            blockers = blockers + "," + user
+            update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
+            c.execute(update_sql, (blockers, user))
+            db.commit()
+        else:
+            b_l = blockers.split(",")
+            b_l.remove(user)
+            blockers = ",".join(b_l)
+            update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
+            c.execute(update_sql, (blockers, user))
+            db.commit()
+        return "-"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
