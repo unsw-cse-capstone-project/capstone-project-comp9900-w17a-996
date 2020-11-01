@@ -1,5 +1,4 @@
 Week 1
-
 Join the group, check the requirements and assessments required for the course, and understand the general framework of the course. 
 Registered a jira account and joined the github group. 
 Discussed with the team members the code framework required by the project.
@@ -13,3 +12,20 @@ Week 3
 Completed the part of project proposal I am responsible for.
 Discuss the details of division works of code with team and I will doing the front-end with jiaqi Ma.
 Learing some knowledge about react framwork and I will begin with the first sprint next week.
+
+Week 4
+Start the task of sprint 1, and make the search box on the home page. 
+I encountered many problems cause I first came into contact with the front-end, they were finally solved with the help of the team members.
+
+Week5
+Completed the task of sprint1 with the team members.
+I started the meeting and discussed the first review, found the advantages and disadvantages, and improved some future work.
+Assigned the task of sprint2.
+
+Week6
+Continue to learn the front-end react knowledge and write the code of spring2.
+Learned and completed the connection of the front-end import back-end database in the task.
+
+Week7
+Conducted a second review with the team members and made a lot of corrections and improvements to the current work.
+Tested at this stage to see if the code and page can run relatively completely.
