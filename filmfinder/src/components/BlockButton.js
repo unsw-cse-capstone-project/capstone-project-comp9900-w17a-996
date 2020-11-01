@@ -17,24 +17,56 @@ export default function BlockButton(props){
     return(
         <div>
             {block ? (<Button className="blocked" icon={<UndoOutlined />} onClick={() => {
-                console.log(props.block);
-                if(block){
-                    setblock(false);
-                }
-                else{
-                    setblock(true);
-                }
+                
+                const data = {action: "u", user: props.username};
+
+                console.log(data);
+                
+                setblock(false);
+
+                fetch("/blockUser", {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                  })
+                    .then((response) => console.log(response))
+                    .then((data) => {
+                      console.log("Success:", data);
+                    })
+                    .catch((error) => {
+                      console.error("Error:", error);
+                    });
+
             }}>
                     Unblock
                     </Button>) 
                     : <Button className="unblock" type="primary" icon={<StopOutlined />} onClick={() => {
-                        console.log(props.block);
-                        if(block){
-                            setblock(false);
-                        }
-                        else{
-                            setblock(true);
-                        }
+                        
+                        const data = {action: "b", user: props.username};
+
+                        console.log(data);
+                        
+                        setblock(true);
+
+                        fetch("/blockUser", {
+                            method: "POST",
+                            headers: {
+                              Accept: "application/json",
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                          })
+                            .then((response) => console.log(response))
+                            .then((data) => {
+                              console.log("Success:", data);
+                            })
+                            .catch((error) => {
+                              console.error("Error:", error);
+                            });
+
                     }}>
                         Block
                     </Button>
