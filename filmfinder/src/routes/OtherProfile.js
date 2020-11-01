@@ -8,6 +8,15 @@ import "../styles/centerCenter.css";
 class OtherProfile extends Component {
   state = { userName: "", follow: "", block: "" };
 
+  setStatus(plain_state){
+    if (plain_state === "false") {
+      return "";
+    }
+    else{
+      return "1";
+    }
+  }
+
   componentDidMount() {
     const query = this.props.location.search;
     const username = query.split("=")[1];
@@ -15,14 +24,18 @@ class OtherProfile extends Component {
     fetch("/followUser")
       .then((r) => r.json())
       .then((r) => {
-        // this.setState(r);
+        this.setState({
+          follow: this.setStatus(r.isfollower)
+        });
         console.log("Follow state:", r);
       });
 
     fetch("/blockUser")
       .then((r) => r.json())
       .then((r) => {
-        // this.setState(r);
+        this.setState({
+          follow: this.setStatus(r.isblocker)
+        });
         console.log("Block state:", r);
       });
 
@@ -72,9 +85,9 @@ class OtherProfile extends Component {
           <h3>This is the profile page of {this.state.userName}</h3>
         </div>
         <div className="row center-h">
-          <FollowButton follow="" username={this.state.userName} />
+          <FollowButton follow={this.state.follow} username={this.state.userName} />
           
-          <BlockButton block="" username={this.state.userName} />
+          <BlockButton block={this.state.block} username={this.state.userName} />
         </div>
 
         <OtherReview />
