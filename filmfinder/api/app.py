@@ -485,15 +485,16 @@ def hotmovie():
 
 """follow another user"""
 follow_block_action = {"action": "", "user": ""}
-@app.route("/followUser", methods=["GET", "POST"])
+@app.route("/followUser", methods=["POST"])
 def followUser():
 
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
         follow_block_action["user"] = data["user"]
-        return "-"
-    else:
+        print("data", data)
+        # return "-"
+    # else:
         db = connect_db()
         c = db.cursor()
 
@@ -501,32 +502,33 @@ def followUser():
         action = follow_block_action["action"]
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
 
-        followers = c.execute(sql, (user, ))
+        followers = c.execute(sql, (user, )).fetchall()[0][0]
+        # print("data", data)
         print("followers:", followers)
         if action == "f":
-            followers = followers + "," + user
+            followers = followers + " " + user
             update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
             c.execute(update_sql, (followers, user))
             db.commit()
         else:
-            f_l = followers.split(",")
+            f_l = followers.split(" ")
             f_l.remove(user)
-            followers = ",".join(f_l)
+            followers = " ".join(f_l)
             update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
             c.execute(update_sql, (followers, user))
             db.commit()
-
+        return "-"
 
 """"block another user"""
-@app.route("/blockUser", methods=["GET", "POST"])
+@app.route("/blockUser", methods=["POST"])
 def blockUser():
 
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
         follow_block_action["user"] = data["user"]
-        return "-"
-    else:
+        # return "-"
+    # else:
         db = connect_db()
         c = db.cursor()
 
@@ -534,16 +536,16 @@ def blockUser():
         action = follow_block_action["action"]
         sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
 
-        blockers = c.execute(sql, (user, ))
+        blockers = c.execute(sql, (user, )).fetchall()[0][0]
         if action == "b":
-            blockers = blockers + "," + user
+            blockers = blockers + " " + user
             update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
             c.execute(update_sql, (blockers, user))
             db.commit()
         else:
-            b_l = blockers.split(",")
+            b_l = blockers.split(" ")
             b_l.remove(user)
-            blockers = ",".join(b_l)
+            blockers = " ".join(b_l)
             update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
             c.execute(update_sql, (blockers, user))
             db.commit()
