@@ -33,4 +33,9 @@ Next week, I will code for my part of Sprint 2 and keep on debugging the Sprint 
 
 Week 6
 I finished my coding part of Sprint 2 and fixed some bugs left from Sprint 1.
-Merge our code together, Sprint 2 finished. Next week, we will hold Sprint 2 retro meeting and start Sprint 3.
+Merge our code together, Sprint 2 finished. Next week, we will hold Sprint 2 retro meeting and start Sprint 3. Busy week.
+
+
+Week 7
+Add other profile page, complete follow & ban list. Keep helping data interaction between back-end & front-end.
+Restruct profile page. Manually merge teammates' work to master. Another busy week.
