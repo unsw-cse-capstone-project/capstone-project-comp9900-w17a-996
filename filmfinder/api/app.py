@@ -494,7 +494,7 @@ def followUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = data["user"]
+        follow_block_action["user"] = otherUserName['content']
         print("data", data)
         # return "-"
     # else:
@@ -545,7 +545,7 @@ def blockUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = data["user"]
+        follow_block_action["user"] = otherUserName['content']
         # return "-"
     # else:
         

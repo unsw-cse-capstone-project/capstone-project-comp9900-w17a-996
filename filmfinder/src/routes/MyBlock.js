@@ -4,7 +4,7 @@ import SideBar from '../components/SideBar';
 import { List } from 'antd';
 
 class MyBlock extends Component {
-    state = { blocks: [{'user': 'hi'}, {'user': 'ho'}] }
+    state = { blocks: [] }
 
     componentDidMount() {
       fetch("/blocklist")
@@ -12,6 +12,7 @@ class MyBlock extends Component {
       .then((r) => {
         
         console.log("BL:",r);
+        this.setState(r);
       });
     }
 
