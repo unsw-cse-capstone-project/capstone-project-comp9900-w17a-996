@@ -17,6 +17,10 @@ import HotMovies from "./components/HotMovies";
 import Carousel from "./components/Carousel";
 import OtherProfile from "./routes/OtherProfile.js";
 
+import MyFollower from "./routes/MyFollower.js";
+import MyFollowing from "./routes/MyFollowing.js";
+import MyBlock from "./routes/MyBlock.js";
+
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -42,6 +46,10 @@ class App extends React.Component {
           <Route path="/hotmovies" component={HotMovies}/>
           <Route path="/carousel" component={Carousel}/>
           <Route path="/otherProfile" component={OtherProfile}/>
+
+          <Route path="/myFollower" component={MyFollower}/>
+          <Route path="/myFollowing" component={MyFollowing}/>
+          <Route path="/myBlock" component={MyBlock}/>
         </Switch>
       </HashRouter>
     )

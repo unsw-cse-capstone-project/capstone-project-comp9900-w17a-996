@@ -48,6 +48,7 @@
 }
 
 .center-h {
+  width: max-content;
     margin: 0 auto;
 }
 .btheader {

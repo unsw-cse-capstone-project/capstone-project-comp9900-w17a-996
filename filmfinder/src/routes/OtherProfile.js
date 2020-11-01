@@ -3,6 +3,7 @@ import FollowButton from "../components/FollowButton";
 import BlockButton from "../components/BlockButton";
 import OtherReview from '../components/OtherReview';
 import OtherWishlist from '../components/OtherWishlist';
+import "../styles/centerCenter.css";
 
 class OtherProfile extends Component {
     state = { userName: '' }
@@ -52,9 +53,14 @@ class OtherProfile extends Component {
 
     render() { 
         return ( <React.Fragment>
-            <h3>This is the profile page of {this.state.userName}</h3>
+            
+            <div className="center-h"><h3>This is the profile page of {this.state.userName}</h3></div>
+            <div className="row center-h" >
+            
             <FollowButton follow=""/>
             <BlockButton block=""/>
+            </div>
+            
             <OtherReview />
             <OtherWishlist />
         </React.Fragment> );

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { Menu, Button } from "antd";
 import "../styles/centerCenter.css";
 import NavBar from "../components/NavBar";
+import SideBar from "../components/SideBar";
+
+const { SubMenu } = Menu;
 
 class Profile extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -16,12 +19,12 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    fetch('/home')
-            .then(r => r.json())
-            .then(r => {
-                console.log(r);
-                this.setProfile(r);
-            })
+    fetch("/home")
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        this.setProfile(r);
+      });
   }
 
   setProfile(r) {
@@ -31,14 +34,13 @@ class Profile extends Component {
   }
 
   handleClick(ev, nickName, email, password, confirmPassword, bio) {
-
     var data = {
       username: this.state.username,
       nickname: this.state.nickname,
       email: this.state.email,
       password: this.state.password,
-      bio: this.state.bio
-    }
+      bio: this.state.bio,
+    };
 
     if (nickName !== "") {
       data.nickname = nickName;
@@ -58,11 +60,10 @@ class Profile extends Component {
 
     console.log(data);
 
-    
     fetch("/profile", {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -76,49 +77,17 @@ class Profile extends Component {
       });
 
     this.props.history.push("/home");
-  };
+  }
 
   render() {
     return (
       <React.Fragment>
-        <NavBar/>
+        <NavBar />
         <div className="row col-md-12">
-          <nav
-            id="sidebarMenu"
-            className="col-md-2 d-md-block badge-light sidebar"
-          >
-            <div className="sidebar-sticky pt-3">
-              <ul className="nav flex-column btbar">
-                <li className="nav-item btheader-current">
-                  <a className="nav-link active">
-                    <span data-feather="home"></span>
-                    Manage Account <span className="sr-only">(current)</span>
-                  </a>
-                </li>
-                <li className="nav-item btheader">
-                  <a className="nav-link">
-                    <span data-feather="shopping-cart"></span>
-                    My Followers
-                  </a>
-                </li>
-                <li className="nav-item btheader">
-                  <a className="nav-link">
-                    <span data-feather="shopping-cart"></span>
-                    My Followings
-                  </a>
-                </li>
-                <li className="nav-item btheader">
-                  <a className="nav-link">
-                    <span data-feather="users"></span>
-                    My Blocklist
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-          <div className="col-md-1"></div>
-          <div className="col-md-8">
-            <div className="container-fluid pt-5">
+        <div className="col-md-2"><SideBar ckey="1"/></div>
+          
+          <div className="col-md-9">
+          <div className="container-fluid pt-5">
               <div className="row">
                 <div className="col-md-12">
                   <h3 className="text-info col-md-7 center-h">
@@ -222,18 +191,19 @@ class Profile extends Component {
                   <br />
                   <div className="col-md-3 center-h">
                     <button
-                      className="btn btn-lg btn-info btn-block"
+                      className="btn btn-lg btn-outline-info btn-block"
                       id="btnSignUp"
                       type="submit"
-                      onClick={(ev) => 
-                      this.handleClick(
-                        ev,
-                        this.refs.nickName.value,
-                        this.refs.email.value,
-                        this.refs.password.value,
-                        this.refs.confirmPassword.value,
-                        this.refs.bio.value
-                      )}
+                      onClick={(ev) =>
+                        this.handleClick(
+                          ev,
+                          this.refs.nickName.value,
+                          this.refs.email.value,
+                          this.refs.password.value,
+                          this.refs.confirmPassword.value,
+                          this.refs.bio.value
+                        )
+                      }
                     >
                       Apply Changes
                     </button>
@@ -243,6 +213,48 @@ class Profile extends Component {
             </div>
           </div>
         </div>
+        
+        {/* </div> */}
+        
+        {/* <div className="row col-md-12">
+          <nav
+            id="sidebarMenu"
+            className="col-md-2 d-md-block badge-light sidebar"
+          >
+            <div className="sidebar-sticky pt-3">
+              <ul className="nav flex-column btbar">
+                <li className="nav-item btheader-current">
+                  <a className="nav-link active">
+                    <span data-feather="home"></span>
+                    Manage Account <span className="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li className="nav-item btheader">
+                  <a className="nav-link">
+                    <span data-feather="shopping-cart"></span>
+                    My Followers
+                  </a>
+                </li>
+                <li className="nav-item btheader">
+                  <a className="nav-link">
+                    <span data-feather="shopping-cart"></span>
+                    My Followings
+                  </a>
+                </li>
+                <li className="nav-item btheader">
+                  <a className="nav-link">
+                    <span data-feather="users"></span>
+                    My Blocklist
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div className="col-md-1"></div>
+          <div className="col-md-8"> */}
+            
+          {/* </div> */}
+        {/* </div> */}
       </React.Fragment>
     );
   }
