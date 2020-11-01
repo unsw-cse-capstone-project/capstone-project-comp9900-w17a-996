@@ -15,6 +15,8 @@ export default function FollowButton(props) {
   // console.log("Follow: ", follow);
   // console.log("***",props.username);
 
+  
+
   return (
     <div>
       {follow ? (

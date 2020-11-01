@@ -485,8 +485,11 @@ def hotmovie():
 
 """follow another user"""
 follow_block_action = {"action": "", "user": ""}
-@app.route("/followUser", methods=["POST"])
+@app.route("/followUser", methods=["POST", "GET"])
 def followUser():
+
+    db = connect_db()
+    c = db.cursor()
 
     if request.method == "POST":
         data = request.get_json()
@@ -495,9 +498,7 @@ def followUser():
         print("data", data)
         # return "-"
     # else:
-        db = connect_db()
-        c = db.cursor()
-
+        
         user = follow_block_action["user"]
         action = follow_block_action["action"]
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
@@ -532,8 +533,11 @@ def followUser():
         
 
 """"block another user"""
-@app.route("/blockUser", methods=["POST"])
+@app.route("/blockUser", methods=["POST", "GET"])
 def blockUser():
+
+    db = connect_db()
+    c = db.cursor()
 
     if request.method == "POST":
         data = request.get_json()
@@ -541,8 +545,7 @@ def blockUser():
         follow_block_action["user"] = data["user"]
         # return "-"
     # else:
-        db = connect_db()
-        c = db.cursor()
+        
 
         user = follow_block_action["user"]
         action = follow_block_action["action"]

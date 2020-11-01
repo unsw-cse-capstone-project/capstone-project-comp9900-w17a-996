@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar';
+import { List } from 'antd';
 
 class MyBlock extends Component {
-    state = {  }
+    state = { blocks: [{'user': 'hi'}, {'user': 'ho'}] }
     render() { 
         return ( <React.Fragment>
             <NavBar />
@@ -11,7 +12,21 @@ class MyBlock extends Component {
         <div className="col-md-2"><SideBar ckey="4"/></div>
           
           <div className="col-md-9">
-            <h3>Should be MyBlock list</h3>
+            
+          <List
+    itemLayout="horizontal"
+    dataSource={this.state.blocks}
+    renderItem={item => (
+      <List.Item>
+        <List.Item.Meta className="ml-5"
+          title={<a href="https://ant.design">{item.user}</a>}
+          // description={item.}
+        />
+        <button>Unblock</button>
+      </List.Item>
+    )}
+  />
+
           </div>
           </div>
         </React.Fragment> );
