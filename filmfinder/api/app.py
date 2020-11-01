@@ -518,6 +518,18 @@ def followUser():
             c.execute(update_sql, (followers, user))
             db.commit()
         return "-"
+    else:
+        user = follow_block_action["user"]
+        sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
+        followers = c.execute(sql, (user, )).fetchall()[0][0]
+        f_l = followers.split(" ")
+        
+        if user in f_l:
+            return {"isfollower": True}
+        else:
+            return {"isfollower": False}
+
+        
 
 """"block another user"""
 @app.route("/blockUser", methods=["POST"])
@@ -550,7 +562,15 @@ def blockUser():
             c.execute(update_sql, (blockers, user))
             db.commit()
         return "-"
-
+    else:
+        user = follow_block_action["user"]
+        sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
+        blockers = c.execute(sql, (user, )).fetchall()[0][0]
+        b_l = blockers.split(" ")
+        if user in b_l:
+            return {"isblocker": True}
+        else:
+            return {"isblocker": False}
 
 @app.route('/recommendmovie', methods=['GET'])
 def recommendmovie():
