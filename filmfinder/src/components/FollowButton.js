@@ -13,7 +13,20 @@ function FollowAction(f) {
 export default function FollowButton(props) {
   const [follow, setFollow] = useState(props.follow);
 
-  useEffect(() => { setFollow(props.follow)},[]);
+  useEffect(() => { 
+    fetch("/followUser")
+      .then((r) => r.json())
+      .then((r) => {
+        
+        console.log("Follow state:", r);
+        if (r.isfollower) {
+          setFollow('1');
+        }
+        else {
+          setFollow(undefined);
+        }
+      });
+  },[]);
 
   console.log("Child Data: ", follow);
   // console.log("***",props.username);

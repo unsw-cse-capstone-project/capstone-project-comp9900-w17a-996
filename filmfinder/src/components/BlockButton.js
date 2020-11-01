@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Button, Tooltip } from 'antd';
 import { UserAddOutlined,UndoOutlined, StopOutlined } from '@ant-design/icons';
 
@@ -13,6 +13,21 @@ function BlockAction(b){
 
 export default function BlockButton(props){
     const [block, setblock] = useState(props.block);
+
+    useEffect(() => {
+      fetch("/blockUser")
+      .then((r) => r.json())
+      .then((r) => {
+
+        console.log("Block state:", r);
+        if (r.isblocker) {
+          setblock('1');
+        }
+        else{
+          setblock(undefined);
+        }
+      });
+    }, []);
 
     return(
         <div>

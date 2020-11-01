@@ -24,27 +24,27 @@ class OtherProfile extends Component {
     let blockState = undefined;
 
   
-    fetch("/followUser")
-      .then((r) => r.json())
-      .then((r) => {
+    // fetch("/followUser")
+    //   .then((r) => r.json())
+    //   .then((r) => {
         
-        console.log("Follow state:", r);
-        if (r.isfollower) {
-          followState = '1';
-        }
-      });
+    //     console.log("Follow state:", r);
+    //     if (r.isfollower) {
+    //       followState = '1';
+    //     }
+    //   });
     
-      console.log(this.state.follow);
+    //   console.log(this.state.follow);
 
-    fetch("/blockUser")
-      .then((r) => r.json())
-      .then((r) => {
+    // fetch("/blockUser")
+    //   .then((r) => r.json())
+    //   .then((r) => {
 
-        console.log("Block state:", r);
-        if (r.isblocker) {
-          blockState = '1';
-        }
-      });
+    //     console.log("Block state:", r);
+    //     if (r.isblocker) {
+    //       blockState = '1';
+    //     }
+    //   });
 
       setTimeout(() => {
         console.log(followState, blockState);
