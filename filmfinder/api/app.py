@@ -89,7 +89,7 @@ def login():
                 guid['email'] = result[0][2]
                 guid['password'] = result[0][3]
                 guid['bio'] = result[0][4]
-                print(guid)
+                # print(guid)
                 return result[0][3]
             else:
                 guid['password'] = ''
@@ -132,7 +132,7 @@ def search():
                     # sub_res["date"] = detail[5]
 
                     result["movies"].append(sub_res)
-                    # print(result)
+                    # # print(result)
         except sqlite3.OperationalError:
             pass
         return search_content
@@ -189,7 +189,7 @@ def movieDetail():
         db = connect_db()
         c = db.cursor()
         details = c.execute("SELECT * FROM MOVIE WHERE TITLE == ?", (title,)).fetchall()
-        # print("this is detail: ", details)
+        # # print("this is detail: ", details)
         movie_detail_res["movie"]["title"] = details[0][0]
         movie_detail_res["movie"]["director"] = details[0][1]
         movie_detail_res["movie"]["cast"] = details[0][2]
@@ -198,7 +198,7 @@ def movieDetail():
         movie_detail_res["movie"]["date"] = details[0][5]
         movie_detail_res["movie"]["url"] = details[0][6]
         movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
-        # print("detail result:", movie_detail_res)
+        # # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
         
@@ -232,7 +232,7 @@ def history():
         # test code
         # query = "SELECT * FROM REVIEW"
         # content = c.execute(query).fetchall()
-        # print(content)
+        # # print(content)
         return request.get_json()
     else:
         review_res = []
@@ -265,6 +265,7 @@ def history():
         return {"data": review_res}
 
 """history page, get user name and user action then post comments, rating"""
+"""do not show review of people who is in block list"""
 @app.route('/checkReview', methods=['GET', 'POST'])
 def checkReview():
     db = connect_db()
@@ -286,14 +287,21 @@ def checkReview():
     else:
         review_res = []
         movie_title = movie_detail_res['movie']['title']
-        print("movie title:", movie_title)
+        # print("movie title:", movie_title)
 
         review_search_sql = "SELECT * FROM REVIEW WHERE MOVIE = ?"
+        block_search_sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
         
         try:
             reviews = c.execute(review_search_sql, (movie_title,)).fetchall()
-            print("reviews", reviews)
+            blockers = c.execute(block_search_sql, (guid["username"], )).fetchall()[0][0]
+            b_l = blockers.split(" ")
+            # print("blockers:", b_l)
+            # print("reviews", reviews)
+
             for review in reviews:
+                if review[0] in b_l:
+                    continue
                 item = {"userName": review[0], 
                         "reviewTime": review[4], 
                         "rating": review[3],
@@ -312,7 +320,7 @@ def checkReview():
         for review in review_res:
             review["key"] = str(counter)
             counter += 1
-        print(review_res)
+        # print(review_res)
 
         title = movie_detail_res["movie"]["title"]
         movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
@@ -332,7 +340,7 @@ def addtoWishList():
         search_wishlist_sql = "SELECT WISHLIST FROM USER WHERE USERNAME == ?"
         
         str_json = c.execute(search_wishlist_sql, (userName,)).fetchall()[0]
-        print("this is a str json:", str_json[0], type(str_json[0]))
+        # print("this is a str json:", str_json[0], type(str_json[0]))
 
         dic_json = json.loads(str_json[0])
 
@@ -367,12 +375,12 @@ def wishlist():
         data = request.get_json()
         keep_movie = data["content"]
         listID = str(data["listid"])
-        print("dict+json:   ", dict_json)
+        # print("dict+json:   ", dict_json)
         all_movie = list(dict_json[listID].keys())
         for movie in all_movie:
             if movie not in keep_movie:
                 del dict_json[listID][movie]
-        print("new dic_json:   ", dict_json)
+        # print("new dic_json:   ", dict_json)
         new_str = json.dumps(dict_json)
 
         update_sql = "UPDATE USER SET WISHLIST = ? WHERE USERNAME = ?"
@@ -391,7 +399,7 @@ def wishlist():
         res = {}
         for k, v in dict_json.items():
             res[k] = list(v.keys())
-        # print(res.values())
+        # # print(res.values())
         return res
 
 
@@ -443,7 +451,7 @@ def otherReview():
         search_sql = "SELECT * FROM REVIEW WHERE USER = ?"
 
         data = c.execute(search_sql, (otherName,)).fetchall()
-        print(data)
+        # print(data)
         review_res = []
 
         try:
@@ -495,7 +503,7 @@ def followUser():
         data = request.get_json()
         follow_block_action["action"] = data["action"]
         follow_block_action["user"] = otherUserName['content']
-        print("data", data)
+        # print("data", data)
         # return "-"
     # else:
         me = guid["username"]
@@ -504,8 +512,8 @@ def followUser():
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
 
         followers = c.execute(sql, (me, )).fetchall()[0][0]
-        # print("data", data)
-        print("followers:", followers)
+        # # print("data", data)
+        # print("followers:", followers)
         if action == "f":
             followers = followers + " " + user
             update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
@@ -522,9 +530,9 @@ def followUser():
     else:
         user = guid['username']
         # user = follow_block_action["user"]
-        print("user", user)
+        # print("user", user)
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
-        print("test 1111", c.execute(sql, (user, )).fetchall()[0])
+        # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         followers = c.execute(sql, (user, )).fetchall()[0][0]
         f_l = followers.split(" ")
         otheruser = otherUserName["content"]
@@ -572,7 +580,7 @@ def blockUser():
         user = guid['username']
         # user = follow_block_action["user"]
         sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
-        print("test 1111", c.execute(sql, (user, )).fetchall()[0])
+        # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         blockers = c.execute(sql, (user, )).fetchall()[0][0]
         b_l = blockers.split(" ")
         otheruser = otherUserName["content"]
