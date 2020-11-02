@@ -294,37 +294,58 @@ def checkReview():
         
         try:
             reviews = c.execute(review_search_sql, (movie_title,)).fetchall()
-            blockers = c.execute(block_search_sql, (guid["username"], )).fetchall()[0][0]
-            b_l = blockers.split(" ")
-            # print("blockers:", b_l)
-            # print("reviews", reviews)
 
-            for review in reviews:
-                if review[0] in b_l:
-                    continue
-                item = {"userName": review[0], 
-                        "reviewTime": review[4], 
-                        "rating": review[3],
-                        "review": review[2],
-                        }
+            try:
+                blockers = c.execute(block_search_sql, (guid["username"], )).fetchall()[0][0]
+                b_l = blockers.split(" ")
+                # print("blockers:", b_l)
                 
-                review_res.append(item)
+                for review in reviews:
+                    if review[0] in b_l:
+                        continue
+                    item = {"userName": review[0], 
+                            "reviewTime": review[4], 
+                            "rating": review[3],
+                            "review": review[2],
+                            }
+                
+                    review_res.append(item)
+            except IndexError:
+
+                for review in reviews:
+                    item = {"userName": review[0], 
+                            "reviewTime": review[4], 
+                            "rating": review[3],
+                            "review": review[2],
+                            }
+                    review_res.append(item)
         except sqlite3.OperationalError:
             pass
 
         # sort by time
         review_res = sorted(review_res, key=lambda x: x["reviewTime"], reverse=True)
-
+        
         # add key:counter
         counter = 1
+        total_rating = 0
         for review in review_res:
+            total_rating += float(review["rating"])
             review["key"] = str(counter)
             counter += 1
-        # print(review_res)
 
-        title = movie_detail_res["movie"]["title"]
-        movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
-        return {"user": review_res, "rating": movie_detail_res["movie"]["rating"]}
+        print("reviews", reviews)
+        print(review_res)
+
+        # title = movie_detail_res["movie"]["title"]
+        # movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
+
+        # print({"user": review_res, "rating": total_rating / len(review_res)})
+        if len(review_res) == 0:
+            rate = 0.0
+        else:
+            rate = round(total_rating / len(review_res), 1)
+
+        return {"user": review_res, "rating": rate}
 
 """movie page, add to wish list function, add to db"""
 @app.route('/addtoWishList', methods=['POST'])
