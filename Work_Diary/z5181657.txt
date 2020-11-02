@@ -31,3 +31,9 @@ Week6
 In this week, we start the second sprint, and assgin the user stories to everyone. Before doing the 2nd sprint, 
 we also had a meeting to discuss the data structure and some functions in 1st sprint that should be improved.
 In the next week, we will do the third sprint to finish what 2nd sprint left and do some new functions as well.
+
+Week7
+
+We had the second Retrospective to review the last week work and make a plan about what to in the next week.
+I complete the follow and block button action part and comment, thumbs up and down to other reviews part.
+In the next week, we will do the fourth sprint.
