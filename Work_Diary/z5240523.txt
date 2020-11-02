@@ -9,3 +9,13 @@ get data from register page and store data to the local database
 
 Week 4
 add movie data table, improve search by movie title.
+
+Week5 -Week7
+1. browse blockers list
+2. browse followers list
+3. follow, block, unfollow, unblock other users, add follow block to database
+4. clean databse
+5. add, edit and delete review, wish list in database
+6. return review, wishlist to front end.
+7. return movie detail data to front end
+8. improve search by title function
