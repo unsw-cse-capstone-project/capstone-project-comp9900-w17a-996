@@ -16,6 +16,37 @@ class MyBlock extends Component {
       });
     }
 
+    handleUnblock(blocker){
+      console.log(blocker);
+      const data = {action: "u", user: blocker};
+
+      fetch("/blockUser", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => console.log(response))
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+        setTimeout(() => {
+          fetch("/blocklist")
+      .then((r) => r.json())
+      .then((r) => {
+        
+        console.log("BL:",r);
+        this.setState(r);
+      });
+        }, 500)
+    }
+
     render() { 
         return ( <React.Fragment>
             <NavBar />
@@ -33,7 +64,7 @@ class MyBlock extends Component {
           title={<a href="https://ant.design">{item.user}</a>}
           // description={item.}
         />
-        <button>Unblock</button>
+        <button onClick={() => (this.handleUnblock(item.user))}>Unblock</button>
       </List.Item>
     )}
   />

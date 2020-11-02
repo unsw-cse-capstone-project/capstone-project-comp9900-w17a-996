@@ -12,9 +12,6 @@ class RecommendList extends Component {
       });
   }
 
-  handleClick = (title) => {
-    
-  }
 
   render() { 
     const data = this.state.recommendmovie;
@@ -26,8 +23,9 @@ class RecommendList extends Component {
             <List.Item>
                 <List.Item.Meta
                 // avatar={<Avatar src={item.src} style={{height:'50px',width:'50px'}}/>}
-                title={<a href="https://ant.design">{item.title}</a>}
+                title={<a>{item.title}</a>}
                 description={item.reason}
+                onClick={() => this.props.setPare2(item.title)}
                 />
             </List.Item>
             )}/>

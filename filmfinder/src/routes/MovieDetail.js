@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Checkbox} from 'antd';
+import { Modal, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 import "../styles/movie.css";
 import PmRibbon from "pm-ribbon";
@@ -15,18 +15,20 @@ import AddComment from "../components/AddComment";
 import RecommendList from "../components/RecommendList";
 import { WindowsOutlined } from "@ant-design/icons";
 import NavBar from "../components/NavBar";
+import copy from "copy-to-clipboard"; 
 const { Header, Footer, Sider, Content } = Layout;
 
-const plainOptions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const plainOptions = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 class MovieDetail extends Component {
   constructor(props) {
     super(props);
     this.myWish = React.createRef();
     this.state = {
-    ModalText: 'Please select the wishlist(s) to add:',
-    visible: false,
-    confirmLoading: false,
+      ModalText: "Please select the wishlist(s) to add:",
+      visible: false,
+      shareVisible: false,
+      confirmLoading: false,
       title: "",
       director: "",
       cast: "",
@@ -50,7 +52,53 @@ class MovieDetail extends Component {
         this.setState(r);
         console.log(r);
       });
-  }
+  };
+
+  setPare2 = (title) => {
+    const data = {
+      title: title,
+    };
+
+    fetch("/movieDetail", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    window.location.href = "/#/movie?title=" + title;
+
+    setTimeout(() => {
+      fetch("/movieDetail")
+        .then((r) => {
+          console.log(r);
+          return r.json();
+        })
+        .then((r) => {
+          this.setState(r.movie);
+          console.log(r);
+        });
+
+      fetch("/checkReview")
+        .then((r) => {
+          console.log(r);
+          return r.json();
+        })
+        .then((r) => {
+          this.setState(r);
+          console.log(r);
+        });
+    }, 500);
+  };
 
   handleOk = () => {
     this.setState({
@@ -59,13 +107,13 @@ class MovieDetail extends Component {
 
     const data = {
       title: this.state.title,
-      type: this.myWish
-    }
+      type: this.myWish,
+    };
 
     fetch("/addtoWishList", {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -87,7 +135,7 @@ class MovieDetail extends Component {
   };
 
   handleCancel = () => {
-    console.log('Clicked cancel button');
+    console.log("Clicked cancel button");
     this.setState({
       visible: false,
     });
@@ -121,14 +169,34 @@ class MovieDetail extends Component {
     this.setState({
       visible: true,
     });
-
-    
   };
 
   onChange(checkedValues) {
     this.myWish = checkedValues;
-    console.log('checked = ', checkedValues);
+    console.log("checked = ", checkedValues);
   }
+
+  showShare = () => {
+    this.setState({
+      shareVisible: true,
+    });
+
+    copy("http://localhost:3000/#/movie" + this.props.location.search);
+    };
+
+  shareOk = (e) => {
+    console.log(e);
+    this.setState({
+      shareVisible: false,
+    });
+  };
+
+  shareCancel = (e) => {
+    console.log(e);
+    this.setState({
+      shareVisible: false,
+    });
+  };
 
   // componentDidMount(){
   //     fetch('/app')
@@ -164,8 +232,10 @@ class MovieDetail extends Component {
                     <div className="comments">
                       <br />
                       <ul>{commentItems}</ul>
-                      <AddComment title={this.state.title} setPare={this.setPare}/>
-                      
+                      <AddComment
+                        title={this.state.title}
+                        setPare={this.setPare}
+                      />
                     </div>
                   </div>
                 </Content>
@@ -191,7 +261,11 @@ class MovieDetail extends Component {
                     </div>
                     <div className="wishShare">
                       <div className="wish">
-                        <Button onClick={this.addToWishlist} type="primary" block>
+                        <Button
+                          onClick={this.addToWishlist}
+                          type="primary"
+                          block
+                        >
                           <div>
                             <PlusOutlined
                               style={{ fontSize: "25px", marginRight: "10px" }}
@@ -202,14 +276,24 @@ class MovieDetail extends Component {
                       </div>
                       <br />
                       <div className="share">
-                        <Button type="primary" block>
+                        <Button type="primary" block onClick={this.showShare}>
                           <div>
                             <ShareAltOutlined
                               style={{ fontSize: "25px", marginRight: "10px" }}
                             />
-                            Add to Wishlist
+                            Share Me!
                           </div>
                         </Button>
+                        <Modal
+                          title="Share Me Now"
+                          visible={this.state.shareVisible}
+                          onOk={this.shareOk}
+                          onCancel={this.shareCancel}
+                        >
+                          <p>The url has been copied to your clipboard.</p>
+                          <p>Paste to share with your friends</p>
+                          
+                        </Modal>
                       </div>
                     </div>
                   </div>
@@ -218,7 +302,7 @@ class MovieDetail extends Component {
                   </div>
                   <Divider orientation="left">Recommend List</Divider>
                   <div className="recommendMovies">
-                    <RecommendList />
+                    <RecommendList setPare2={this.setPare2} />
                   </div>
                 </Sider>
               </Layout>
@@ -234,7 +318,11 @@ class MovieDetail extends Component {
           onCancel={this.handleCancel.bind(this)}
         >
           <p>{ModalText}</p>
-          <Checkbox.Group options={plainOptions} onChange={this.onChange.bind(this)} ref={this.myWish} />
+          <Checkbox.Group
+            options={plainOptions}
+            onChange={this.onChange.bind(this)}
+            ref={this.myWish}
+          />
         </Modal>
       </div>
     );

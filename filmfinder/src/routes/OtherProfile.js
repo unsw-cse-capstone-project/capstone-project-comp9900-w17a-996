@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NavBar from "../components/NavBar";
 import FollowButton from "../components/FollowButton";
 import BlockButton from "../components/BlockButton";
 import OtherReview from "../components/OtherReview";
@@ -94,6 +95,7 @@ class OtherProfile extends Component {
   render() {
     return (
       <React.Fragment>
+        <NavBar />
         <div className="center-h">
           <h3>This is the profile page of {this.state.userName}</h3>
         </div>

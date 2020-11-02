@@ -16,6 +16,38 @@ class MyFollowing extends Component {
       });
     }
 
+    handleUnfollow(following){
+      console.log(following);
+
+      const data = { action: "u", user: following };
+
+      fetch("/followUser", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => console.log(response))
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+        setTimeout(() => {
+          fetch("/followinglist")
+      .then((r) => r.json())
+      .then((r) => {
+        
+        console.log("FGL:",r);
+        this.setState(r);
+      });
+        }, 500)
+    }
+
     render() { 
         return ( <React.Fragment>
             <NavBar />
@@ -33,7 +65,7 @@ class MyFollowing extends Component {
           title={<a href="https://ant.design">{item.user}</a>}
           // description={item.}
         />
-        <button>Unfollow</button>
+        <button onClick={() => (this.handleUnfollow(item.user))}>Unfollow</button>
       </List.Item>
     )}
   />
