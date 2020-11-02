@@ -12,6 +12,10 @@ class RecommendList extends Component {
       });
   }
 
+  handleClick = (title) => {
+    
+  }
+
   render() { 
     const data = this.state.recommendmovie;
     return ( <React.Fragment>

@@ -1,9 +1,10 @@
 import sqlite3
-conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
-c = conn.cursor()
+
 
 
 def recommend(username):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     result = c.execute("SELECT * FROM REVIEW WHERE USER = ?",
                         (username,)).fetchall()
     final_recommand_list = []
@@ -17,7 +18,7 @@ def recommend(username):
 
         for n in range (len(result)):
             # choose the film which rate >= 4 
-            if int(result[n][3]) >= 4:
+            if float(result[n][3]) >= 4:
                 movie = result[n][1]
                 for tmp in findsimilar(movie):
                     if tmp not in final_recommand_list and tmp not in watched_movie:
@@ -41,7 +42,8 @@ def recommend(username):
 
 # return a list with dictionayr inside. For example :[{'title': something, 'rating': 4}]
 def findsimilar(filmname):
-
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     recommand_list_set = set([])
     result = c.execute("SELECT * FROM MOVIE WHERE TITLE = ?", 
                     (filmname,)).fetchall()
@@ -84,7 +86,8 @@ def findsimilar(filmname):
     return final_result        
                 
 def cal_mark(filmname):
-    
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     mark = 0.0
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?",
     (filmname,)).fetchall()
@@ -98,6 +101,8 @@ def cal_mark(filmname):
 
        
 def sort_film(film_list):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     tmp = []   
     for film in film_list:
         tmp.append({'title': film, 'rating': cal_mark(film)})
@@ -106,6 +111,8 @@ def sort_film(film_list):
     return tmp
 
 def hotmovie():
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     hot_movie ={}
     movie_list = []
     movies = c.execute("SELECT * FROM MOVIE").fetchall()
