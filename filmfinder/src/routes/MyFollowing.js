@@ -48,6 +48,10 @@ class MyFollowing extends Component {
         }, 500)
     }
 
+    handleUser(user){
+      window.location.href = "/#/otherProfile?username=" + user;
+    }
+
     render() { 
         return ( <React.Fragment>
             <NavBar />
@@ -62,7 +66,7 @@ class MyFollowing extends Component {
     renderItem={item => (
       <List.Item>
         <List.Item.Meta className="ml-5"
-          title={<a href="https://ant.design">{item.user}</a>}
+          title={<a onClick={() => this.handleUser(item.user)}>{item.user}</a>}
           // description={item.}
         />
         <button onClick={() => (this.handleUnfollow(item.user))}>Unfollow</button>

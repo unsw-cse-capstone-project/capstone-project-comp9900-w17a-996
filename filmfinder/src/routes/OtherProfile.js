@@ -105,7 +105,10 @@ class OtherProfile extends Component {
           <BlockButton block={this.state.block} username={this.state.userName} />
         </div>
 
-        <OtherReview />
+    <h5 className="ml-5">{this.state.userName}'s review history:</h5>
+    <div className="ml-5"><OtherReview /></div>
+        
+        <h5 className="ml-5">{this.state.userName}'s wishlist:</h5>
         <OtherWishlist />
       </React.Fragment>
     );

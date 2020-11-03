@@ -142,6 +142,10 @@ class MovieDetail extends Component {
   };
 
   componentDidMount() {
+    const query = this.props.location.search;
+    const title = query.split("=")[1];
+    console.log("CCCCC", title);
+
     fetch("/movieDetail")
       .then((r) => {
         console.log(r);

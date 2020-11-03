@@ -61,7 +61,7 @@ class MyBlock extends Component {
     renderItem={item => (
       <List.Item>
         <List.Item.Meta className="ml-5"
-          title={<a href="https://ant.design">{item.user}</a>}
+          title={<a >{item.user}</a>}
           // description={item.}
         />
         <button onClick={() => (this.handleUnblock(item.user))}>Unblock</button>
