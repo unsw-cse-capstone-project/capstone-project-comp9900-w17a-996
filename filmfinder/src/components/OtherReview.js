@@ -25,12 +25,38 @@ class OtherReview extends Component {
     
   }
 
+  handleTitle(title) {
+    const data = {
+      title: title,
+    };
+
+    fetch("/movieDetail", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    window.location.href = "/#/movie?title=" + title;
+  }
+
   render() {
     return (
       <React.Fragment>
         <div>
           <Table dataSource={this.state.data}>
-            <Column title="Movie" dataIndex="movieName" key="movieName" />
+            <Column title="Movie" dataIndex="movieName" key="movieName" render={(text, record) => (
+              <h6 onClick={() => this.handleTitle(record.movieName)}>{record.movieName}</h6>
+              )}/>
             <Column
               title="Review Time"
               dataIndex="reviewTime"
