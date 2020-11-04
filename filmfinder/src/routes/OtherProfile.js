@@ -100,7 +100,7 @@ class OtherProfile extends Component {
           <h3>This is the profile page of {this.state.userName}</h3>
         </div>
         <div className="row center-h">
-          <FollowButton{...this.state} />
+        <FollowButton block={this.state.block} username={this.state.userName} />
           
           <BlockButton block={this.state.block} username={this.state.userName} />
         </div>

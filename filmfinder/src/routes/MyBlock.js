@@ -17,8 +17,10 @@ class MyBlock extends Component {
     }
 
     handleUnblock(blocker){
-      console.log(blocker);
+      // blocker = blocker.replace(/\s*/g, '');
+      console.log('Test bbbbb:',blocker);
       const data = {action: "u", user: blocker};
+      console.log(data);
 
       fetch("/blockUser", {
         method: "POST",
@@ -47,6 +49,10 @@ class MyBlock extends Component {
         }, 500)
     }
 
+    handleUser(user){
+      window.location.href = "/#/otherProfile?username=" + user;
+    }
+
     render() { 
         return ( <React.Fragment>
             <NavBar />
@@ -61,7 +67,7 @@ class MyBlock extends Component {
     renderItem={item => (
       <List.Item>
         <List.Item.Meta className="ml-5"
-          title={<a >{item.user}</a>}
+          title={<a onClick={() => this.handleUser(item.user)} >{item.user}</a>}
           // description={item.}
         />
         <button onClick={() => (this.handleUnblock(item.user))}>Unblock</button>

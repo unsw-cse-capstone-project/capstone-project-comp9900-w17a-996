@@ -26,8 +26,6 @@ c = conn.cursor()
 
 
 
-
-
 """user"""
 # c.execute("DROP TABLE USER")
 # c.execute("DROP TABLE REVIEW")

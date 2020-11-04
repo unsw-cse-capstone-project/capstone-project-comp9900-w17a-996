@@ -523,7 +523,7 @@ def followUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = otherUserName['content']
+        follow_block_action["user"] = data['user']
         # print("data", data)
         # return "-"
     # else:
@@ -574,7 +574,7 @@ def blockUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = otherUserName['content']
+        follow_block_action["user"] = data['user']
         # return "-"
     # else:
         
@@ -591,6 +591,9 @@ def blockUser():
             db.commit()
         else:
             b_l = blockers.split(" ")
+            print("user", user)
+            print("blockers",blockers)
+            print("me",me)
             b_l.remove(user)
             blockers = " ".join(b_l)
             update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
