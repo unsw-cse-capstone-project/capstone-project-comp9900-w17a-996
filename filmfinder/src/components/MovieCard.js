@@ -34,7 +34,12 @@ class MovieCard extends Component{
             var url_1 = "My perple, My Homeland(2020)";
         }
         else{
+
             var url_1 = this.props.title;
+            if (this.props.title.indexOf(":") !== -1){
+                url_1 = url_1.replace(/:/, '');
+            }
+            
         }
         
         return (
