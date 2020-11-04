@@ -21,14 +21,14 @@ class Result extends Component {
       });
   }
 
-  componentDidUpdate() {
-    fetch("/search")
-      .then((r) => r.json())
-      .then((r) => {
-        this.setState(r);
-        console.log("Result UI:",r);
-      });
-  }
+  // componentDidUpdate() {
+  //   fetch("/search")
+  //     .then((r) => r.json())
+  //     .then((r) => {
+  //       this.setState(r);
+  //       console.log("Result UI:",r);
+  //     });
+  // }
 
   handleClick(ev, title) {
     const data = {
@@ -54,10 +54,12 @@ class Result extends Component {
     window.location.href = "/#/movie?title=" + title;
   }
 
-  handleImage(title) {
-    let path = "../" + title + ".jpg";
-    console.log("path", path);
-    return path;
+  handleImage = (title) => {
+    let url_1 = title;
+    if (title.indexOf(":") !== -1){
+        url_1 = url_1.replace(/:/, '');
+    }
+    return url_1;
   }
     
 
@@ -87,7 +89,7 @@ class Result extends Component {
   {movies.map((movie) => {
     return (
       <div onClick={(ev) => this.handleClick(ev, movie.title)}>
-        <img src={require(`../${movie.title}.jpg`) } width="100px"
+        <img src={require(`../${this.handleImage(movie.title)}.jpg`) } width="100px"
           height="150px"/>
         {/* <Image
           width="100px"
