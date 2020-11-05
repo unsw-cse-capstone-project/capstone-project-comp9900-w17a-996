@@ -29,7 +29,12 @@ class NavBar extends Component {
   }
 
   setPare = () => {
-    this.props.setPare();
+    try {
+      this.props.setPare();
+    } catch (error) {
+      ;
+    }
+    
   }
 
   render() {
