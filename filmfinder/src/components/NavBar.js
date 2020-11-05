@@ -28,6 +28,10 @@ class NavBar extends Component {
     }
   }
 
+  setPare = () => {
+    this.props.setPare();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -97,7 +101,7 @@ class NavBar extends Component {
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-              <Search></Search>
+              <Search setPare={this.setPare}></Search>
             </form>
           </div>
         </nav>
