@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Search from "./Search";
 import "../styles/centerCenter.css";
+import Filter from "./Filter";
 
 class NavBar extends Component {
   state = {};
@@ -108,6 +109,7 @@ class NavBar extends Component {
             <form class="form-inline my-2 my-lg-0">
               <Search setPare={this.setPare}></Search>
             </form>
+            <Filter />
           </div>
         </nav>
       </React.Fragment>

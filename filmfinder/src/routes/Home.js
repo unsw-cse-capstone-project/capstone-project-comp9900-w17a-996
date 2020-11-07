@@ -6,6 +6,7 @@ import "../styles/centerCenter.css";
 import SearchBar from "../components/Search";
 import HotMovies from "../components/HotMovies";
 import Carousel from "../components/Carousel";
+import Filter from "../components/Filter";
 
 class Home extends Component {
   constructor(props) {
@@ -149,6 +150,7 @@ class Home extends Component {
         {/* </div> */}
 
         <div className="box_search">
+          <Filter />
           <SearchBar />
         </div>
         <br />
