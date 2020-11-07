@@ -98,8 +98,12 @@ class Result extends Component {
   {movies.map((movie) => {
     return (
       <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+        <div className="row">
         <img src={require(`../${this.handleImage(movie.title)}.jpg`) } width="100px"
           height="150px"/>
+          <h3>Rating: 5.0</h3>
+        </div>
+        
         {/* <Image
           width="100px"
           height="150px"
