@@ -7,8 +7,8 @@ FilmFinder© schedule✍
 `Retro 1`:    15/10/2020                    ✅<br/>
 `Sprint 2`:   15/10/2020 ~ 25/10/2020       ✅<br/>
 `Retro 2`:    26/10/2020                    ✅<br/>
-`Sprint 3`:   27/10/2020 ~ 03/11/2020        ✍<br/>
-`Retro 3`:    04/11/2020<br/>
-`Demo B`:     04/11/2020<br/>
-`Sprint 4`:   TBD<br/>
+`Sprint 3`:   27/10/2020 ~ 03/11/2020       ✅<br/>
+`Retro 3`:    04/11/2020                    ✅<br/>
+`Demo B`:     04/11/2020                    ✅<br/>
+`Sprint 4`:   05/11/2020 ~ 12/11/2020       ✍<br/>
 `Retro 4`:    TBD<br/>
