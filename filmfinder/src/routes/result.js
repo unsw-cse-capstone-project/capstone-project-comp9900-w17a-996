@@ -101,7 +101,7 @@ class Result extends Component {
         <div className="row">
         <img src={require(`../${this.handleImage(movie.title)}.jpg`) } width="100px"
           height="150px"/>
-          <h3>Rating: 5.0</h3>
+          <h3>Rating: {movie.rating}</h3>
         </div>
         
         {/* <Image
