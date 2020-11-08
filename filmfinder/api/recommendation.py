@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 def recommend(username):
     conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
     c = conn.cursor()
@@ -119,3 +117,57 @@ def hotmovie():
     for n in range(len(movies)):
         movie_list.append(movies[n][0])
     return sort_film(movie_list)
+
+
+def recommendByGenre(genre, username):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
+    result = c.execute("SELECT * FROM MOVIE").fetchall()
+    same_genre_list = []
+    for n in range(len(result)):
+        genre_list = result[n][3].split(', ')
+        movie_name = result[n][0]
+        if genre in genre_list:
+            review_result = c.execute("SELECT * FROM REVIE WHERE USER = ? AND MOVIE = ?",
+            (username, movie_name,)).fetchall()
+            if len(review_result) == 0:
+                same_genre_list.append(movie_name)
+
+    final_result = sort_film(same_genre_list)
+    return final_result
+
+
+
+def recommendByDirector(director, username):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
+    result = c.execute("SELECT * FROM MOVIE").fetchall()
+    same_director_list = []
+    for n in range(len(result)):
+        director_list = result[n][1].split(', ')
+        movie_name = result[n][0]
+        if director in director_list:
+            review_result = c.execute("SELECT * FROM REVIE WHERE USER = ? AND MOVIE = ?",
+            (username, movie_name,)).fetchall()
+            if len(review_result) == 0:
+                same_director_list.append(movie_name)
+
+    final_result = sort_film(same_director_list)
+    return final_result
+
+def recommendByActor(actor, username):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
+    result = c.execute("SELECT * FROM MOVIE").fetchall()
+    same_actor_list = []
+    for n in range(len(result)):
+        actor_list = result[n][2].split(', ')
+        movie_name = result[n][0]
+        if actor in actor_list:
+            review_result = c.execute("SELECT * FROM REVIE WHERE USER = ? AND MOVIE = ?",
+            (username, movie_name,)).fetchall()
+            if len(review_result) == 0:
+                same_actor_list.append(movie_name)
+
+    final_result = sort_film(same_actor_list)
+    return final_result

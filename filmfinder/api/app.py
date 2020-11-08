@@ -35,7 +35,7 @@ def api():
         # create User table
         try:
             c.execute(
-                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT, FOLLOW TEXT, BLOCK TEXT)"
+                "CREATE TABLE USER (USERNAME TEXT PRIMARY KEY, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT, FOLLOW TEXT, BLOCK TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
@@ -44,12 +44,20 @@ def api():
         # create Review table
         try:
             c.execute(
-                "CREATE TABLE REVIEW (USER TEXT, MOVIE TEXT, COMMENT TEXT, RATE TEXT, TIME TEXT)"
+                "CREATE TABLE REVIEW (USER TEXT, MOVIE TEXT, COMMENT TEXT, RATE TEXT, TIME TEXT, UPUSER TEXT, DOWNUSER TEXT, UPNUMBER TEXT, DOWNNUMBER TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
             pass 
 
+        # create reviewofreview table
+         try:
+            c.execute(
+                "CREATE TABLE REVIEWOFREVIEW (ORIGINALUSER TEXT, REPLYUSER TEXT, MOVIE TEXT, COMMENT TEXT, TIME TEXT)"
+            )
+            db.commit()
+        except sqlite3.OperationalError:
+            pass 
         
         user_data = request.get_json()
         # username = user_data["userName"]
@@ -279,8 +287,8 @@ def checkReview():
         userName = guid['username']
         time = str(datetime.datetime.now())[:19]
 
-        c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)", 
-        (userName, movieTitle,review,rating,time))
+        c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME, UPUSER, DOWNUSER, UPNUMBER, DOWNNUMBER ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        (userName, movieTitle,review,rating,time,'','','0','0'))
         db.commit()
 
         return request.get_json()
