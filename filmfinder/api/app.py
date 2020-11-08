@@ -742,13 +742,16 @@ def searchByOther():
         elif search_type == "Director":
             res = []
             director = searchByOther_data["content"]
-            movies = c.execute("SELECT * FROM MOVIE WHERE DIRECTORS = ?", (director,)).fetchall()
-
+            # print("director", director)
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+            # print("movies", movies)
             for idx in range(len(movies)):
-                item = {"title": movies[idx][0],
-                        "genre": movies[idx][3],
-                        "rating": recommendation.cal_mark(movies[idx][0])}
-                res.append(item)
+                directors = movies[idx][1].split(", ")
+                if director in directors:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
         elif search_type == "Year":
             # year
             res = []
