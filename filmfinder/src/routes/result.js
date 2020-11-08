@@ -13,7 +13,7 @@ class Result extends Component {
 
   componentWillMount() {
     
-    fetch("/search")
+    fetch("/searchByOther")
       .then((r) => r.json())
       .then((r) => {
         this.setState(r);
@@ -22,7 +22,7 @@ class Result extends Component {
   }
 
   setPare = () => {
-    fetch("/search")
+    fetch("/searchByOther")
       .then((r) => r.json())
       .then((r) => {
         this.setState(r);

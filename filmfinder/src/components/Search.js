@@ -23,10 +23,11 @@ class Search extends Component {
     console.log("value", value);
 
     const data = {
-      searchContent: value,
+      type: "Default",
+      content: value,
     };
 
-    fetch("/search", {
+    fetch("/searchByOther", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -42,7 +43,7 @@ class Search extends Component {
         console.error("Error:", error);
       });
 
-      fetch("/search")
+      fetch("/searchByOther")
       .then((r) => r.json())
       .then((r) => {
         this.setState(r);
