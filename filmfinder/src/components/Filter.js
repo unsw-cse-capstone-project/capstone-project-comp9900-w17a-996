@@ -4,10 +4,10 @@ import { Button, Select } from 'antd';
 const { Option } = Select;
 const typeData = ['Director', 'Genre', 'Year', 'Language'];
 const contentData = {
-  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei', 'Justin Baldoni'],
+  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei', 'Justin Baldoni', 'Aaron Sorkin', 'Rusty Cundieff', 'Radha Blank'],
   Genre: ['Melody', 'Music', 'Drama', 'Action'],
-  Year: [],
-  Language: [],
+  Year: ['2020', '2015'],
+  Language: ['English', 'Chinese'],
 };
 
 class Filter extends Component {
