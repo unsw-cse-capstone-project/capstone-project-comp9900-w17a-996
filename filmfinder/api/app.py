@@ -657,7 +657,7 @@ def followinglist():
 
 
 """search movie by genre, language, director, year"""
-searchByOther_data = {"type": "", "content"= ""}
+searchByOther_data = {"type": "", "content": ""}
 @app.route("/searchByOther", methods=["GET", "POST"])
 def searchByOther():
     if request.method == "POST":
@@ -678,13 +678,13 @@ def searchByOther():
             res = []
             movies = c.execute("SELECT * FROM MOVIE").fetchall()
             genre = searchByOther_data["content"]
-            for idx in range(len(movies))：
+            for idx in range(len(movies)):
                 item = {}
                 genres = movies[idx][3].split(", ")
                 title = movies[idx][0]
                 if genre in genres:
-                    item = {"title": movies[idx][0]
-                            "genre": movies[idx][3]
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
                             "rating": recommendation.cal_mark(movies[idx][0])}
                     res.append(item)
 
@@ -695,8 +695,8 @@ def searchByOther():
             movies = c.execute("SELECT * FROM MOVIE WHERE LANGUAGE = ?", (language,)).fetchall()
 
             for idx in range(len(movies)):
-                item = {"title": movies[idx][0]
-                        "genre": movies[idx][3]
+                item = {"title": movies[idx][0],
+                        "genre": movies[idx][3],
                         "rating": recommendation.cal_mark(movies[idx][0])}
                 res.append(item)
                 
@@ -706,8 +706,8 @@ def searchByOther():
             movies = c.execute("SELECT * FROM MOVIE WHERE DIRECTORS = ?", (director,)).fetchall()
 
             for idx in range(len(movies)):
-                item = {"title": movies[idx][0]
-                        "genre": movies[idx][3]
+                item = {"title": movies[idx][0],
+                        "genre": movies[idx][3],
                         "rating": recommendation.cal_mark(movies[idx][0])}
                 res.append(item)
         else:
@@ -719,8 +719,8 @@ def searchByOther():
             for idx in range(len(movies)):
                 current_year = movies[idx][5][:4]
                 if year == current_year:
-                    item = {"title": movies[idx][0]
-                            "genre": movies[idx][3]
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
                             "rating": recommendation.cal_mark(movies[idx][0])}
                     res.append(item)
 
