@@ -779,7 +779,7 @@ def searchByOther():
         # sort by rating
         res = sorted(res, key=lambda x: x["rating"], reverse=False)
 
-        return {"data": res}
+        return {"movies": res}
         
 
 

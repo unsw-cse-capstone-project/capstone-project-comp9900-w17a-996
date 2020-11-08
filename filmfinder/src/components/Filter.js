@@ -4,8 +4,8 @@ import { Button, Select } from 'antd';
 const { Option } = Select;
 const typeData = ['Director', 'Genre', 'Year', 'Language'];
 const contentData = {
-  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei'],
-  Genre: ['Melody', 'Music', 'Drama'],
+  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei', 'Justin Baldoni'],
+  Genre: ['Melody', 'Music', 'Drama', 'Action'],
   Year: [],
   Language: [],
 };
@@ -54,6 +54,8 @@ class Filter extends Component {
           .catch((error) => {
             console.error("Error:", error);
           });
+
+          window.location.href = "/#/result?keyword=" + this.state.type;
       }
       
 
