@@ -109,7 +109,7 @@ class NavBar extends Component {
             <form class="form-inline my-2 my-lg-0">
               <Search setPare={this.setPare}></Search>
             </form>
-            <Filter />
+            <Filter setPare={this.setPare}/>
           </div>
         </nav>
       </React.Fragment>
