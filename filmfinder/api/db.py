@@ -31,18 +31,25 @@ c = conn.cursor()
 # c.execute("DROP TABLE REVIEW")
 
 print("User:")
+
 content = c.execute("SELECT * FROM USER").fetchall()
+col_name = [t[0] for t in c.description]
+print(col_name)
 for i in content:
     print(i)
 
-# print("Movie:")
-# movies = c.execute("SELECT * FROM MOVIE").fetchall()
-# for i in movies:
-#     print(i)
+print("\n\nMovie:")
+movies = c.execute("SELECT * FROM MOVIE").fetchall()
+col_name = [t[0] for t in c.description]
+print(col_name)
+for i in movies:
+    print(i)
 
 
-print("Review:")
+print("\n\nReview:")
 reviews = c.execute("SELECT * FROM REVIEW").fetchall()
+col_name = [t[0] for t in c.description]
+print(col_name)
 for i in reviews:
     print(i)
 

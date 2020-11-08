@@ -523,7 +523,7 @@ def followUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = data['user']
+        follow_block_action["user"] = otherUserName['content']
         # print("data", data)
         # return "-"
     # else:
@@ -574,7 +574,7 @@ def blockUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = data['user']
+        follow_block_action["user"] = otherUserName['content']
         # return "-"
     # else:
         
@@ -591,9 +591,6 @@ def blockUser():
             db.commit()
         else:
             b_l = blockers.split(" ")
-            print("user", user)
-            print("blockers",blockers)
-            print("me",me)
             b_l.remove(user)
             blockers = " ".join(b_l)
             update_sql = "UPDATE USER SET BLOCK = ? WHERE USERNAME = ?"
@@ -657,6 +654,84 @@ def followinglist():
         res.append({"user": f})
 
     return {"followings": res}
+
+
+"""search movie by genre, language, director, year"""
+searchByOther_data = {"type": "", "content"= ""}
+@app.route("/searchByOther", methods=["GET", "POST"])
+def searchByOther():
+    if request.method == "POST":
+        # post data: data = {"type": genre or language or director or year, "content": "Music or English or director or 2000"}
+        data = request.get_json()
+        searchByOther_data["type"] = data["type"]
+        searchByOther_data["content"] = data["content"]
+        
+        return searchByOther_data
+    else:
+        db = connect_db()
+        c = db.cursor()
+
+        search_type = searchByOther_data["type"]
+        search_content = searchByOther_data["content"]
+
+        if search_type == "genre":
+            res = []
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+            genre = searchByOther_data["content"]
+            for idx in range(len(movies))：
+                item = {}
+                genres = movies[idx][3].split(", ")
+                title = movies[idx][0]
+                if genre in genres:
+                    item = {"title": movies[idx][0]
+                            "genre": movies[idx][3]
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
+
+        elif search_type == "language":
+
+            res = []
+            language = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE WHERE LANGUAGE = ?", (language,)).fetchall()
+
+            for idx in range(len(movies)):
+                item = {"title": movies[idx][0]
+                        "genre": movies[idx][3]
+                        "rating": recommendation.cal_mark(movies[idx][0])}
+                res.append(item)
+                
+        elif search_type == "director":
+            res = []
+            director = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE WHERE DIRECTORS = ?", (director,)).fetchall()
+
+            for idx in range(len(movies)):
+                item = {"title": movies[idx][0]
+                        "genre": movies[idx][3]
+                        "rating": recommendation.cal_mark(movies[idx][0])}
+                res.append(item)
+        else:
+            # year
+            res = []
+            year = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+
+            for idx in range(len(movies)):
+                current_year = movies[idx][5][:4]
+                if year == current_year:
+                    item = {"title": movies[idx][0]
+                            "genre": movies[idx][3]
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
+
+        
+        # sort by rating
+        res = sorted(res, key=lambda x: x["rating"], reverse=False)
+
+        return {"data": res}
+        
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
