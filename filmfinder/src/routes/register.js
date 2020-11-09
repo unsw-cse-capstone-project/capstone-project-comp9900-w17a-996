@@ -133,7 +133,7 @@ class Register extends Component {
                     <div className="col-md-9">
                       <textarea
                         className="form-control"
-                        rows="5"
+                        rows="3"
                         cols="3"
                         ref="bio"
                         placeholder="Add something intersting..."

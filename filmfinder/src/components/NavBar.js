@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Search from "./Search";
 import "../styles/centerCenter.css";
+import Filter from "./Filter";
 
 class NavBar extends Component {
   state = {};
@@ -26,6 +27,15 @@ class NavBar extends Component {
     } else {
       this.setState({ username: name });
     }
+  }
+
+  setPare = () => {
+    try {
+      this.props.setPare();
+    } catch (error) {
+      ;
+    }
+    
   }
 
   render() {
@@ -97,8 +107,9 @@ class NavBar extends Component {
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-              <Search></Search>
+              <Search setPare={this.setPare}></Search>
             </form>
+            <Filter />
           </div>
         </nav>
       </React.Fragment>

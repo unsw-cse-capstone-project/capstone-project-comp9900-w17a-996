@@ -2,17 +2,23 @@ import sqlite3
 conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
 c = conn.cursor()
 
-def check_thumb(comment_username, filmname, thumbup_user):
+def check_thumb(comment_username, filmname, thumbup_user, up_or_down):
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ? AND USER = ?",
     (filmname,comment_username,)).fetchall()
     
-    if len(result) != 0:
-        users = str(result[0][5])
-        user_list = users.split(',')
-        if thumbup_user in user_list:
-            return True
-        else:
-            return False
+    if len(result) != 0 and up_or_down = 'up':
+        user = str(result[0][5])
+        user_list = up_user.split(',')
+        
+    elif en(result) != 0 and up_or_down = 'down'
+        user = str(result[0][6])
+        user_list = down_user.split(',')
+
+    if thumbup_user in user_list:
+        return True
+    else:
+        return False
+        
     return False
 
 
@@ -82,7 +88,6 @@ def cancel_thumb_down(comment_username, filmname, thumbdown_user):
         conn.commit()
 
 
-def review_of_review(ori_review_user, reply_user, movie):
     
 
 

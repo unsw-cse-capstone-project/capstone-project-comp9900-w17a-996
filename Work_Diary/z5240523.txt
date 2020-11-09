@@ -19,3 +19,6 @@ Week5 -Week7
 6. return review, wishlist to front end.
 7. return movie detail data to front end
 8. improve search by title function
+
+Week8
+add filter by genre, year, language, directors function

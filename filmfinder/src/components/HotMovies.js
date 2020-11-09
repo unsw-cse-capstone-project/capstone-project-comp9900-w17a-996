@@ -73,25 +73,25 @@ class HotMovies extends Component {
   }
 
   handleClick(ev, title) {
-    const data = {
-      title: title,
-    }
+    // const data = {
+    //   title: title,
+    // }
 
-    fetch("/movieDetail", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => console.log(response))
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    // fetch("/movieDetail", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => console.log(response))
+    //   .then((data) => {
+    //     console.log("Success:", data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
 
     window.location.href = "/#/movie?title=" + title;
 }

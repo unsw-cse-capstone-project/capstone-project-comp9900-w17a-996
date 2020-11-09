@@ -21,7 +21,7 @@ class Result extends Component {
       });
   }
 
-  componentDidUpdate() {
+  setPare = () => {
     fetch("/search")
       .then((r) => r.json())
       .then((r) => {
@@ -30,34 +30,45 @@ class Result extends Component {
       });
   }
 
-  handleClick(ev, title) {
-    const data = {
-      title: title,
-    };
+  // componentDidUpdate() {
+  //   fetch("/search")
+  //     .then((r) => r.json())
+  //     .then((r) => {
+  //       this.setState(r);
+  //       console.log("Result UI:",r);
+  //     });
+  // }
 
-    fetch("/movieDetail", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => console.log(response))
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  handleClick(ev, title) {
+    // const data = {
+    //   title: title,
+    // };
+
+    // fetch("/movieDetail", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => console.log(response))
+    //   .then((data) => {
+    //     console.log("Success:", data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
 
     window.location.href = "/#/movie?title=" + title;
   }
 
-  handleImage(title) {
-    let path = "../" + title + ".jpg";
-    console.log("path", path);
-    return path;
+  handleImage = (title) => {
+    let url_1 = title;
+    if (title.indexOf(":") !== -1){
+        url_1 = url_1.replace(/:/, '');
+    }
+    return url_1;
   }
     
 
@@ -76,7 +87,7 @@ class Result extends Component {
 
     return (
       <React.Fragment>
-        <NavBar></NavBar>
+        <NavBar setPare={this.setPare}></NavBar>
         <div className="pl-5 pt-4">
           
 
@@ -87,8 +98,12 @@ class Result extends Component {
   {movies.map((movie) => {
     return (
       <div onClick={(ev) => this.handleClick(ev, movie.title)}>
-        <img src={require(`../${movie.title}.jpg`) } width="100px"
+        <div className="row">
+        <img src={require(`../${this.handleImage(movie.title)}.jpg`) } width="100px"
           height="150px"/>
+          <h3>Rating: 5.0</h3>
+        </div>
+        
         {/* <Image
           width="100px"
           height="150px"

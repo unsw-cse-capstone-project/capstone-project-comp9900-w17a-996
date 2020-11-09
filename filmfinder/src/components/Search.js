@@ -90,7 +90,12 @@ class Search extends Component {
     console.log("Value", value);
     window.location.href = "/#/result?keyword=" + value;
     window.event.returnValue=false;
-
+    try {
+      this.props.setPare();
+    } catch (error) {
+      
+    }
+    
   }
 
   

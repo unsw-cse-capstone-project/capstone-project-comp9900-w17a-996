@@ -143,10 +143,33 @@ class MovieDetail extends Component {
 
   componentDidMount() {
     const query = this.props.location.search;
-    const title = query.split("=")[1];
+    let title = query.split("=")[1];
+    title = title.replace(/\%20/g, ' ');
     console.log("CCCCC", title);
 
-    fetch("/movieDetail")
+    const data = {
+      title: title,
+    };
+
+    fetch("/movieDetail", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    
+    setTimeout(() => {
+      fetch("/movieDetail")
       .then((r) => {
         console.log(r);
         return r.json();
@@ -165,6 +188,7 @@ class MovieDetail extends Component {
         this.setState(r);
         console.log(r);
       });
+    }, 500);
   }
 
   addToWishlist = () => {

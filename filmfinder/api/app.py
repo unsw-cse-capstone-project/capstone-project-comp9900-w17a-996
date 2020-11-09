@@ -51,9 +51,9 @@ def api():
             pass 
 
         # create reviewofreview table
-         try:
+        try:
             c.execute(
-                "CREATE TABLE REVIEWOFREVIEW (ORIGINALUSER TEXT, REPLYUSER TEXT, MOVIE TEXT, COMMENT TEXT, TIME TEXT)"
+                "CREATE TABLE REVIEWOFREVIEW (ID TEXT PRIMARY KEY, ORIGINALUSER TEXT, REPLYUSER TEXT, MOVIE TEXT, COMMENT TEXT, TIME TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
@@ -662,6 +662,174 @@ def followinglist():
         res.append({"user": f})
 
     return {"followings": res}
+
+
+"""search movie by genre, language, director, year"""
+searchByOther_data = {"type": "", "content": ""}
+@app.route("/searchByOther", methods=["GET", "POST"])
+def searchByOther():
+    if request.method == "POST":
+        # post data: data = {"type": genre or language or director or year, "content": "Music or English or director or 2000"}
+        data = request.get_json()
+        searchByOther_data["type"] = data["type"]
+        searchByOther_data["content"] = data["content"]
+        
+        return searchByOther_data
+    else:
+        db = connect_db()
+        c = db.cursor()
+
+        search_type = searchByOther_data["type"]
+        search_content = searchByOther_data["content"]
+
+        if search_type == "genre":
+            res = []
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+            genre = searchByOther_data["content"]
+            for idx in range(len(movies)):
+                item = {}
+                genres = movies[idx][3].split(", ")
+                title = movies[idx][0]
+                if genre in genres:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
+
+        elif search_type == "language":
+
+            res = []
+            language = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE WHERE LANGUAGE = ?", (language,)).fetchall()
+
+            for idx in range(len(movies)):
+                item = {"title": movies[idx][0],
+                        "genre": movies[idx][3],
+                        "rating": recommendation.cal_mark(movies[idx][0])}
+                res.append(item)
+                
+        elif search_type == "director":
+            res = []
+            director = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE WHERE DIRECTORS = ?", (director,)).fetchall()
+
+            for idx in range(len(movies)):
+                item = {"title": movies[idx][0],
+                        "genre": movies[idx][3],
+                        "rating": recommendation.cal_mark(movies[idx][0])}
+                res.append(item)
+        else:
+            # year
+            res = []
+            year = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+
+            for idx in range(len(movies)):
+                current_year = movies[idx][5][:4]
+                if year == current_year:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
+
+        
+        # sort by rating
+        res = sorted(res, key=lambda x: x["rating"], reverse=False)
+
+        return {"data": res}
+
+import dianzan
+
+@app.route("/thumbupordown", method=["GET", "POST"])
+def thumbupordown():
+    db = connect_db()
+    c = db.cursor()
+    if request.method == 'POST':
+        json_data = request.get_json()
+        user_name = guid['username']
+        comment_user = json_data[]
+        movie = json_data[]
+        
+        # if user trying to thumb up  
+        if json_data[] == '1':
+            dianzan.thumb_up(comment_user, movie, user_name)
+            # if user trying to thumb up and in the thumb down list 
+            if dianzan.check_thumb(comment_user, movie, user_name, 'down'):
+                dianzan.cancel_thumb_down(comment_user, movie, user_name)
+        
+        elif json_data[] == '0':
+            dianzan.thumb_down(comment_user, movie, user_name)
+            if dianzan.check_thumb(comment_user, movie, user_name, 'up'):
+                dianzan.cancel_thumb_up(comment_user, movie, user_name)
+    
+    else:
+        movie_title = movie_detail_res['movie']['title']
+        result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movie_title,)).fetchall()
+        dic = {}
+        dic['thumb_count'] = []
+        for n in range(len(result)):
+            user = result[n][0]
+            up_count = result[n][7]
+            down_count = result[n][8]
+            tmp_dic = {}
+            tmp_dic['up'] = up_count
+            tmp_dic['down'] = down_count
+            tmp_dic2 = {}
+            tmp_dic2[user] = tmp_dic
+            dic['thumb_count'].append(tmp_dic2)
+        
+        return dic
+
+
+import random
+import string
+
+def rando():
+    random = ''.join(random.sample(string.ascii_letters + string.digits, 6))
+    return random
+
+@app.route("/replyReview", methods=["GET", "POST"])
+def replyreview():
+    if request.method == 'POST':
+        db = connect_db()
+        c = db.cursor()
+        json_data = request.get_json()
+        uid = rando()
+        username = guid['username']
+        original_user = json_data[]
+        movie = json_data[]
+        comment = json_data[]
+        time = str(datetime.datetime.now())[:19]
+
+        c.execute("INSERT INTO REVIEWOFREVIEW (ID, ORIGINALUSER, REPLYUSER, MOVIE, COMMENT, TIME) VALUES (?, ?, ?, ?, ?, ?)",
+        (uid, original_user, username, movie, comment, time))
+        db.commit()
+
+    else:
+        movie_title = movie_detail_res['movie']['title']
+        result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movie_title,)).fetchall()
+        user_list = []
+        dic = {}
+        dic['reply'] = []
+        for n in range(len(result)):
+            user_list.append(result[n][0])
+        for user in user_list:
+            tmp_dic = {}
+            tmp_dic[user] = []
+            reply = c.execute("SELECT * FROM REVIEWOFREVIEW WHERE ORIGINALUSER = ?", (user,)).fetchall()
+            for n in range(len(reply)):
+                tmp_dic_2 = {}
+                tmp_dic_2['reply_user'] = reply[n][2]
+                tmp_dic_2['comment'] = reply[n][4]
+                tmp_dic_2['date'] = reply[n][5]
+                tmp_dic[user].append(tmp_dic_2)
+            dic['reply'].append(tmp_dic)
+        return dic
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
