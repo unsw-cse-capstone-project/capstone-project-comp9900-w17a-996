@@ -39,3 +39,8 @@ Merge our code together, Sprint 2 finished. Next week, we will hold Sprint 2 ret
 Week 7
 Add other profile page, complete follow & ban list. Keep helping data interaction between back-end & front-end.
 Restruct profile page. Manually merge teammates' work to master. Another busy week.
+
+
+Week 8
+Spint 4 started. Finish filter front-end and connect to back-end. Resolve search fetch issues.
+Main functions are almost completed. Next week, I will focus on UI optimisation.

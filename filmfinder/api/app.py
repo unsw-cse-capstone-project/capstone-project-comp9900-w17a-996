@@ -112,40 +112,40 @@ def login():
 def home():
     return guid
 
-"""search movie, get input from search bar and return related movies"""
-result = {"movies": []}
-@app.route('/search', methods=['POST', 'GET'])
-def search():
-    if request.method == 'POST':
-        data = request.get_json()
-        search_content = data["searchContent"]
+# """search movie, get input from search bar and return related movies"""
+# result = {"movies": []}
+# @app.route('/search', methods=['POST', 'GET'])
+# def search():
+#     if request.method == 'POST':
+#         data = request.get_json()
+#         search_content = data["searchContent"]
  
-        db = connect_db()
-        c = db.cursor()
-        query_sql = "SELECT * FROM MOVIE"
-        result["movies"] = []
-        
-        try:
-            movie_details = c.execute(query_sql).fetchall()
+#         db = connect_db()
+#         c = db.cursor()
+#         query_sql = "SELECT * FROM MOVIE"
+#         result["movies"] = []
 
-            for detail in movie_details:
-                if search_content in detail[0]:
-                    # sub_res = {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}
-                    sub_res = {"title": "", "genre": ""}
-                    sub_res["title"] = detail[0]
-                    # sub_res["director"] = detail[1]
-                    # sub_res["cast"] = detail[2]
-                    sub_res["genre"] = detail[3]
-                    # sub_res["language"] = detail[4]
-                    # sub_res["date"] = detail[5]
+#         try:
+#             movie_details = c.execute(query_sql).fetchall()
 
-                    result["movies"].append(sub_res)
-                    # # print(result)
-        except sqlite3.OperationalError:
-            pass
-        return search_content
-    else:
-        return result
+#             for detail in movie_details:
+#                 if search_content in detail[0]:
+#                     # sub_res = {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}
+#                     sub_res = {"title": "", "genre": ""}
+#                     sub_res["title"] = detail[0]
+#                     # sub_res["director"] = detail[1]
+#                     # sub_res["cast"] = detail[2]
+#                     sub_res["genre"] = detail[3]
+#                     # sub_res["language"] = detail[4]
+#                     # sub_res["date"] = detail[5]
+
+#                     result["movies"].append(sub_res)
+#                     # # print(result)
+#         except sqlite3.OperationalError:
+#             pass
+#         return search_content
+#     else:
+#         return result
 
 """profile page, update user info"""
 @app.route('/profile', methods=['POST'])
@@ -664,6 +664,45 @@ def followinglist():
     return {"followings": res}
 
 
+
+# """search movie, get input from search bar and return related movies"""
+# result = {"movies": []}
+# @app.route('/search', methods=['POST', 'GET'])
+# def search():
+#     if request.method == 'POST':
+#         data = request.get_json()
+#         search_content = data["searchContent"]
+ 
+#         db = connect_db()
+#         c = db.cursor()
+#         query_sql = "SELECT * FROM MOVIE"
+#         result["movies"] = []
+
+#         try:
+#             movie_details = c.execute(query_sql).fetchall()
+
+#             for detail in movie_details:
+#                 if search_content in detail[0]:
+#                     # sub_res = {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": ""}
+#                     sub_res = {"title": "", "genre": ""}
+#                     sub_res["title"] = detail[0]
+#                     # sub_res["director"] = detail[1]
+#                     # sub_res["cast"] = detail[2]
+#                     sub_res["genre"] = detail[3]
+#                     # sub_res["language"] = detail[4]
+#                     # sub_res["date"] = detail[5]
+
+#                     result["movies"].append(sub_res)
+#                     # # print(result)
+#         except sqlite3.OperationalError:
+#             pass
+#         return search_content
+#     else:
+#         return result
+
+
+
+
 """search movie by genre, language, director, year"""
 searchByOther_data = {"type": "", "content": ""}
 @app.route("/searchByOther", methods=["GET", "POST"])
@@ -682,7 +721,7 @@ def searchByOther():
         search_type = searchByOther_data["type"]
         search_content = searchByOther_data["content"]
 
-        if search_type == "genre":
+        if search_type == "Genre":
             res = []
             movies = c.execute("SELECT * FROM MOVIE").fetchall()
             genre = searchByOther_data["content"]
@@ -696,7 +735,7 @@ def searchByOther():
                             "rating": recommendation.cal_mark(movies[idx][0])}
                     res.append(item)
 
-        elif search_type == "language":
+        elif search_type == "Language":
 
             res = []
             language = searchByOther_data["content"]
@@ -708,17 +747,20 @@ def searchByOther():
                         "rating": recommendation.cal_mark(movies[idx][0])}
                 res.append(item)
                 
-        elif search_type == "director":
+        elif search_type == "Director":
             res = []
             director = searchByOther_data["content"]
-            movies = c.execute("SELECT * FROM MOVIE WHERE DIRECTORS = ?", (director,)).fetchall()
-
+            # print("director", director)
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+            # print("movies", movies)
             for idx in range(len(movies)):
-                item = {"title": movies[idx][0],
-                        "genre": movies[idx][3],
-                        "rating": recommendation.cal_mark(movies[idx][0])}
-                res.append(item)
-        else:
+                directors = movies[idx][1].split(", ")
+                if director in directors:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
+        elif search_type == "Year":
             # year
             res = []
             year = searchByOther_data["content"]
@@ -731,12 +773,26 @@ def searchByOther():
                             "genre": movies[idx][3],
                             "rating": recommendation.cal_mark(movies[idx][0])}
                     res.append(item)
+        else:
+            # default
+            res = []
+            user_input = searchByOther_data["content"]
+            movies = c.execute("SELECT * FROM MOVIE").fetchall()
+            
+            for idx in range(len(movies)):
+                if user_input in movies[idx][0]:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res.append(item)
 
-        
+
         # sort by rating
-        res = sorted(res, key=lambda x: x["rating"], reverse=False)
+        res = sorted(res, key=lambda x: x["rating"], reverse=True)
+        
+        
+        return {"movies": res}
 
-        return {"data": res}
 
 import dianzan
 
@@ -777,7 +833,6 @@ def thumbupordown():
             tmp_dic2 = {}
             tmp_dic2[user] = tmp_dic
             dic['thumb_count'].append(tmp_dic2)
-        
         return dic
 
 
@@ -825,11 +880,6 @@ def replyreview():
                 tmp_dic[user].append(tmp_dic_2)
             dic['reply'].append(tmp_dic)
         return dic
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

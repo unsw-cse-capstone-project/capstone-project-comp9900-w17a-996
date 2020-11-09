@@ -4,20 +4,22 @@ import { Button, Select } from 'antd';
 const { Option } = Select;
 const typeData = ['Director', 'Genre', 'Year', 'Language'];
 const contentData = {
-  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei'],
-  Genre: ['Melody', 'Music', 'Drama'],
-  Year: [],
-  Language: [],
+  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei', 'Justin Baldoni', 'Aaron Sorkin', 'Rusty Cundieff', 'Radha Blank', 'James Foley'],
+  Genre: ['Melody', 'Music', 'Drama', 'Action', 'Comedy'],
+  Year: ['2020', '2015'],
+  Language: ['English', 'Chinese'],
 };
 
 class Filter extends Component {
     state = { 
+        type: typeData[0],
         contents: contentData[typeData[0]],
     secondContent: contentData[typeData[0]][0],
      };
 
      handleProvinceChange = value => {
         this.setState({
+            type: value,
             contents: contentData[value],
             secondContent: contentData[value][0],
         });
@@ -28,6 +30,38 @@ class Filter extends Component {
             secondContent: value,
         });
       };
+
+      handleBrowse = () => {
+        console.log(this.state);
+
+        const data = {
+          type: this.state.type,
+          content: this.state.secondContent,
+        }
+
+        fetch("/searchByOther", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => console.log(response))
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+          window.location.href = "/#/result?keyword=" + this.state.type;
+          try {
+            this.props.setPare();
+          } catch (error) {
+            
+          }
+      }
       
 
     render() { 
@@ -51,7 +85,7 @@ class Filter extends Component {
             <Option key={content}>{content}</Option>
           ))}
         </Select>
-        <Button type="primary">Browse</Button>
+        <Button type="primary" onClick={this.handleBrowse}>Browse</Button>
         </React.Fragment> );
     }
 }
