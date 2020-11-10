@@ -45,7 +45,7 @@ class MovieDetail extends Component {
     console.log("My child is calling me.");
     fetch("/checkReview")
       .then((r) => {
-        console.log(r);
+        console.log('review',r);
         return r.json();
       })
       .then((r) => {
@@ -90,7 +90,7 @@ class MovieDetail extends Component {
 
       fetch("/checkReview")
         .then((r) => {
-          console.log(r);
+          console.log('review',r);
           return r.json();
         })
         .then((r) => {
@@ -181,12 +181,12 @@ class MovieDetail extends Component {
 
     fetch("/checkReview")
       .then((r) => {
-        console.log(r);
+        console.log('review',r);
         return r.json();
       })
       .then((r) => {
         this.setState(r);
-        console.log(r);
+        console.log('review',r);
       });
     }, 500);
   }
@@ -233,10 +233,12 @@ class MovieDetail extends Component {
   //             this.setState(r);
   //         })
   // }
+  
   render() {
+    console.log(this.state.title)
     const comments = this.state.user;
     const commentItems = comments.map((commentItem) => (
-      <CommentCard {...commentItem} />
+      <CommentCard {...commentItem} title={this.state.title}/>
     ));
     const { visible, confirmLoading, ModalText } = this.state;
 

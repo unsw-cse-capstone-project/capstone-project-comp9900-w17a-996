@@ -1,4 +1,4 @@
-import React, { ReactDOM, MountNode, createElement, useState} from 'react';
+import React, { useEffect, createElement, useState} from 'react';
 import "../styles/moviecard.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import { Comment, Tooltip, Avatar,Tag} from 'antd';
@@ -9,21 +9,84 @@ import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, MessageOutlin
 
 const CommentCard = (props) => {
 
-        const [likes, setLikes] = useState(0);
-        const [dislikes, setDislikes] = useState(0);
+        const [likes, setLikes] = useState(props.likes);
+        const [dislikes, setDislikes] = useState(props.dislike);
         const [action, setAction] = useState(null);
         const [reply, setReply] = useState(false);
-
+        
+        useEffect(() => { 
+          fetch("/thumbupordown")
+            .then((r) => r.json())
+            .then((r) => {
+              const up = r.thumb_count[props.userName].up;
+              const down = r.thumb_count[props.userName].down;
+              console.log("thumbcount:", up,down);
+              if (up === null){
+                setLikes(0)
+              }
+              else{
+                setLikes(up)
+              }
+              if (down === null){
+                setDislikes(0)
+              }
+              else{
+                setDislikes(down)
+              }
+              
+            });
+        },[]);
         const like = () => {
-            setLikes(1);
-            setDislikes(0);
+            setLikes(1 + likes);
+            if (dislikes > 0){
+              setDislikes(dislikes - 1);
+            }
             setAction('liked');
+            const data = {
+              'commentuser': props.userName,
+              'movie': props.title,
+              'like': '1'
+            }
+            fetch("/thumbupordown", {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then(r => r.json())
+                .then((data) => {
+                  console.log("Success:", data);
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
+            
         };
 
         const dislike = () => {
-            setLikes(0);
-            setDislikes(1);
+            if (likes > 0){
+              setLikes(likes - 1);
+            }
+            setDislikes(dislikes + 1);
             setAction('disliked');
+            /*
+            fetch("/dislike", {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then(r => r.json())
+                .then((data) => {
+                  console.log("Success:", data);
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });*/
         };
         const addReply = () => {
             console.log(reply);
@@ -64,8 +127,36 @@ const CommentCard = (props) => {
         }
       });
             
-        }       
-
+        }     
+        const replies = [{name:'jiaqi',content:'good'},{name:'Han',content:'bad'}];
+        const showReply = replies.map((k,i) => (
+            <Comment
+                key={i}
+                author={<a>{k.name}</a>}
+                avatar={
+                <Avatar
+                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    alt={k.name}
+                />
+                }
+                content={
+                <p>
+                    {k.content}
+                </p>
+                }
+            >
+                
+            </Comment>
+        ));
+        /*
+        const CommentList = ({ comments }) => (
+            <List
+              dataSource={comments}
+              header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+              itemLayout="horizontal"
+              renderItem={props => <Comment {...props} />}
+            />
+          );*/
         return (
             <Comment
             actions={actions}
@@ -78,19 +169,21 @@ const CommentCard = (props) => {
                 />
             }
             content={
-                    <div id='toReply'>
                         <p>
                             {props.review}
                         </p>
-                        {createElement(reply === true ? AddReply : MessageOutlined)}
-                    </div>
+                        
             }
             datetime={
                 <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
                 <span>{props.reviewTime}</span>
                 </Tooltip>
             }
-            />
+            >
+
+                {showReply}
+                {createElement(reply === true ? AddReply : MessageOutlined)}
+            </Comment>
             
         );
     
