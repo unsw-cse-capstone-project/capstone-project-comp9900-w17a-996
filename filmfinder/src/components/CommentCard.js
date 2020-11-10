@@ -10,58 +10,29 @@ import { OmitProps } from 'antd/lib/transfer/ListBody';
 
 const CommentCard = (props) => {
 
-        const [likes, setLikes] = useState(0);
-        const [dislikes, setDislikes] = useState(0);
+        const [likes, setLikes] = useState(parseInt(props.thumbcount.up));
+        const [dislikes, setDislikes] = useState(parseInt(props.thumbcount.down));
         const [action, setAction] = useState(null);
         const [reply, setReply] = useState(false);
-        const [thumbup, setThumbup] = useState(0);
-        const [thumbdown, setThumbdown] = useState(0);
+        const [thumbup, setThumbup] = useState(parseInt(props.thumbcount.up));
+        const [thumbdown, setThumbdown] = useState(parseInt(props.thumbcount.down));
         const [replies, setReplies] = useState([]);
-        const [hadLike,setHadLike] = useState(0);
-        const [hadDisLike,setHadDisLike] = useState(0);
+        const [hadLike,setHadLike] = useState(props.thumbcount.already_up);
+        const [hadDisLike,setHadDisLike] = useState(props.thumbcount.already_down);
         const [loginUser, setLoginUser] = useState('');
-        
-
-        console.log(likes,dislikes,replies)
+       
+        console.log(props.thumbcount,props.userName);
+    
         useEffect(() => { 
           console.log('usereffect');
-          fetch("/thumbupordown")
-            .then((r) => r.json())
-            .then((r) => {
-              console.log(r.thumb_count,props.userName,r.login_user);
-              setLoginUser(r.login_user);
-              const up = parseInt(r.thumb_count[props.userName].up);
-              const down = parseInt(r.thumb_count[props.userName].down);
-              const aup = r.thumb_count[props.userName].already_up;
-              const adown = r.thumb_count[props.userName].already_down;
-              console.log("thumbcount:", up,down,aup,adown);
-              setHadLike(aup);
-              setHadDisLike(adown);
 
-              if (aup === 1){
-                setAction('liked')
-              }
-              if (adown === 1){
-                setAction('disliked')
-              }
-              if (up === null){
-                setLikes(0)
-                setThumbup(0)
-              }
-              else{
-                setLikes(up)
-                setThumbup(up)
-              }
-              if (down === null){
-                setDislikes(0)
-                setThumbdown(0)
-              }
-              else{
-                setDislikes(down)
-                setThumbdown(down)
-              }
-              
-            });
+          if (hadLike === 1){
+              setAction('liked')
+          }
+          if (hadDisLike === 1){
+              setAction('disliked')
+          }
+          
           fetch("/replyReview")
             .then((r) => r.json()
             .then((r) => {
@@ -149,13 +120,13 @@ const CommentCard = (props) => {
             <Tooltip key="comment-basic-like" title="Like">
             <span onClick={like}>
                 {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
-                <span className="comment-action">{likes}</span>
+                <span className="comment-action">{props.thumbcount.up}</span>
             </span>
             </Tooltip>,
             <Tooltip key="comment-basic-dislike" title="Dislike">
             <span onClick={dislike}>
                 {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-                <span className="comment-action">{dislikes}</span>
+                <span className="comment-action">{props.thumbcount.down}</span>
             </span>
             </Tooltip>,
             <span key="comment-basic-reply-to" onClick={addReply}>Reply to</span>,
@@ -206,7 +177,7 @@ const CommentCard = (props) => {
         }
         let createReply = null;
         if (reply === true) {
-          createReply = <AddReply user={loginUser} movie={props.title}/>;
+          createReply = <AddReply user={loginUser} commentuser={props.userName} movie={props.title}/>;
         }
         /*
         const CommentList = ({ comments }) => (

@@ -119,7 +119,7 @@ class AddComment extends Component {
       console.log(this.state.comments);
       return (
         <>
-          {comments.length > 0 && <CommentCard {...this.state.comments[0]} userName='jia'/>}
+          {comments.length > 0 && <CommentCard {...this.state.comments[0]}/>}
           <Rating parent={ this }/>
       {/* <h3>Title is {this.props.title}</h3> */}
           <Comment

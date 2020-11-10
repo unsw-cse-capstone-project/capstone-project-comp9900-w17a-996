@@ -38,11 +38,23 @@ class MovieDetail extends Component {
       rating: "",
       url: "",
       user: [],
+      thumb_count: {},
+      login_user:'',
+      reply: {}
     };
   }
 
   setPare = () => {
     console.log("My child is calling me.");
+    fetch("/thumbupordown")
+      .then((r) => r.json())
+      .then(r => {
+        this.setState({
+          thumb_count: r.thumb_count,
+          login_user: r.login_user
+        });
+        console.log(r);
+      });
     fetch("/checkReview")
       .then((r) => {
         console.log('review',r);
@@ -53,7 +65,7 @@ class MovieDetail extends Component {
         console.log(r);
       });
   };
-
+  
   setPare2 = (title) => {
     const data = {
       title: title,
@@ -166,7 +178,15 @@ class MovieDetail extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-
+      fetch("/thumbupordown")
+      .then((r) => r.json())
+      .then(r => {
+        this.setState({
+          thumb_count: r.thumb_count,
+          login_user: r.login_user
+        });
+        console.log(r);
+      })
     
     setTimeout(() => {
       fetch("/movieDetail")
@@ -188,6 +208,7 @@ class MovieDetail extends Component {
         this.setState(r);
         console.log('review',r);
       });
+    
     }, 500);
   }
 
@@ -237,8 +258,9 @@ class MovieDetail extends Component {
   render() {
     console.log(this.state.title)
     const comments = this.state.user;
+    console.log('comments',comments,this.state.thumb_count);
     const commentItems = comments.map((commentItem) => (
-      <CommentCard {...commentItem} title={this.state.title}/>
+      <CommentCard {...commentItem} title={this.state.title} login_user={this.state.login_user} thumbcount={this.state.thumb_count[commentItem.userName]} />
     ));
     const { visible, confirmLoading, ModalText } = this.state;
 

@@ -47,8 +47,9 @@ class AddReply extends Component {
     let v = '';
     setTimeout(() => {
       console.log(this.state.value);
+      console.log(this.props.user);
       const data = {
-        commentuser: this.props.user,
+        commentuser: this.props.commentuser,
         movie: this.props.movie,
         comment: this.state.value
       }
@@ -81,7 +82,7 @@ class AddReply extends Component {
         ],
       });
     
-    }, 1000);
+    }, );
     
   };
 
