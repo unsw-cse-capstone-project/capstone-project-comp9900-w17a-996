@@ -116,9 +116,10 @@ class AddComment extends Component {
     render() {
       const {title} = this.props;
       const { comments, submitting, value,rating} = this.state;
+      console.log(this.state.comments);
       return (
         <>
-          {comments.length > 0 && <CommentCard {...this.state.comments[0]} />}
+          {comments.length > 0 && <CommentCard {...this.state.comments[0]} userName='jia'/>}
           <Rating parent={ this }/>
       {/* <h3>Title is {this.props.title}</h3> */}
           <Comment

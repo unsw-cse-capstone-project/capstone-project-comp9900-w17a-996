@@ -16,15 +16,34 @@ const CommentCard = (props) => {
         const [reply, setReply] = useState(false);
         const [thumbup, setThumbup] = useState(0);
         const [thumbdown, setThumbdown] = useState(0);
+        const [replies, setReplies] = useState([]);
+        const [hadLike,setHadLike] = useState(0);
+        const [hadDisLike,setHadDisLike] = useState(0);
+        const [loginUser, setLoginUser] = useState('');
+        
 
+        console.log(likes,dislikes,replies)
         useEffect(() => { 
+          console.log('usereffect');
           fetch("/thumbupordown")
             .then((r) => r.json())
             .then((r) => {
-              console.log(r.thumb_count);
+              console.log(r.thumb_count,props.userName,r.login_user);
+              setLoginUser(r.login_user);
               const up = parseInt(r.thumb_count[props.userName].up);
               const down = parseInt(r.thumb_count[props.userName].down);
-              console.log("thumbcount:", up,down);
+              const aup = r.thumb_count[props.userName].already_up;
+              const adown = r.thumb_count[props.userName].already_down;
+              console.log("thumbcount:", up,down,aup,adown);
+              setHadLike(aup);
+              setHadDisLike(adown);
+
+              if (aup === 1){
+                setAction('liked')
+              }
+              if (adown === 1){
+                setAction('disliked')
+              }
               if (up === null){
                 setLikes(0)
                 setThumbup(0)
@@ -43,11 +62,18 @@ const CommentCard = (props) => {
               }
               
             });
+          fetch("/replyReview")
+            .then((r) => r.json()
+            .then((r) => {
+              console.log(r)
+              setReplies(r.reply[props.userName])
+            }))
         },[]);
        
         const like = () => {
             console.log(likes,thumbup);
-            if (likes === thumbup){
+            //no like or dislike
+            if ((hadDisLike === 0 && hadLike === 0 && likes === thumbup) || (hadLike === 0 && hadDisLike === 1 && likes === thumbup) || (hadLike === 1 && likes !== thumbup)){
               console.log('yes')
               setLikes(1 + likes);
               const data = {
@@ -71,7 +97,7 @@ const CommentCard = (props) => {
                     console.error("Error:", error);
                   });
             }
-            if (dislikes > 0 && dislikes !== thumbdown){
+            if (dislikes > 0 && ((hadDisLike === 0 && hadLike === 0 && dislikes !== thumbdown) || (hadLike === 0 && hadDisLike === 1 && dislikes === thumbdown) || (hadLike === 1 && dislikes !== thumbdown))){
               setDislikes(dislikes - 1);
             }
             setAction('liked');
@@ -80,11 +106,11 @@ const CommentCard = (props) => {
         };
 
         const dislike = () => {
-            console.log(likes,thumbup)
-            if (likes > 0 && likes !== thumbup){
+            console.log(likes,thumbup,hadDisLike)
+            if (likes > 0 && ((hadDisLike === 0 && hadLike === 0 && likes > thumbup) || (hadLike === 0 && hadDisLike === 1 && likes > thumbup) || (hadLike === 1 && likes === thumbup))){
               setLikes(likes - 1);
             }
-            if (dislikes === thumbdown){
+            if ((hadDisLike === 0 && hadLike === 0 && dislikes === thumbdown) || (hadLike === 0 && hadDisLike === 1 && dislikes < thumbdown) || (hadLike === 1 && dislikes === thumbdown)){
               setDislikes(dislikes + 1);
               const data = {
                 commentuser: props.userName,
@@ -150,29 +176,37 @@ const CommentCard = (props) => {
       });
             
         }     
-        const replies = [{name:'jiaqi',content:'good'},{name:'Han',content:'bad'}];
-        const showReply = replies.map((k,i) => (
+        //const replies = [{name:'jiaqi',content:'good'},{name:'Han',content:'bad'}];
+        let showReply = null;
+        if (replies.length !== 0){
+            showReply = replies.map((k,i) => (
             <Comment
-                key={i}
-                author={<a>{k.name}</a>}
-                avatar={
-                <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt={k.name}
-                />
-                }
-                content={
-                <p>
-                    {k.content}
-                </p>
-                }
-            >
-                
-            </Comment>
-        ));
+              key={i}
+              author={<a>{k.reply_user}</a>}
+              avatar={
+              <Avatar
+                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  alt={k.reply_user}
+              />
+              }
+              content={
+              <p>
+                  {k.comment}
+              </p>
+              }
+              datetime={
+                <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+                <span>{k.date}</span>
+                </Tooltip>
+            }
+          >
+              
+          </Comment>
+            ));
+        }
         let createReply = null;
         if (reply === true) {
-          createReply = <AddReply user={props.userName} movie={props.title}/>;
+          createReply = <AddReply user={loginUser} movie={props.title}/>;
         }
         /*
         const CommentList = ({ comments }) => (

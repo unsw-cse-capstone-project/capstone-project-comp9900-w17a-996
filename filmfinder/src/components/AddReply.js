@@ -44,22 +44,9 @@ class AddReply extends Component {
     this.setState({
       submitting: true,
     });
-   
+    let v = '';
     setTimeout(() => {
-      //console.log(this.state.rating);
-      this.setState({
-        submitting: false,
-        value: '',
-        comments: [
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-          ...this.state.comments,
-        ],
-      });
+      console.log(this.state.value);
       const data = {
         commentuser: this.props.user,
         movie: this.props.movie,
@@ -80,7 +67,22 @@ class AddReply extends Component {
           .catch((error) => {
             console.error("Error:", error);
           });
+      this.setState({
+        submitting: false,
+        value: '',
+        comments: [
+          {
+            author: this.props.user,
+            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            content: <p>{this.state.value}</p>,
+            datetime: moment().fromNow(),
+          },
+          ...this.state.comments,
+        ],
+      });
+    
     }, 1000);
+    
   };
 
     handleChange = e => {
