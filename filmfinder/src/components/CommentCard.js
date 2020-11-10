@@ -71,7 +71,7 @@ const CommentCard = (props) => {
                     console.error("Error:", error);
                   });
             }
-            if (dislikes > 0 && dislikes === thumbdown){
+            if (dislikes > 0 && dislikes !== thumbdown){
               setDislikes(dislikes - 1);
             }
             setAction('liked');
@@ -80,7 +80,8 @@ const CommentCard = (props) => {
         };
 
         const dislike = () => {
-            if (likes > 0 && likes === thumbup){
+            console.log(likes,thumbup)
+            if (likes > 0 && likes !== thumbup){
               setLikes(likes - 1);
             }
             if (dislikes === thumbdown){
