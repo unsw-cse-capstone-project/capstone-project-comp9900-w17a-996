@@ -28,11 +28,13 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 );
 
 class AddReply extends Component {
+
   state = {
     comments: [],
     submitting: false,
-    value: '',
+    value: ''
   };
+
 
   handleSubmit = () => {
     if (!this.state.value) {
@@ -42,7 +44,7 @@ class AddReply extends Component {
     this.setState({
       submitting: true,
     });
-
+   
     setTimeout(() => {
       //console.log(this.state.rating);
       this.setState({
@@ -58,6 +60,26 @@ class AddReply extends Component {
           ...this.state.comments,
         ],
       });
+      const data = {
+        commentuser: this.props.user,
+        movie: this.props.movie,
+        comment: this.state.value
+      }
+      fetch("/replyReview", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then(r => console.log(r))
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
     }, 1000);
   };
 

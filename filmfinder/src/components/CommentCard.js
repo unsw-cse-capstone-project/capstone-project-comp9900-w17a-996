@@ -5,49 +5,92 @@ import { Comment, Tooltip, Avatar,Tag} from 'antd';
 import moment from 'moment';
 import RatingResult from './RatingResult';
 import AddReply from '../components/AddReply';
-import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, MessageOutlined} from '@ant-design/icons';
+import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, MessageOutlined, ThunderboltFilled} from '@ant-design/icons';
+import { OmitProps } from 'antd/lib/transfer/ListBody';
 
 const CommentCard = (props) => {
 
-        const [likes, setLikes] = useState(props.likes);
-        const [dislikes, setDislikes] = useState(props.dislike);
+        const [likes, setLikes] = useState(0);
+        const [dislikes, setDislikes] = useState(0);
         const [action, setAction] = useState(null);
         const [reply, setReply] = useState(false);
-        
+        const [thumbup, setThumbup] = useState(0);
+        const [thumbdown, setThumbdown] = useState(0);
+
         useEffect(() => { 
           fetch("/thumbupordown")
             .then((r) => r.json())
             .then((r) => {
-              const up = r.thumb_count[props.userName].up;
-              const down = r.thumb_count[props.userName].down;
+              console.log(r.thumb_count);
+              const up = parseInt(r.thumb_count[props.userName].up);
+              const down = parseInt(r.thumb_count[props.userName].down);
               console.log("thumbcount:", up,down);
               if (up === null){
                 setLikes(0)
+                setThumbup(0)
               }
               else{
                 setLikes(up)
+                setThumbup(up)
               }
               if (down === null){
                 setDislikes(0)
+                setThumbdown(0)
               }
               else{
                 setDislikes(down)
+                setThumbdown(down)
               }
               
             });
         },[]);
+       
         const like = () => {
-            setLikes(1 + likes);
-            if (dislikes > 0){
+            console.log(likes,thumbup);
+            if (likes === thumbup){
+              console.log('yes')
+              setLikes(1 + likes);
+              const data = {
+                commentuser: props.userName,
+                movie: props.title,
+                like: '1'
+              }
+              fetch("/thumbupordown", {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then(r => console.log(r))
+                  .then((data) => {
+                    console.log("Success:", data);
+                  })
+                  .catch((error) => {
+                    console.error("Error:", error);
+                  });
+            }
+            if (dislikes > 0 && dislikes === thumbdown){
               setDislikes(dislikes - 1);
             }
             setAction('liked');
-            const data = {
-              'commentuser': props.userName,
-              'movie': props.title,
-              'like': '1'
+  
+            
+        };
+
+        const dislike = () => {
+            if (likes > 0 && likes === thumbup){
+              setLikes(likes - 1);
             }
-            fetch("/thumbupordown", {
+            if (dislikes === thumbdown){
+              setDislikes(dislikes + 1);
+              const data = {
+                commentuser: props.userName,
+                movie: props.title,
+                like: '0'
+              }
+              fetch("/thumbupordown", {
                 method: "POST",
                 headers: {
                   Accept: "application/json",
@@ -55,38 +98,16 @@ const CommentCard = (props) => {
                 },
                 body: JSON.stringify(data),
               })
-                .then(r => r.json())
+                .then(r => console.log(r))
                 .then((data) => {
                   console.log("Success:", data);
                 })
                 .catch((error) => {
                   console.error("Error:", error);
                 });
-            
-        };
-
-        const dislike = () => {
-            if (likes > 0){
-              setLikes(likes - 1);
             }
-            setDislikes(dislikes + 1);
             setAction('disliked');
-            /*
-            fetch("/dislike", {
-                method: "POST",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              })
-                .then(r => r.json())
-                .then((data) => {
-                  console.log("Success:", data);
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });*/
+            
         };
         const addReply = () => {
             console.log(reply);
@@ -148,6 +169,10 @@ const CommentCard = (props) => {
                 
             </Comment>
         ));
+        let createReply = null;
+        if (reply === true) {
+          createReply = <AddReply user={props.userName} movie={props.title}/>;
+        }
         /*
         const CommentList = ({ comments }) => (
             <List
@@ -182,7 +207,8 @@ const CommentCard = (props) => {
             >
 
                 {showReply}
-                {createElement(reply === true ? AddReply : MessageOutlined)}
+                {createReply}
+                
             </Comment>
             
         );
