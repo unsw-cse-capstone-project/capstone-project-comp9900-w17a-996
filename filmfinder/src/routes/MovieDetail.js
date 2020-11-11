@@ -37,6 +37,7 @@ class MovieDetail extends Component {
       date: "",
       rating: "",
       url: "",
+      description: "",
       user: [],
       thumb_count: {},
       login_user:'',

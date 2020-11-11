@@ -194,7 +194,7 @@ def profile():
     # }
 
 """movie page, get movie name then post movie detils"""
-movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": "", "rating": ""}}
+movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": "", "rating": "", "description":""}}
 @app.route('/movieDetail', methods=['GET', 'POST'])
 # @as_json
 def movieDetail():
@@ -214,6 +214,7 @@ def movieDetail():
         movie_detail_res["movie"]["date"] = details[0][5]
         movie_detail_res["movie"]["url"] = details[0][6]
         movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
+        movie_detail_res["movie"]["description"] = details[0][8]
         # # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
@@ -245,6 +246,7 @@ def history():
         else:
             del_review_sql = "DELETE FROM REVIEW WHERE USER = ? AND MOVIE = ?"
             c.execute(del_review_sql, (user, movie, ))
+            c.execute("DELETE FROM REVIEWOFREVIEW WHERE ORIGINALUSER = ? AND MOVIE = ?", (user, movie,))
             db.commit()
         # test code
         # query = "SELECT * FROM REVIEW"

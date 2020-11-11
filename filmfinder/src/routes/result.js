@@ -6,18 +6,19 @@ class Result extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: [],
-      url: "The Forty-Year-Old Version"
+      description: [],
+      genre: [],
+      title: [],
+      url: "The Forty-Year-Old Version",
     };
   }
 
   componentWillMount() {
-    
     fetch("/searchByOther")
       .then((r) => r.json())
       .then((r) => {
         this.setState(r);
-        console.log("Result UI:",r);
+        console.log("Result UI:", r);
       });
   }
 
@@ -26,9 +27,9 @@ class Result extends Component {
       .then((r) => r.json())
       .then((r) => {
         this.setState(r);
-        console.log("Result UI:",r);
+        console.log("Result UI:", r);
       });
-  }
+  };
 
   // componentDidUpdate() {
   //   fetch("/search")
@@ -65,13 +66,11 @@ class Result extends Component {
 
   handleImage = (title) => {
     let url_1 = title;
-    if (title.indexOf(":") !== -1){
-        url_1 = url_1.replace(/:/, '');
+    if (title.indexOf(":") !== -1) {
+      url_1 = url_1.replace(/:/, "");
     }
     return url_1;
-  }
-    
-
+  };
 
   // componentDidMount(){
   //     const reg = /([^=&s]+)[=s]([^=&s]+)/g;
@@ -83,43 +82,78 @@ class Result extends Component {
   // }
 
   render() {
-    const movies = this.state.movies;
+    const description = this.state.description;
+    const genre = this.state.genre;
+    const title = this.state.title;
 
     return (
       <React.Fragment>
         <NavBar setPare={this.setPare}></NavBar>
         <div className="pl-5 pt-4">
-          
+          <h4>{description.length} description(s) matches found: </h4>
 
-        <h4>{movies.length} result(s) found: </h4>
+          <div>
+            {description.map((movie) => {
+              return (
+                <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+                  <div className="row">
+                    <img
+                      src={require(`../${this.handleImage(movie.title)}.jpg`)}
+                      width="100px"
+                      height="150px"
+                    />
+                    <h3>Rating: {movie.rating}</h3>
+                  </div>
+                  <div>Title: {movie.title}</div>
+                  <div>Genre: {movie.genre}</div>
+                </div>
+              );
+            })}
+          </div>
 
-<div>
-  
-  {movies.map((movie) => {
-    return (
-      <div onClick={(ev) => this.handleClick(ev, movie.title)}>
-        <div className="row">
-        <img src={require(`../${this.handleImage(movie.title)}.jpg`) } width="100px"
-          height="150px"/>
-          <h3>Rating: {movie.rating}</h3>
+          <h4>{genre.length} genre(s) matches found: </h4>
+
+          <div>
+            {genre.map((movie) => {
+              return (
+                <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+                  <div className="row">
+                    <img
+                      src={require(`../${this.handleImage(movie.title)}.jpg`)}
+                      width="100px"
+                      height="150px"
+                    />
+                    <h3>Rating: {movie.rating}</h3>
+                  </div>
+                  <div>Title: {movie.title}</div>
+                  <div>Genre: {movie.genre}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          <h4>{title.length} title(s) matches found: </h4>
+
+          <div>
+            {title.map((movie) => {
+              return (
+                <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+                  <div className="row">
+                    <img
+                      src={require(`../${this.handleImage(movie.title)}.jpg`)}
+                      width="100px"
+                      height="150px"
+                    />
+                    <h3>Rating: {movie.rating}</h3>
+                  </div>
+                  <div>Title: {movie.title}</div>
+                  <div>Genre: {movie.genre}</div>
+                </div>
+              );
+            })}
+          </div>
+
         </div>
-        
-        {/* <Image
-          width="100px"
-          height="150px"
-          src={poster}
-          className="poster"
-        /> */}
-        <div >
-          Title: {movie.title}
-        </div>
-        <div>Genre: {movie.genre}</div>
-      </div>
-    );
-  })}
-</div>
-        </div>
-        
       </React.Fragment>
     );
   }
