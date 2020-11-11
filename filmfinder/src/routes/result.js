@@ -82,6 +82,35 @@ class Result extends Component {
   // }
 
   render() {
+    if (this.state.movies) {
+      const movies = this.state.movies;
+      return (<React.Fragment>
+        <NavBar setPare={this.setPare}></NavBar>
+        <div className="pl-5 pt-4">
+          <h4>{movies.length} movie(s) found: </h4>
+
+          <div>
+            {movies.map((movie) => {
+              return (
+                <div onClick={(ev) => this.handleClick(ev, movie.title)}>
+                  <div className="row">
+                    <img
+                      src={require(`../${this.handleImage(movie.title)}.jpg`)}
+                      width="100px"
+                      height="150px"
+                    />
+                    <h3>Rating: {movie.rating}</h3>
+                  </div>
+                  <div>Title: {movie.title}</div>
+                  <div>Genre: {movie.genre}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </React.Fragment>)
+    }
+
     const description = this.state.description;
     const genre = this.state.genre;
     const title = this.state.title;
