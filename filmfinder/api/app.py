@@ -635,13 +635,43 @@ def blockUser():
         else:
             return {"isblocker": False}
 
-@app.route('/recommendmovie', methods=['GET'])
-# @as_json
+recommendation_list = {}
+choice = {'c': ''}
+@app.route('/recommendmovie', methods=['GET', 'POST'])
 def recommendmovie():
-    userName = guid['username']
-    recommendation_list = {}
-    recommendation_list['recommendmovie'] = recommendation.recommend(userName)
-    return recommendation_list
+    db = connect_db()
+    c = db.cursor()
+    
+    if request.method == 'POST':
+        userName = guid['username']
+        recommendation_list['recommendmovie'] = recommendation.recommend(userName)
+        data = request.get_json()
+        movie_title = movie_detail_res['movie']['title']
+        genre = c.execute('SELECT * FROM MOVIE WHERE TITLE = ?', (movie_title,)).fetchall()[0][3]
+        director = c.execute('SELECT * FROM MOVIE WHERE TITLE = ?', (movie_title,)).fetchall()[0][1]
+        genre_list = genre.split(', ')
+        director_list = director.split(', ')
+        same_genre_list, same_genre_dic, final_result_genre = recommendation.recommendByGenre(genre_list, userName, movie_title)
+        same_director_list, same_director_dic, final_result_director = recommendation.recommendByGenre(director_list, userName, movie_title)
+        if data['choice'] == 'g':
+            recommendation_list['recommendmovie'] = final_result_genre
+            choice['c'] = 'g'
+        elif data['choice'] == 'd':
+            recommendation_list['recommendmovie'] = final_result_director
+            choice['c'] = 'd'
+        elif data['choice'] == 'dg':
+            choice['c'] = 'dg'
+            recommendation_list['recommendmovie'] = recommendation.recommendByGenreAndDirector(same_genre_list, same_genre_dic, same_director_list, same_director_dic)
+        else:
+            choice['c'] = 'no'
+        
+        return "-"
+    
+    else:
+        if choice['c'] == '':
+            userName = guid['username']
+            return {'recommendmovie': recommendation.recommend(userName)}
+        return recommendation_list
 
 @app.route('/blocklist', methods=['GET', 'POST'])
 # @as_json

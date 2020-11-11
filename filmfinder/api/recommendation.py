@@ -23,7 +23,7 @@ def recommend(username):
                         final_recommand_list.append(tmp['title'])
                         final_recommand_dic[tmp['title']] = ('Because you like' + movie + '...')
     
-    n = 3 - len(final_recommand_list)
+    n = 5 - len(final_recommand_list)
     i = 0
     hotmovies = hotmovie()
     while n > 0:
@@ -119,55 +119,72 @@ def hotmovie():
     return sort_film(movie_list)
 
 
-def recommendByGenre(genre, username):
+def recommendByGenre(genre_list, username, movie_title):
     conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
     c = conn.cursor()
     result = c.execute("SELECT * FROM MOVIE").fetchall()
     same_genre_list = []
-    for n in range(len(result)):
-        genre_list = result[n][3].split(', ')
-        movie_name = result[n][0]
-        if genre in genre_list:
-            review_result = c.execute("SELECT * FROM REVIE WHERE USER = ? AND MOVIE = ?",
-            (username, movie_name,)).fetchall()
-            if len(review_result) == 0:
-                same_genre_list.append(movie_name)
+    same_genre_dic = {}
+    for genre in genre_list:
+        for n in range(len(result)):
+            tmp_genre_list = result[n][3].split(', ')
+            movie_name = result[n][0]
+            if genre in tmp_genre_list and movie_name != movie_title and movie_name not in same_genre_list:
+                review_result = c.execute("SELECT * FROM REVIEW WHERE USER = ? AND MOVIE = ?",
+                (username, movie_name,)).fetchall()
+                if len(review_result) == 0:
+                    same_genre_list.append(movie_name)
+                    same_genre_dic[movie_name] = 'Other film of ' + genre
 
+    final_result_2 = []
     final_result = sort_film(same_genre_list)
-    return final_result
+    for film in final_result:
+        film['reason'] = same_genre_dic[film['title']]
+        final_result_2.append(film)
+    return same_genre_list, same_genre_dic, final_result_2
 
 
-
-def recommendByDirector(director, username):
+def recommendByDirector(director_list, username, movie_title):
     conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
     c = conn.cursor()
     result = c.execute("SELECT * FROM MOVIE").fetchall()
+    same_director_dic = {}
     same_director_list = []
-    for n in range(len(result)):
-        director_list = result[n][1].split(', ')
-        movie_name = result[n][0]
-        if director in director_list:
-            review_result = c.execute("SELECT * FROM REVIE WHERE USER = ? AND MOVIE = ?",
-            (username, movie_name,)).fetchall()
-            if len(review_result) == 0:
-                same_director_list.append(movie_name)
+    for director in director_list:
+        for n in range(len(result)):
+            tmp_director_list = result[n][1].split(', ')
+            movie_name = result[n][0]
+            if director in tmp_director_list and movie_name != movie_title:
+                review_result = c.execute("SELECT * FROM REVIEW WHERE USER = ? AND MOVIE = ?",
+                (username, movie_name,)).fetchall()
+                if len(review_result) == 0:
+                    same_director_dic[movie_name] = 'Other film of director ' + director
+                    same_director_list.append(movie_name) 
 
     final_result = sort_film(same_director_list)
-    return final_result
+    final_result_2 = []
+    for film in final_result:
+        film['reason'] = same_director_dic[film['title']]
+        final_result_2.append(film)
+    return same_director_list, same_director_dic, final_result_2
 
-def recommendByActor(actor, username):
-    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
-    c = conn.cursor()
-    result = c.execute("SELECT * FROM MOVIE").fetchall()
-    same_actor_list = []
-    for n in range(len(result)):
-        actor_list = result[n][2].split(', ')
-        movie_name = result[n][0]
-        if actor in actor_list:
-            review_result = c.execute("SELECT * FROM REVIE WHERE USER = ? AND MOVIE = ?",
-            (username, movie_name,)).fetchall()
-            if len(review_result) == 0:
-                same_actor_list.append(movie_name)
 
-    final_result = sort_film(same_actor_list)
-    return final_result
+def recommendByGenreAndDirector(same_genre_list, same_genre_dic, same_director_list, same_director_dic):
+    film_list = list(set(same_director_list).union(set(same_genre_list)))
+    final_result = sort_film(film_list)
+    final_result_2 = []
+    for film in final_result:
+        film_name = film['title']
+        if film_name in same_genre_dic:
+            film['reason'] = same_genre_dic[film_name]
+        else:
+            film['reason'] = same_director_dic[film_name]
+        final_result_2.append(film)
+    return final_result_2
+
+
+genre_list = ['Comedy', 'Music', 'Drama']
+print(recommendByGenre(genre_list, 'test', 'The Forty-Year-Old Version'))
+
+
+
