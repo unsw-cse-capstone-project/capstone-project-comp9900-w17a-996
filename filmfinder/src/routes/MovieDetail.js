@@ -45,38 +45,40 @@ class MovieDetail extends Component {
   }
 
   setPare = () => {
-    console.log("My child is calling me.");
-    fetch("/checkReview")
-      .then((r) => {
-        console.log('review',r);
-        return r.json();
-      })
-      .then((r) => {
-        const reviews = r;
-        fetch("/thumbupordown")
-          .then((r) => {
-            return r.json();
-          })
-          .then(r => {
-            const thumbcounts = r.thumb_count;
-            const loginUser = r.login_user;
-            fetch("/replyReview")
-              .then((r) => r.json())
-              .then((r) => {
-                  console.log(r)
-                  this.setState({
-                    reply: r.reply,
-                    thumb_count: thumbcounts,
-                    login_user: loginUser,
-                    user: reviews.user,
-                    rating: reviews.rating
-                  });
-              })
-            console.log(r);
-          });
-        //this.setState(r);
-        console.log(r);
-      });
+    setTimeout(() => {
+      console.log("My child is calling me.");
+      fetch("/checkReview")
+        .then((r) => {
+          console.log('review',r);
+          return r.json();
+        })
+        .then((r) => {
+          const reviews = r;
+          fetch("/thumbupordown")
+            .then((r) => {
+              return r.json();
+            })
+            .then(r => {
+              const thumbcounts = r.thumb_count;
+              const loginUser = r.login_user;
+              fetch("/replyReview")
+                .then((r) => r.json())
+                .then((r) => {
+                    console.log(r)
+                    this.setState({
+                      reply: r.reply,
+                      thumb_count: thumbcounts,
+                      login_user: loginUser,
+                      user: reviews.user,
+                      rating: reviews.rating
+                    });
+                })
+              console.log(r);
+            });
+          //this.setState(r);
+          console.log(r);
+        });
+    },500)
     
     
     
@@ -205,23 +207,7 @@ class MovieDetail extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-      fetch("/thumbupordown")
-      .then((r) => r.json())
-      .then(r => {
-        this.setState({
-          thumb_count: r.thumb_count,
-          login_user: r.login_user
-        });
-        console.log(r);
-      })
-      fetch("/replyReview")
-      .then((r) => r.json()
-      .then((r) => {
-          console.log(r)
-          this.setState({
-            reply: r.reply
-          });
-      }))
+      
     
     setTimeout(() => {
       fetch("/movieDetail")
@@ -234,14 +220,36 @@ class MovieDetail extends Component {
         console.log(r);
       });
 
-    fetch("/checkReview")
+      fetch("/checkReview")
       .then((r) => {
         console.log('review',r);
         return r.json();
       })
       .then((r) => {
-        this.setState(r);
-        console.log('review',r);
+        const reviews = r;
+        fetch("/thumbupordown")
+          .then((r) => {
+            return r.json();
+          })
+          .then(r => {
+            const thumbcounts = r.thumb_count;
+            const loginUser = r.login_user;
+            fetch("/replyReview")
+              .then((r) => r.json())
+              .then((r) => {
+                  console.log(r)
+                  this.setState({
+                    reply: r.reply,
+                    thumb_count: thumbcounts,
+                    login_user: loginUser,
+                    user: reviews.user,
+                    rating: reviews.rating
+                  });
+              })
+            console.log(r);
+          });
+        //this.setState(r);
+        console.log(r);
       });
     
     }, 500);
