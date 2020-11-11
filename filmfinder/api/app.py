@@ -791,7 +791,6 @@ def searchByOther():
         # sort by rating
         res = sorted(res, key=lambda x: x["rating"], reverse=True)
         
-        
         return {"movies": res}
 
 
