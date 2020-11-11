@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "../styles/carousel.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import poster from '../My perple, My Homeland(2020).jpg';
+import poster from '../My people, My Homeland(2020).jpg';
 import recom1 from '../rec1.jpg';
 import recom2 from '../rec2.jpg';
 import recom3 from '../rec3.jpg';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "../styles/moviecard.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import PmRibbon from 'pm-ribbon';
-// import poster from '../My perple, My Homeland(2020).';
+// import poster from '../My people, My Homeland(2020).';
 import {Image} from 'antd';
 //import YouTube from 'react-youtube';
 class MovieCard extends Component{
@@ -31,7 +31,7 @@ class MovieCard extends Component{
         };
 
         if (this.props.title === ""){
-            var url_1 = "My perple, My Homeland(2020)";
+            var url_1 = "My people, My Homeland(2020)";
         }
         else{
 

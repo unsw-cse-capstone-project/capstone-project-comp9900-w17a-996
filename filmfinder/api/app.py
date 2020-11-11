@@ -742,6 +742,8 @@ def searchByOther():
         search_type = searchByOther_data["type"]
         search_content = searchByOther_data["content"]
 
+        default = 0
+
         if search_type == "Genre":
             res = []
             movies = c.execute("SELECT * FROM MOVIE").fetchall()
@@ -796,7 +798,8 @@ def searchByOther():
                     res.append(item)
         else:
             # default
-            res = []
+            default = 1
+            res_title, res_genre, res_des = [], [], []
             user_input = searchByOther_data["content"]
             movies = c.execute("SELECT * FROM MOVIE").fetchall()
             
@@ -805,18 +808,33 @@ def searchByOther():
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
                             "rating": recommendation.cal_mark(movies[idx][0])}
-                    res.append(item)
+                    res_title.append(item)
+                elif user_input in movies[idx][3]:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res_genre.append(item)
+                elif user_input in movies[idx][8]:
+                    item = {"title": movies[idx][0],
+                            "genre": movies[idx][3],
+                            "rating": recommendation.cal_mark(movies[idx][0])}
+                    res_des.append(item)
 
+        if default == 0:
 
-        # sort by character
-        res = sorted(res, key=lambda x: x["title"], reverse=False)
+            # sort by character
+            res = sorted(res, key=lambda x: x["title"], reverse=False)
 
-        # sort by rating
-        res = sorted(res, key=lambda x: x["rating"], reverse=True)
+            # sort by rating
+            res = sorted(res, key=lambda x: x["rating"], reverse=True)
 
         
         
-        return {"movies": res}
+            return {"movies": res}
+        else:
+            print("result................", {"title": res_title, "genre": res_genre, "description": res_des})
+            return {"title": res_title, "genre": res_genre, "description": res_des}
+            
 
 
 import dianzan

@@ -3,7 +3,7 @@ import "../styles/wishList.css";
 import "../styles/movie.css";
 import { Layout, Button, Divider, Menu, Breadcrumb} from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import poster from '../My perple, My Homeland(2020).jpg';
+import poster from '../My people, My Homeland(2020).jpg';
 import recom1 from '../rec1.jpg';
 import recom2 from '../rec2.jpg';
 import recom3 from '../rec3.jpg';
