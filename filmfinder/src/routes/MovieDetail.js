@@ -15,10 +15,21 @@ import AddComment from "../components/AddComment";
 import RecommendList from "../components/RecommendList";
 import { WindowsOutlined } from "@ant-design/icons";
 import NavBar from "../components/NavBar";
-import copy from "copy-to-clipboard"; 
+import copy from "copy-to-clipboard";
 const { Header, Footer, Sider, Content } = Layout;
 
-const plainOptions = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const plainOptions = [
+  { label: "My Favourite", value: "0" },
+  { label: "Watch Later", value: "1" },
+  { label: "Coming Soon", value: "2" },
+  { label: "Popular", value: "3" },
+  { label: "Classic", value: "4" },
+  { label: "Cure", value: "5" },
+  { label: "Series", value: "6" },
+  { label: "Family", value: "7" },
+  { label: "Technology", value: "8" },
+  { label: "Education", value: "9" },
+];
 
 class MovieDetail extends Component {
   constructor(props) {
@@ -40,8 +51,8 @@ class MovieDetail extends Component {
       description: "",
       user: [],
       thumb_count: {},
-      login_user:'',
-      reply: {}
+      login_user: "",
+      reply: {},
     };
   }
 
@@ -50,7 +61,7 @@ class MovieDetail extends Component {
       console.log("My child is calling me.");
       fetch("/checkReview")
         .then((r) => {
-          console.log('review',r);
+          console.log("review", r);
           return r.json();
         })
         .then((r) => {
@@ -59,32 +70,29 @@ class MovieDetail extends Component {
             .then((r) => {
               return r.json();
             })
-            .then(r => {
+            .then((r) => {
               const thumbcounts = r.thumb_count;
               const loginUser = r.login_user;
               fetch("/replyReview")
                 .then((r) => r.json())
                 .then((r) => {
-                    console.log(r)
-                    this.setState({
-                      reply: r.reply,
-                      thumb_count: thumbcounts,
-                      login_user: loginUser,
-                      user: reviews.user,
-                      rating: reviews.rating
-                    });
-                })
+                  console.log(r);
+                  this.setState({
+                    reply: r.reply,
+                    thumb_count: thumbcounts,
+                    login_user: loginUser,
+                    user: reviews.user,
+                    rating: reviews.rating,
+                  });
+                });
               console.log(r);
             });
           //this.setState(r);
           console.log(r);
         });
-    },500)
-    
-    
-    
+    }, 500);
   };
-  
+
   setPare2 = (title) => {
     const data = {
       title: title,
@@ -121,7 +129,7 @@ class MovieDetail extends Component {
 
       fetch("/checkReview")
         .then((r) => {
-          console.log('review',r);
+          console.log("review", r);
           return r.json();
         })
         .then((r) => {
@@ -131,17 +139,17 @@ class MovieDetail extends Component {
     }, 500);
   };
   setPare3 = () => {
-    console.log('update thumbupordown')
+    console.log("update thumbupordown");
     fetch("/thumbupordown")
       .then((r) => r.json())
-      .then(r => {
+      .then((r) => {
         this.setState({
           thumb_count: r.thumb_count,
-          login_user: r.login_user
+          login_user: r.login_user,
         });
         console.log(r);
       });
-  }
+  };
   handleOk = () => {
     this.setState({
       confirmLoading: true,
@@ -186,7 +194,7 @@ class MovieDetail extends Component {
   componentDidMount() {
     const query = this.props.location.search;
     let title = query.split("=")[1];
-    title = title.replace(/\%20/g, ' ');
+    title = title.replace(/\%20/g, " ");
     console.log("CCCCC", title);
 
     const data = {
@@ -208,51 +216,49 @@ class MovieDetail extends Component {
       .catch((error) => {
         console.error("Error:", error);
       });
-      
-    
+
     setTimeout(() => {
       fetch("/movieDetail")
-      .then((r) => {
-        console.log(r);
-        return r.json();
-      })
-      .then((r) => {
-        this.setState(r.movie);
-        console.log(r);
-      });
+        .then((r) => {
+          console.log(r);
+          return r.json();
+        })
+        .then((r) => {
+          this.setState(r.movie);
+          console.log(r);
+        });
 
       fetch("/checkReview")
-      .then((r) => {
-        console.log('review',r);
-        return r.json();
-      })
-      .then((r) => {
-        const reviews = r;
-        fetch("/thumbupordown")
-          .then((r) => {
-            return r.json();
-          })
-          .then(r => {
-            const thumbcounts = r.thumb_count;
-            const loginUser = r.login_user;
-            fetch("/replyReview")
-              .then((r) => r.json())
-              .then((r) => {
-                  console.log(r)
+        .then((r) => {
+          console.log("review", r);
+          return r.json();
+        })
+        .then((r) => {
+          const reviews = r;
+          fetch("/thumbupordown")
+            .then((r) => {
+              return r.json();
+            })
+            .then((r) => {
+              const thumbcounts = r.thumb_count;
+              const loginUser = r.login_user;
+              fetch("/replyReview")
+                .then((r) => r.json())
+                .then((r) => {
+                  console.log(r);
                   this.setState({
                     reply: r.reply,
                     thumb_count: thumbcounts,
                     login_user: loginUser,
                     user: reviews.user,
-                    rating: reviews.rating
+                    rating: reviews.rating,
                   });
-              })
-            console.log(r);
-          });
-        //this.setState(r);
-        console.log(r);
-      });
-    
+                });
+              console.log(r);
+            });
+          //this.setState(r);
+          console.log(r);
+        });
     }, 500);
   }
 
@@ -275,7 +281,7 @@ class MovieDetail extends Component {
     });
 
     copy("http://localhost:3000/#/movie" + this.props.location.search);
-    };
+  };
 
   shareOk = (e) => {
     console.log(e);
@@ -298,13 +304,20 @@ class MovieDetail extends Component {
   //             this.setState(r);
   //         })
   // }
-  
+
   render() {
-    console.log(this.state.title)
+    console.log(this.state.title);
     const comments = this.state.user;
-    console.log('comments',comments,this.state.thumb_count,this.state.reply);
+    console.log("comments", comments, this.state.thumb_count, this.state.reply);
     const commentItems = comments.map((commentItem) => (
-      <CommentCard {...commentItem} title={this.state.title} login_user={this.state.login_user} thumbcount={this.state.thumb_count[commentItem.userName]} reply={this.state.reply[commentItem.userName]} setPare={this.setPare}/>
+      <CommentCard
+        {...commentItem}
+        title={this.state.title}
+        login_user={this.state.login_user}
+        thumbcount={this.state.thumb_count[commentItem.userName]}
+        reply={this.state.reply[commentItem.userName]}
+        setPare={this.setPare}
+      />
     ));
     const { visible, confirmLoading, ModalText } = this.state;
 
@@ -388,7 +401,6 @@ class MovieDetail extends Component {
                         >
                           <p>The url has been copied to your clipboard.</p>
                           <p>Paste to share with your friends</p>
-                          
                         </Modal>
                       </div>
                     </div>
