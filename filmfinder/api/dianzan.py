@@ -1,8 +1,9 @@
 import sqlite3
-conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
-c = conn.cursor()
+
 
 def check_thumb(comment_username, filmname, thumbup_user, up_or_down):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ? AND USER = ?",
     (filmname,comment_username,)).fetchall()
     
@@ -23,6 +24,8 @@ def check_thumb(comment_username, filmname, thumbup_user, up_or_down):
 
 
 def thumb_up(comment_username, filmname, thumbup_user):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ? AND USER = ?",
     (filmname,comment_username,)).fetchall()
     if len(result) != 0:# and not check_thumb(comment, comment_username, thumbup_user):
@@ -37,6 +40,8 @@ def thumb_up(comment_username, filmname, thumbup_user):
         conn.commit()
 
 def cancel_thumb_up(comment_username, filmname, thumbup_user):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ? AND USER = ?",
     (filmname,comment_username,)).fetchall()
     if len(result) != 0:
@@ -56,6 +61,8 @@ def cancel_thumb_up(comment_username, filmname, thumbup_user):
 
 
 def thumb_down(comment_username, filmname, thumbdown_user):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ? AND USER = ?",
     (filmname,comment_username,)).fetchall()
     if len(result) != 0:# and not check_thumb(comment, comment_username, thumbup_user):
@@ -70,6 +77,8 @@ def thumb_down(comment_username, filmname, thumbdown_user):
         conn.commit()
 
 def cancel_thumb_down(comment_username, filmname, thumbdown_user):
+    conn = sqlite3.connect("filmFinder.db", check_same_thread=False)
+    c = conn.cursor()
     result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ? AND USER = ?",
     (filmname,comment_username,)).fetchall()
     if len(result) != 0:
@@ -92,7 +101,7 @@ def cancel_thumb_down(comment_username, filmname, thumbdown_user):
 
 
 
-
+"""
 c.execute("DROP TABLE REVIEW")
 
 c.execute(
@@ -120,3 +129,4 @@ result = c.execute('SELECT * FROM REVIEW').fetchall()
 
 for i in result:
     print(i)
+"""
