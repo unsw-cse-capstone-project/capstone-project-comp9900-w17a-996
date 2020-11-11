@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask_json import as_json
 # from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import os.path
@@ -19,11 +20,13 @@ def connect_db():
     return db
 
 @app.route('/', methods=['GET'])
+# @as_json
 def default():
     return "Default Page of Backend"
 
 """register page, create user table and insert a new user"""
 @app.route('/app', methods=['GET','POST'])
+# @as_json
 def api():
     if request.method=='GET':
         return('<form action="/test" method="post"><input type="submit" value=a /></form>')
@@ -80,6 +83,7 @@ def api():
 """login page, get user name and password then check with data in db"""
 guid = {'username': '', 'nickname': '', 'email': '', 'password': '', 'bio': ''}
 @app.route('/login', methods=['POST', 'GET'])
+# @as_json
 def login():
     if request.method=='POST':
         json_data = request.get_json()
@@ -109,9 +113,11 @@ def login():
     else:
         return guid
 
+
 @app.route('/home', methods=['GET'])
+# @as_json
 def home():
-    return guid
+    return jsonify(guid)
 
 # """search movie, get input from search bar and return related movies"""
 # result = {"movies": []}
@@ -150,6 +156,7 @@ def home():
 
 """profile page, update user info"""
 @app.route('/profile', methods=['POST'])
+# @as_json
 def profile():
     user_data = request.get_json()
 
@@ -190,6 +197,7 @@ def profile():
 """movie page, get movie name then post movie detils"""
 movie_detail_res = {"movie": {"title": "", "director": "", "cast": "", "genre": "", "language": "", "date": "", "rating": ""}}
 @app.route('/movieDetail', methods=['GET', 'POST'])
+# @as_json
 def movieDetail():
     
     if request.method == 'POST':
@@ -215,6 +223,7 @@ def movieDetail():
 
 
 @app.route('/history', methods=['GET', 'POST'])
+# @as_json
 def history():
     db = connect_db()
     c = db.cursor()
@@ -276,6 +285,7 @@ def history():
 """history page, get user name and user action then post comments, rating"""
 """do not show review of people who is in block list"""
 @app.route('/checkReview', methods=['GET', 'POST'])
+# @as_json
 def checkReview():
     db = connect_db()
     c = db.cursor()
@@ -358,6 +368,7 @@ def checkReview():
 
 """movie page, add to wish list function, add to db"""
 @app.route('/addtoWishList', methods=['POST'])
+# @as_json
 def addtoWishList():
     db = connect_db()
     c = db.cursor()
@@ -391,6 +402,7 @@ def addtoWishList():
 
 """wishlist page, send wishlists data to front-end"""
 @app.route('/wishlist', methods=['POST', 'GET'])
+# @as_json
 def wishlist():
     db = connect_db()
     c = db.cursor()
@@ -436,6 +448,7 @@ def wishlist():
 otherUserName = {"content": ""}
 """user browse others wish list"""
 @app.route("/otherWishList", methods=['POST', 'GET'])
+# @as_json
 def otherWishList():
     db = connect_db()
     c = db.cursor()
@@ -467,6 +480,7 @@ def otherWishList():
 otherUserName = {"content": ""}
 """user browse other review"""
 @app.route("/otherReview", methods=["POST", "GET"])
+# @as_json
 def otherReview():
     db = connect_db()
     c = db.cursor()
@@ -509,6 +523,7 @@ def otherReview():
 
 
 @app.route('/hotmovie', methods=['GET'])
+# @as_json
 def hotmovie():
     db = connect_db()
     c = db.cursor()
@@ -519,11 +534,12 @@ def hotmovie():
         movie_list.append(movies[n][0])
     
     hot_movie['hotMovies'] = recommendation.sort_film(movie_list)
-    return hot_movie
+    return jsonify(hot_movie)
 
 """follow another user"""
 follow_block_action = {"action": "", "user": ""}
 @app.route("/followUser", methods=["POST", "GET"])
+# @as_json
 def followUser():
 
     db = connect_db()
@@ -575,6 +591,7 @@ def followUser():
 
 """"block another user"""
 @app.route("/blockUser", methods=["POST", "GET"])
+# @as_json
 def blockUser():
 
     db = connect_db()
@@ -620,6 +637,7 @@ def blockUser():
             return {"isblocker": False}
 
 @app.route('/recommendmovie', methods=['GET'])
+# @as_json
 def recommendmovie():
     userName = guid['username']
     recommendation_list = {}
@@ -627,6 +645,7 @@ def recommendmovie():
     return recommendation_list
 
 @app.route('/blocklist', methods=['GET', 'POST'])
+# @as_json
 def blocklist():
     db = connect_db()
     c = db.cursor()
@@ -646,6 +665,7 @@ def blocklist():
     return {"blocks": res}
 
 @app.route('/followinglist', methods=['GET', 'POST'])
+# @as_json
 def followinglist():
     db = connect_db()
     c = db.cursor()
@@ -707,6 +727,7 @@ def followinglist():
 """search movie by genre, language, director, year"""
 searchByOther_data = {"type": "", "content": ""}
 @app.route("/searchByOther", methods=["GET", "POST"])
+# @as_json
 def searchByOther():
     if request.method == "POST":
         # post data: data = {"type": genre or language or director or year, "content": "Music or English or director or 2000"}
@@ -797,6 +818,7 @@ def searchByOther():
 import dianzan
 
 @app.route("/thumbupordown", methods=["GET", "POST"])
+# @as_json
 def thumbupordown():
     db = connect_db()
     c = db.cursor()
@@ -850,6 +872,7 @@ def rando():
     return random_id
 
 @app.route("/replyReview", methods=["GET", "POST"])
+# @as_json
 def replyreview():
     if request.method == 'POST':
         db = connect_db()
@@ -893,4 +916,5 @@ def replyreview():
         return dic
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+    host='0.0.0.0', port=5001, debug=True)
