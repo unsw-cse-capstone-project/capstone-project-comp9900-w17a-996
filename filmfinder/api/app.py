@@ -808,8 +808,13 @@ def searchByOther():
                     res.append(item)
 
 
+        # sort by character
+        res = sorted(res, key=lambda x: x["title"], reverse=False)
+
         # sort by rating
         res = sorted(res, key=lambda x: x["rating"], reverse=True)
+
+        
         
         return {"movies": res}
 
