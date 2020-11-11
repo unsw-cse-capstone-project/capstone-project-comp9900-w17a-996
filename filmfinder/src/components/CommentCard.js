@@ -188,7 +188,7 @@ const CommentCard = (props) => {
         }
         let createReply = null;
         if (reply === true) {
-          createReply = <AddReply user={loginUser} commentuser={props.userName} movie={props.title}/>;
+          createReply = <AddReply user={loginUser} commentuser={props.userName} movie={props.title} setPare={props.setPare}/>;
         }
         /*
         const CommentList = ({ comments }) => (

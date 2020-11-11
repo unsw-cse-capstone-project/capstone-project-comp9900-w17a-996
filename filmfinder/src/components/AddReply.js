@@ -71,16 +71,18 @@ class AddReply extends Component {
       this.setState({
         submitting: false,
         value: '',
-        comments: [
-          {
-            author: this.props.user,
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-          ...this.state.comments,
-        ],
+        // comments: [
+        //   {
+        //     author: this.props.user,
+        //     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        //     content: <p>{this.state.value}</p>,
+        //     datetime: moment().fromNow(),
+        //   },
+        //   ...this.state.comments,
+        // ],
       });
+
+      this.props.setPare();
     
     }, );
     
