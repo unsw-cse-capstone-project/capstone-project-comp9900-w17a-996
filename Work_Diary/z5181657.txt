@@ -37,3 +37,9 @@ Week7
 We had the second Retrospective to review the last week work and make a plan about what to in the next week.
 I complete the follow and block button action part and comment, thumbs up and down to other reviews part.
 In the next week, we will do the fourth sprint.
+
+Week8
+
+We finished our second progressive demo (B) and our group also had a meeting after the demo. We conclude that what did well,
+what didn't well, try to do and how about the previous 'try to do'. We have completed the whole structrue of the filmfinder
+project, the next we will do is to care about the detail and test. In the next week, we will do the fifth sprint.
