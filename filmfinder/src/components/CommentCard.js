@@ -10,43 +10,42 @@ import { OmitProps } from 'antd/lib/transfer/ListBody';
 
 const CommentCard = (props) => {
 
-        const [likes, setLikes] = useState(parseInt(props.thumbcount.up));
-        const [dislikes, setDislikes] = useState(parseInt(props.thumbcount.down));
-        const [action, setAction] = useState(null);
+        //const [likes, setLikes] = useState(parseInt(props.thumbcount.up));
+        //const [dislikes, setDislikes] = useState(parseInt(props.thumbcount.down));
+        //const [action, setAction] = useState(null);
         const [reply, setReply] = useState(false);
-        const [thumbup, setThumbup] = useState(parseInt(props.thumbcount.up));
-        const [thumbdown, setThumbdown] = useState(parseInt(props.thumbcount.down));
-        const [replies, setReplies] = useState([]);
-        const [hadLike,setHadLike] = useState(props.thumbcount.already_up);
-        const [hadDisLike,setHadDisLike] = useState(props.thumbcount.already_down);
-        const [loginUser, setLoginUser] = useState('');
-       
-        console.log(props.thumbcount,props.userName);
-    
-        useEffect(() => { 
-          console.log('usereffect');
-
-          if (hadLike === 1){
-              setAction('liked')
-          }
-          if (hadDisLike === 1){
-              setAction('disliked')
-          }
-          
-          fetch("/replyReview")
-            .then((r) => r.json()
-            .then((r) => {
-              console.log(r)
-              setReplies(r.reply[props.userName])
-            }))
-        },[]);
+        //const [thumbup, setThumbup] = useState(parseInt(props.thumbcount.up));
+        //const [thumbdown, setThumbdown] = useState(parseInt(props.thumbcount.down));
+        //const [replies, setReplies] = useState([]);
+        //const [hadLike,setHadLike] = useState(props.thumbcount.already_up);
+        //const [hadDisLike,setHadDisLike] = useState(props.thumbcount.already_down);
+        //const [loginUser, setLoginUser] = useState('');
+        const likes = parseInt(props.thumbcount.up);
+        const dislikes = parseInt(props.thumbcount.down);
+        const thumbup = parseInt(props.thumbcount.up);
+        const thumbdown = parseInt(props.thumbcount.down);
+        const hadLike = props.thumbcount.already_up;
+        const hadDisLike = props.thumbcount.already_down;
+        const loginUser = props.login_user;
+        const replies = props.reply;
+        console.log(replies)
+        var action = null;
+        if (hadLike === 1){
+          action = 'liked'
+        }
+        if (hadDisLike === 1){
+          action = 'disliked'
+        }
+        console.log(likes,dislikes,action,hadLike);
        
         const like = () => {
             console.log(likes,thumbup);
             //no like or dislike
             if ((hadDisLike === 0 && hadLike === 0 && likes === thumbup) || (hadLike === 0 && hadDisLike === 1 && likes === thumbup) || (hadLike === 1 && likes !== thumbup)){
               console.log('yes')
-              setLikes(1 + likes);
+              //likes += 1;
+              //console.log(likes);
+              //setLikes(1 + likes);
               const data = {
                 commentuser: props.userName,
                 movie: props.title,
@@ -63,26 +62,33 @@ const CommentCard = (props) => {
                   .then(r => console.log(r))
                   .then((data) => {
                     console.log("Success:", data);
+                    action = 'liked';
+                    props.setPare();
                   })
                   .catch((error) => {
                     console.error("Error:", error);
                   });
+                  
             }
-            if (dislikes > 0 && ((hadDisLike === 0 && hadLike === 0 && dislikes !== thumbdown) || (hadLike === 0 && hadDisLike === 1 && dislikes === thumbdown) || (hadLike === 1 && dislikes !== thumbdown))){
-              setDislikes(dislikes - 1);
-            }
-            setAction('liked');
+            /*if (dislikes > 0 && ((hadDisLike === 0 && hadLike === 0 && dislikes !== thumbdown) || (hadLike === 0 && hadDisLike === 1 && dislikes === thumbdown) || (hadLike === 1 && dislikes !== thumbdown))){
+              //setDislikes(dislikes - 1);
+              dislikes -= 1;
+            }*/
+            //setAction('liked');
+            
   
             
         };
 
         const dislike = () => {
             console.log(likes,thumbup,hadDisLike)
-            if (likes > 0 && ((hadDisLike === 0 && hadLike === 0 && likes > thumbup) || (hadLike === 0 && hadDisLike === 1 && likes > thumbup) || (hadLike === 1 && likes === thumbup))){
-              setLikes(likes - 1);
-            }
+            /*if (likes > 0 && ((hadDisLike === 0 && hadLike === 0 && likes > thumbup) || (hadLike === 0 && hadDisLike === 1 && likes > thumbup) || (hadLike === 1 && likes === thumbup))){
+              //setLikes(likes - 1);
+              likes -= 1;
+            }*/
             if ((hadDisLike === 0 && hadLike === 0 && dislikes === thumbdown) || (hadLike === 0 && hadDisLike === 1 && dislikes < thumbdown) || (hadLike === 1 && dislikes === thumbdown)){
-              setDislikes(dislikes + 1);
+              //setDislikes(dislikes + 1);
+              //dislikes += 1;
               const data = {
                 commentuser: props.userName,
                 movie: props.title,
@@ -99,12 +105,17 @@ const CommentCard = (props) => {
                 .then(r => console.log(r))
                 .then((data) => {
                   console.log("Success:", data);
+                  action = 'disliked';
+                  props.setPare();
                 })
                 .catch((error) => {
                   console.error("Error:", error);
                 });
+              
             }
-            setAction('disliked');
+            //props.setPare();
+            //setAction('disliked');
+            
             
         };
         const addReply = () => {
@@ -120,13 +131,13 @@ const CommentCard = (props) => {
             <Tooltip key="comment-basic-like" title="Like">
             <span onClick={like}>
                 {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
-                <span className="comment-action">{props.thumbcount.up}</span>
+                <span className="comment-action">{likes}</span>
             </span>
             </Tooltip>,
             <Tooltip key="comment-basic-dislike" title="Dislike">
             <span onClick={dislike}>
                 {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-                <span className="comment-action">{props.thumbcount.down}</span>
+                <span className="comment-action">{dislikes}</span>
             </span>
             </Tooltip>,
             <span key="comment-basic-reply-to" onClick={addReply}>Reply to</span>,

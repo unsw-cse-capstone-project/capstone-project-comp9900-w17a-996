@@ -47,14 +47,22 @@ class MovieDetail extends Component {
   setPare = () => {
     console.log("My child is calling me.");
     fetch("/thumbupordown")
-      .then((r) => r.json())
-      .then(r => {
-        this.setState({
-          thumb_count: r.thumb_count,
-          login_user: r.login_user
-        });
-        console.log(r);
+    .then((r) => r.json())
+    .then(r => {
+      this.setState({
+        thumb_count: r.thumb_count,
+        login_user: r.login_user
       });
+      console.log(r);
+    });
+    fetch("/replyReview")
+      .then((r) => r.json()
+      .then((r) => {
+          console.log(r)
+          this.setState({
+            reply: r.reply
+          });
+      }))
     fetch("/checkReview")
       .then((r) => {
         console.log('review',r);
@@ -111,7 +119,18 @@ class MovieDetail extends Component {
         });
     }, 500);
   };
-
+  setPare3 = () => {
+    console.log('update thumbupordown')
+    fetch("/thumbupordown")
+      .then((r) => r.json())
+      .then(r => {
+        this.setState({
+          thumb_count: r.thumb_count,
+          login_user: r.login_user
+        });
+        console.log(r);
+      });
+  }
   handleOk = () => {
     this.setState({
       confirmLoading: true,
@@ -187,6 +206,14 @@ class MovieDetail extends Component {
         });
         console.log(r);
       })
+      fetch("/replyReview")
+      .then((r) => r.json()
+      .then((r) => {
+          console.log(r)
+          this.setState({
+            reply: r.reply
+          });
+      }))
     
     setTimeout(() => {
       fetch("/movieDetail")
@@ -258,9 +285,9 @@ class MovieDetail extends Component {
   render() {
     console.log(this.state.title)
     const comments = this.state.user;
-    console.log('comments',comments,this.state.thumb_count);
+    console.log('comments',comments,this.state.thumb_count,this.state.reply);
     const commentItems = comments.map((commentItem) => (
-      <CommentCard {...commentItem} title={this.state.title} login_user={this.state.login_user} thumbcount={this.state.thumb_count[commentItem.userName]} />
+      <CommentCard {...commentItem} title={this.state.title} login_user={this.state.login_user} thumbcount={this.state.thumb_count[commentItem.userName]} reply={this.state.reply[commentItem.userName]} setPare={this.setPare3}/>
     ));
     const { visible, confirmLoading, ModalText } = this.state;
 
