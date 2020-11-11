@@ -41,10 +41,10 @@ class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand">FilmFinder</a>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a className="navbar-brand">FilmFinder</a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -52,29 +52,29 @@ class NavBar extends Component {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#/home">
-                  Home <span class="sr-only">(current)</span>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item active">
+                <a className="nav-link" href="#/home">
+                  Home <span className="sr-only">(current)</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#/wishList">
+              <li className="nav-item">
+                <a className="nav-link" href="#/wishList">
                   Wishlist
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#/history">
+              <li className="nav-item">
+                <a className="nav-link" href="#/history">
                   History
                 </a>
               </li>
-              <li class="nav-item dropdown">
+              <li className="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle"
                   href="#"
                   id="navbarDropdown"
                   role="button"
@@ -84,29 +84,29 @@ class NavBar extends Component {
                 >
                   Messages
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item" href="#">
                     Replied to Me
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Thumbed me up
                   </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">
+                  <div className="dropdown-divider"></div>
+                  <a className="dropdown-item" href="#">
                     My Followings
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     New Followers
                   </a>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" tabindex="-1" aria-disabled="true">
+              <li className="nav-item">
+                <a className="nav-link active" tabIndex="-1" aria-disabled="true">
                   G' day, {this.state.username}!
                 </a>
               </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <form className="form-inline my-2 my-lg-0">
               <Search setPare={this.setPare}></Search>
             </form>
             <Filter setPare={this.setPare}/>

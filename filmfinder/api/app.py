@@ -35,7 +35,7 @@ def api():
         # create User table
         try:
             c.execute(
-                "CREATE TABLE USER (USERNAME TEXT, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT, FOLLOW TEXT, BLOCK TEXT)"
+                "CREATE TABLE USER (USERNAME TEXT PRIMARY KEY, NICKNAME TEXT, EMAIL TEXT, PASSWORD TEXT, BIO TEXT, WISHLIST TEXT, FOLLOW TEXT, BLOCK TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
@@ -44,12 +44,21 @@ def api():
         # create Review table
         try:
             c.execute(
-                "CREATE TABLE REVIEW (USER TEXT, MOVIE TEXT, COMMENT TEXT, RATE TEXT, TIME TEXT)"
+                "CREATE TABLE REVIEW (USER TEXT, MOVIE TEXT, COMMENT TEXT, RATE TEXT, TIME TEXT, UPUSER TEXT, DOWNUSER TEXT, UPNUMBER TEXT, DOWNNUMBER TEXT)"
             )
             db.commit()
         except sqlite3.OperationalError:
             pass 
 
+        # create reviewofreview table
+        try:
+            c.execute("DROP TABLE REVIEWOFREVIEW")
+            c.execute(
+                "CREATE TABLE REVIEWOFREVIEW (ID TEXT PRIMARY KEY, ORIGINALUSER TEXT, REPLYUSER TEXT, MOVIE TEXT, COMMENT TEXT, TIME TEXT)"
+            )
+            db.commit()
+        except sqlite3.OperationalError:
+            pass 
         
         user_data = request.get_json()
         # username = user_data["userName"]
@@ -279,8 +288,8 @@ def checkReview():
         userName = guid['username']
         time = str(datetime.datetime.now())[:19]
 
-        c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME) VALUES (?, ?, ?, ?, ?)", 
-        (userName, movieTitle,review,rating,time))
+        c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME, UPUSER, DOWNUSER, UPNUMBER, DOWNNUMBER ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        (userName, movieTitle,review,rating,time,'','','0','0'))
         db.commit()
 
         return request.get_json()
@@ -781,11 +790,107 @@ def searchByOther():
 
         # sort by rating
         res = sorted(res, key=lambda x: x["rating"], reverse=True)
-
-        return {"movies": res}
         
+        return {"movies": res}
 
 
+import dianzan
+
+@app.route("/thumbupordown", methods=["GET", "POST"])
+def thumbupordown():
+    db = connect_db()
+    c = db.cursor()
+    if request.method == 'POST':
+        json_data = request.get_json()
+        user_name = guid['username']
+        comment_user = json_data['commentuser']
+        movie = json_data['movie']
+        
+        # if user trying to thumb up  
+        if json_data['like'] == '1':
+            dianzan.thumb_up(comment_user, movie, user_name)
+            # if user trying to thumb up and in the thumb down list 
+            if dianzan.check_thumb(comment_user, movie, user_name, 'down'):
+                dianzan.cancel_thumb_down(comment_user, movie, user_name)
+            return 'up'
+        
+        elif json_data['like'] == '0':
+            dianzan.thumb_down(comment_user, movie, user_name)
+            if dianzan.check_thumb(comment_user, movie, user_name, 'up'):
+                dianzan.cancel_thumb_up(comment_user, movie, user_name)
+            return 'down'
+    
+    else:
+        movie_title = movie_detail_res['movie']['title']
+        result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movie_title,)).fetchall()
+        dic = {}
+        dic['thumb_count'] = {}
+        user_name = guid['username']
+        dic['login_user'] = user_name
+        for n in range(len(result)):
+            user = result[n][0]
+            up_count = result[n][7]
+            down_count = result[n][8]
+            tmp_dic = {}
+            tmp_dic['up'] = up_count
+            tmp_dic['down'] = down_count
+            tmp_dic['already_up'] = dianzan.check_thumb(user, movie_title, user_name, 'up')
+            tmp_dic['already_down'] = dianzan.check_thumb(user, movie_title, user_name, 'down')
+            tmp_dic2 = {}
+            tmp_dic2[user] = tmp_dic
+            dic['thumb_count'][user] = tmp_dic
+        return dic
+
+
+import random
+import string
+
+def rando():
+    random_id = ''.join(random.sample(string.ascii_letters + string.digits, 6))
+    return random_id
+
+@app.route("/replyReview", methods=["GET", "POST"])
+def replyreview():
+    if request.method == 'POST':
+        db = connect_db()
+        c = db.cursor()
+        json_data = request.get_json()
+        uid = rando()
+        username = guid['username']
+        original_user = json_data['commentuser']
+        movie = json_data['movie']
+        comment = json_data['comment']
+        time = str(datetime.datetime.now())[:19]
+
+        c.execute("INSERT INTO REVIEWOFREVIEW (ID, ORIGINALUSER, REPLYUSER, MOVIE, COMMENT, TIME) VALUES (?, ?, ?, ?, ?, ?)",
+        (uid, original_user, username, movie, comment, time))
+        db.commit()
+        return 'success'
+
+    else:
+        db = connect_db()
+        c = db.cursor()
+        movie_title = movie_detail_res['movie']['title']
+        print(movie_title)
+        result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movie_title,)).fetchall()
+        print(result)
+        user_list = []
+        dic = {}
+        dic['reply'] = {}
+        for n in range(len(result)):
+            user_list.append(result[n][0])
+        for user in user_list:
+            #tmp_dic = {}
+            dic['reply'][user] = []
+            reply = c.execute("SELECT * FROM REVIEWOFREVIEW WHERE ORIGINALUSER = ? AND MOVIE = ?", (user, movie_title,)).fetchall()
+            for n in range(len(reply)):
+                tmp_dic_2 = {}
+                tmp_dic_2['reply_user'] = reply[n][2]
+                tmp_dic_2['comment'] = reply[n][4]
+                tmp_dic_2['date'] = reply[n][5]
+                dic['reply'][user].append(tmp_dic_2)
+            #dic['reply'][user]=tmp_dic
+        return dic
 
 if __name__ == "__main__":
     app.run(debug=True)

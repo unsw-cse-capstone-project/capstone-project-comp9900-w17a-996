@@ -8,7 +8,7 @@ const { TextArea } = Input;
 const CommentList = ({ comments }) => (
   <List
     dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+    //header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
     itemLayout="horizontal"
     renderItem={props => <Comment {...props} />}
   />
@@ -28,11 +28,13 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 );
 
 class AddReply extends Component {
+
   state = {
     comments: [],
     submitting: false,
-    value: '',
+    value: ''
   };
+
 
   handleSubmit = () => {
     if (!this.state.value) {
@@ -42,23 +44,48 @@ class AddReply extends Component {
     this.setState({
       submitting: true,
     });
-
+    let v = '';
     setTimeout(() => {
-      //console.log(this.state.rating);
+      console.log(this.state.value);
+      console.log(this.props.user);
+      const data = {
+        commentuser: this.props.commentuser,
+        movie: this.props.movie,
+        comment: this.state.value
+      }
+      fetch("/replyReview", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then(r => console.log(r))
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       this.setState({
         submitting: false,
         value: '',
-        comments: [
-          {
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-          ...this.state.comments,
-        ],
+        // comments: [
+        //   {
+        //     author: this.props.user,
+        //     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        //     content: <p>{this.state.value}</p>,
+        //     datetime: moment().fromNow(),
+        //   },
+        //   ...this.state.comments,
+        // ],
       });
-    }, 1000);
+
+      this.props.setPare();
+    
+    }, );
+    
   };
 
     handleChange = e => {
