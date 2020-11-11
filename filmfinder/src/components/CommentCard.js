@@ -37,7 +37,7 @@ const CommentCard = (props) => {
           action = 'disliked'
         }
         console.log(likes,dislikes,action,hadLike);
-       
+      
         const like = () => {
             console.log(likes,thumbup);
             //no like or dislike
