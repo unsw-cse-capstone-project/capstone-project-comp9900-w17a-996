@@ -137,7 +137,7 @@ def recommendByGenre(genre_list, username, movie_title):
                     same_genre_dic[movie_name] = 'Other film of ' + genre
 
     final_result_2 = []
-    final_result = sort_film(same_genre_list)
+    final_result = sort_film(list(set(same_genre_list)))
     for film in final_result:
         film['reason'] = same_genre_dic[film['title']]
         final_result_2.append(film)
@@ -161,7 +161,7 @@ def recommendByDirector(director_list, username, movie_title):
                     same_director_dic[movie_name] = 'Other film of director ' + director
                     same_director_list.append(movie_name) 
 
-    final_result = sort_film(same_director_list)
+    final_result = sort_film(list(set(same_director_list)))
     final_result_2 = []
     for film in final_result:
         film['reason'] = same_director_dic[film['title']]
@@ -183,8 +183,6 @@ def recommendByGenreAndDirector(same_genre_list, same_genre_dic, same_director_l
     return final_result_2
 
 
-genre_list = ['Comedy', 'Music', 'Drama']
-print(recommendByGenre(genre_list, 'test', 'The Forty-Year-Old Version'))
 
 
 

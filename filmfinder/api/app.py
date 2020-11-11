@@ -652,7 +652,7 @@ def recommendmovie():
         genre_list = genre.split(', ')
         director_list = director.split(', ')
         same_genre_list, same_genre_dic, final_result_genre = recommendation.recommendByGenre(genre_list, userName, movie_title)
-        same_director_list, same_director_dic, final_result_director = recommendation.recommendByGenre(director_list, userName, movie_title)
+        same_director_list, same_director_dic, final_result_director = recommendation.recommendByDirector(director_list, userName, movie_title)
         if data['choice'] == 'g':
             recommendation_list['recommendmovie'] = final_result_genre
             choice['c'] = 'g'
