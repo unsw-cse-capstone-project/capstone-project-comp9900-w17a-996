@@ -810,8 +810,11 @@ def searchByOther():
         search_content = searchByOther_data["content"]
 
         user = guid["username"]
-        blockers = c.execute("SELECT BLOCK FROM USER WHERE USERNAME = ?", (user, )).fetchall()[0][0]
-        blockers = blockers.split(" ")[1:]
+        try:
+            blockers = c.execute("SELECT BLOCK FROM USER WHERE USERNAME = ?", (user, )).fetchall()[0][0]
+            blockers = blockers.split(" ")[1:]
+        except IndexError:
+            blockers = []
 
         default = 0
 
@@ -888,12 +891,13 @@ def searchByOther():
                             "genre": movies[idx][3],
                             "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res_title.append(item)
-                elif user_input in movies[idx][3]:
+                if user_input in movies[idx][3]:
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
                             "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res_genre.append(item)
-                elif user_input in movies[idx][8]:
+                if user_input in movies[idx][8]:
+                    # print("description:,", movies[idx][8])
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
                             "rating": get_rate_wihout_blockers(reviews, blockers)}
@@ -911,6 +915,16 @@ def searchByOther():
         
             return {"movies": res}
         else:
+            # sort by character
+            res_title = sorted(res_title, key=lambda x: x["title"], reverse=False)
+            res_genre = sorted(res_genre, key=lambda x: x["title"], reverse=False)
+            res_des = sorted(res_des, key=lambda x: x["title"], reverse=False)
+
+            # sort by rating
+            res_title = sorted(res_title, key=lambda x: x["rating"], reverse=True)
+            res_genre = sorted(res_genre, key=lambda x: x["rating"], reverse=True)
+            res_des = sorted(res_des, key=lambda x: x["rating"], reverse=True)
+
             # print("result................", {"title": res_title, "genre": res_genre, "description": res_des})
             return {"title": res_title, "genre": res_genre, "description": res_des}
             
