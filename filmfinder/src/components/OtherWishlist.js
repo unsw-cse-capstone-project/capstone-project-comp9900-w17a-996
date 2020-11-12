@@ -43,6 +43,40 @@ class OtherWishlist extends Component {
       window.location.href = "/#/movie?title=" + title;
     }
 
+    mapTitle = (idx) => {
+      console.log(idx);
+      if (idx === "0"){
+        return "My Favourite";
+      }
+      else if (idx === "1"){
+        return "Watch Later";
+      }
+      else if (idx === "2"){
+        return "Coming Soon";
+      }
+      else if (idx === "3"){
+        return "Popular";
+      }
+      else if (idx === "4"){
+        return "Classic";
+      }
+      else if (idx === "5"){
+        return "Cure";
+      }
+      else if (idx === "6"){
+        return "Serious";
+      }
+      else if (idx === "7"){
+        return "Family";
+      }
+      else if (idx === "8"){
+        return "Technology";
+      }
+      else {
+        return "Education";
+      }
+    }
+
     render() { 
       
         return ( <React.Fragment>
@@ -52,7 +86,7 @@ class OtherWishlist extends Component {
     renderItem={item => (
       <List.Item>
         <List.Item.Meta className="ml-5"
-          title={<a >{item.title}</a>}
+          title={<a >{this.mapTitle(item.title)}</a>}
     description={<List dataSource={item.movies} renderItem={item => (<List.Item onClick={() => this.handleClick(item)}>{item}</List.Item>)}></List>}
         />
       </List.Item>
