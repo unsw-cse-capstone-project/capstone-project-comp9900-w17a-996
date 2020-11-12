@@ -7,6 +7,20 @@ import datetime
 import recommendation
 import json
 
+def get_rate_wihout_blockers(reviews, blockers):
+    rating = 0.0
+    counter = 0
+    for review in reviews:
+        if review[0] not in blockers:
+            counter += 1
+            rating += float(review[3])
+    if counter == 0:
+        rating = 0
+    else:
+        rating = round(rating / counter, 2)
+    return rating
+
+
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -101,7 +115,7 @@ def login():
                 guid['email'] = result[0][2]
                 guid['password'] = result[0][3]
                 guid['bio'] = result[0][4]
-                # print(guid)
+                # # print(guid)
                 return result[0][3]
             else:
                 guid['password'] = ''
@@ -146,7 +160,7 @@ def home():
 #                     # sub_res["date"] = detail[5]
 
 #                     result["movies"].append(sub_res)
-#                     # # print(result)
+#                     # # # print(result)
 #         except sqlite3.OperationalError:
 #             pass
 #         return search_content
@@ -205,7 +219,7 @@ def movieDetail():
         db = connect_db()
         c = db.cursor()
         details = c.execute("SELECT * FROM MOVIE WHERE TITLE == ?", (title,)).fetchall()
-        # # print("this is detail: ", details)
+        # # # print("this is detail: ", details)
         movie_detail_res["movie"]["title"] = details[0][0]
         movie_detail_res["movie"]["director"] = details[0][1]
         movie_detail_res["movie"]["cast"] = details[0][2]
@@ -215,7 +229,7 @@ def movieDetail():
         movie_detail_res["movie"]["url"] = details[0][6]
         movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
         movie_detail_res["movie"]["description"] = details[0][8]
-        # # print("detail result:", movie_detail_res)
+        # # # print("detail result:", movie_detail_res)
         return movie_detail_res
     else:
         
@@ -251,7 +265,7 @@ def history():
         # test code
         # query = "SELECT * FROM REVIEW"
         # content = c.execute(query).fetchall()
-        # # print(content)
+        # # # print(content)
         return request.get_json()
     else:
         review_res = []
@@ -307,7 +321,7 @@ def checkReview():
     else:
         review_res = []
         movie_title = movie_detail_res['movie']['title']
-        # print("movie title:", movie_title)
+        # # print("movie title:", movie_title)
 
         review_search_sql = "SELECT * FROM REVIEW WHERE MOVIE = ?"
         block_search_sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
@@ -318,7 +332,7 @@ def checkReview():
             try:
                 blockers = c.execute(block_search_sql, (guid["username"], )).fetchall()[0][0]
                 b_l = blockers.split(" ")
-                # print("blockers:", b_l)
+                # # print("blockers:", b_l)
                 
                 for review in reviews:
                     if review[0] in b_l:
@@ -353,13 +367,13 @@ def checkReview():
             review["key"] = str(counter)
             counter += 1
 
-        print("reviews", reviews)
-        print(review_res)
+        # print("reviews", reviews)
+        # print(review_res)
 
         # title = movie_detail_res["movie"]["title"]
         # movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
 
-        # print({"user": review_res, "rating": total_rating / len(review_res)})
+        # # print({"user": review_res, "rating": total_rating / len(review_res)})
         if len(review_res) == 0:
             rate = 0.0
         else:
@@ -382,7 +396,7 @@ def addtoWishList():
         search_wishlist_sql = "SELECT WISHLIST FROM USER WHERE USERNAME == ?"
         
         str_json = c.execute(search_wishlist_sql, (userName,)).fetchall()[0]
-        # print("this is a str json:", str_json[0], type(str_json[0]))
+        # # print("this is a str json:", str_json[0], type(str_json[0]))
 
         dic_json = json.loads(str_json[0])
 
@@ -418,12 +432,12 @@ def wishlist():
         data = request.get_json()
         keep_movie = data["content"]
         listID = str(data["listid"])
-        # print("dict+json:   ", dict_json)
+        # # print("dict+json:   ", dict_json)
         all_movie = list(dict_json[listID].keys())
         for movie in all_movie:
             if movie not in keep_movie:
                 del dict_json[listID][movie]
-        # print("new dic_json:   ", dict_json)
+        # # print("new dic_json:   ", dict_json)
         new_str = json.dumps(dict_json)
 
         update_sql = "UPDATE USER SET WISHLIST = ? WHERE USERNAME = ?"
@@ -442,7 +456,7 @@ def wishlist():
         res = {}
         for k, v in dict_json.items():
             res[k] = list(v.keys())
-        # # print(res.values())
+        # # # print(res.values())
         return res
 
 
@@ -496,7 +510,7 @@ def otherReview():
         search_sql = "SELECT * FROM REVIEW WHERE USER = ?"
 
         data = c.execute(search_sql, (otherName,)).fetchall()
-        # print(data)
+        # # print(data)
         review_res = []
 
         try:
@@ -528,14 +542,35 @@ def otherReview():
 def hotmovie():
     db = connect_db()
     c = db.cursor()
-    hot_movie ={}
-    movie_list = []
+
+    user = guid["username"]
+    try:
+        blockers = c.execute("SELECT BLOCK FROM USER WHERE USERNAME = ?", (user, )).fetchall()[0][0]
+        blockers = blockers.split(" ")[1:]
+    except IndexError:
+        blockers = []
+
+    res = []
+    # hot_movie ={}
+    # movie_list = []
     movies = c.execute("SELECT * FROM MOVIE").fetchall()
     for n in range(len(movies)):
-        movie_list.append(movies[n][0])
+        title = movies[n][0]
+        reviews = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (title, )).fetchall()
+        rating = get_rate_wihout_blockers(reviews, blockers)
+
+        hot_movie = {"title": title, "rating": rating}
+        res.append(hot_movie)
+        # movie_list.append(movies[n][0])
     
-    hot_movie['hotMovies'] = recommendation.sort_film(movie_list)
-    return jsonify(hot_movie)
+
+    # sort by rating
+    res = sorted(res, key=lambda x: x["rating"], reverse=True)
+
+    result = {"hotMovies": res}
+    # hot_movie['hotMovies'] = recommendation.sort_film(movie_list)
+    print("hotmovie:\n", result)
+    return jsonify(result)
 
 """follow another user"""
 follow_block_action = {"action": "", "user": ""}
@@ -550,7 +585,7 @@ def followUser():
         data = request.get_json()
         follow_block_action["action"] = data["action"]
         follow_block_action["user"] = otherUserName['content']
-        # print("data", data)
+        # # print("data", data)
         # return "-"
     # else:
         me = guid["username"]
@@ -559,8 +594,8 @@ def followUser():
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
 
         followers = c.execute(sql, (me, )).fetchall()[0][0]
-        # # print("data", data)
-        # print("followers:", followers)
+        # # # print("data", data)
+        # # print("followers:", followers)
         if action == "f":
             followers = followers + " " + user
             update_sql = "UPDATE USER SET FOLLOW = ? WHERE USERNAME = ?"
@@ -577,9 +612,9 @@ def followUser():
     else:
         user = guid['username']
         # user = follow_block_action["user"]
-        # print("user", user)
+        # # print("user", user)
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
-        # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
+        # # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         followers = c.execute(sql, (user, )).fetchall()[0][0]
         f_l = followers.split(" ")
         otheruser = otherUserName["content"]
@@ -628,7 +663,7 @@ def blockUser():
         user = guid['username']
         # user = follow_block_action["user"]
         sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
-        # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
+        # # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
         blockers = c.execute(sql, (user, )).fetchall()[0][0]
         b_l = blockers.split(" ")
         otheruser = otherUserName["content"]
@@ -745,7 +780,7 @@ def followinglist():
 #                     # sub_res["date"] = detail[5]
 
 #                     result["movies"].append(sub_res)
-#                     # # print(result)
+#                     # # # print(result)
 #         except sqlite3.OperationalError:
 #             pass
 #         return search_content
@@ -774,6 +809,10 @@ def searchByOther():
         search_type = searchByOther_data["type"]
         search_content = searchByOther_data["content"]
 
+        user = guid["username"]
+        blockers = c.execute("SELECT BLOCK FROM USER WHERE USERNAME = ?", (user, )).fetchall()[0][0]
+        blockers = blockers.split(" ")[1:]
+
         default = 0
 
         if search_type == "Genre":
@@ -784,10 +823,13 @@ def searchByOther():
                 item = {}
                 genres = movies[idx][3].split(", ")
                 title = movies[idx][0]
+
+                reviews = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (title, )).fetchall()
+
                 if genre in genres:
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
-                            "rating": recommendation.cal_mark(movies[idx][0])}
+                            "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res.append(item)
 
         elif search_type == "Language":
@@ -797,23 +839,26 @@ def searchByOther():
             movies = c.execute("SELECT * FROM MOVIE WHERE LANGUAGE = ?", (language,)).fetchall()
 
             for idx in range(len(movies)):
+                reviews = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movies[idx][0],)).fetchall()
+
                 item = {"title": movies[idx][0],
                         "genre": movies[idx][3],
-                        "rating": recommendation.cal_mark(movies[idx][0])}
+                        "rating": get_rate_wihout_blockers(reviews, blockers)}
                 res.append(item)
                 
         elif search_type == "Director":
             res = []
             director = searchByOther_data["content"]
-            # print("director", director)
+            # # print("director", director)
             movies = c.execute("SELECT * FROM MOVIE").fetchall()
-            # print("movies", movies)
+            # # print("movies", movies)
             for idx in range(len(movies)):
                 directors = movies[idx][1].split(", ")
                 if director in directors:
+                    reviews = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movies[idx][0], )).fetchall()
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
-                            "rating": recommendation.cal_mark(movies[idx][0])}
+                            "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res.append(item)
         elif search_type == "Year":
             # year
@@ -824,9 +869,10 @@ def searchByOther():
             for idx in range(len(movies)):
                 current_year = movies[idx][5][:4]
                 if year == current_year:
+                    reviews = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movies[idx][0], )).fetchall()
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
-                            "rating": recommendation.cal_mark(movies[idx][0])}
+                            "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res.append(item)
         else:
             # default
@@ -836,20 +882,21 @@ def searchByOther():
             movies = c.execute("SELECT * FROM MOVIE").fetchall()
             
             for idx in range(len(movies)):
+                reviews = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movies[idx][0], )).fetchall()
                 if user_input in movies[idx][0]:
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
-                            "rating": recommendation.cal_mark(movies[idx][0])}
+                            "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res_title.append(item)
                 elif user_input in movies[idx][3]:
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
-                            "rating": recommendation.cal_mark(movies[idx][0])}
+                            "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res_genre.append(item)
                 elif user_input in movies[idx][8]:
                     item = {"title": movies[idx][0],
                             "genre": movies[idx][3],
-                            "rating": recommendation.cal_mark(movies[idx][0])}
+                            "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res_des.append(item)
 
         if default == 0:
@@ -864,7 +911,7 @@ def searchByOther():
         
             return {"movies": res}
         else:
-            print("result................", {"title": res_title, "genre": res_genre, "description": res_des})
+            # print("result................", {"title": res_title, "genre": res_genre, "description": res_des})
             return {"title": res_title, "genre": res_genre, "description": res_des}
             
 
@@ -948,9 +995,9 @@ def replyreview():
         db = connect_db()
         c = db.cursor()
         movie_title = movie_detail_res['movie']['title']
-        print(movie_title)
+        # print(movie_title)
         result = c.execute("SELECT * FROM REVIEW WHERE MOVIE = ?", (movie_title,)).fetchall()
-        print(result)
+        # print(result)
         user_list = []
         dic = {}
         dic['reply'] = {}
