@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Search from "./Search";
 import "../styles/centerCenter.css";
 import Filter from "./Filter";
+import { message, Button, Space } from 'antd';
 
 class NavBar extends Component {
   state = {};
@@ -38,6 +39,32 @@ class NavBar extends Component {
     
   }
 
+  warning = () => {
+    message.warning('Please login to access this feature!');
+  };
+
+  handleWishlist = () => {
+    let name = this.state.username;
+
+    if (name === "Visitor") {
+      this.warning();
+    }
+    else {
+      window.location.href = "/#/wishList";
+    }
+  }
+
+  handleHistory = () => {
+    let name = this.state.username;
+
+    if (name === "Visitor") {
+      this.warning();
+    }
+    else {
+      window.location.href = "/#/history";
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -63,16 +90,16 @@ class NavBar extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#/wishList">
+                <a className="nav-link" onClick={this.handleWishlist.bind(this)}>
                   Wishlist
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#/history">
+                <a className="nav-link" onClick={this.handleHistory.bind(this)}>
                   History
                 </a>
               </li>
-              <li className="nav-item dropdown">
+              {/* <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -99,7 +126,7 @@ class NavBar extends Component {
                     New Followers
                   </a>
                 </div>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <a className="nav-link active" tabIndex="-1" aria-disabled="true">
                   G' day, {this.state.username}!

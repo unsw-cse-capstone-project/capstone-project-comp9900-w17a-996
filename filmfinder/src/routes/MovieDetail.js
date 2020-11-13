@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Checkbox } from "antd";
+import { Modal, Checkbox, message } from "antd";
 import { Link } from "react-router-dom";
 import "../styles/movie.css";
 import PmRibbon from "pm-ribbon";
@@ -262,8 +262,17 @@ class MovieDetail extends Component {
     }, 500);
   }
 
+  warning = () => {
+    message.warning('Please login to access this feature!');
+  };
+
   addToWishlist = () => {
     console.log("123");
+
+    if (this.state.login_user === "") {
+      this.warning();
+      return;
+    }
 
     this.setState({
       visible: true,

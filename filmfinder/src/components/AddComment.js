@@ -1,4 +1,4 @@
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, message } from 'antd';
 import moment from 'moment';
 import React, { Component } from 'react';
 import CommentCard from '../components/CommentCard';
@@ -30,13 +30,31 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 class AddComment extends Component {
   state = {
+    username: '',
     comments: [],
     submitting: false,
     value: '',
     rating: 0
   };
 
+  componentDidMount() {
+    fetch("/home")
+      .then((r) => r.json())
+      .then((r) => {
+        this.setState(r);
+      });
+  }
+
+  warning = () => {
+    message.warning('Please login to access this feature!');
+  };
+
   handleSubmit(movieTitle) {
+    if (this.state.username === "") {
+      this.warning();
+      return;
+    }
+
     if (!this.state.value) {
       return;
     }
@@ -69,9 +87,6 @@ class AddComment extends Component {
 
     setTimeout(() => {
       console.log(this.state);
-      
-
-      
 
       console.log(data);
 

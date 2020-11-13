@@ -1,7 +1,7 @@
 import React, { useEffect, createElement, useState} from 'react';
 import "../styles/moviecard.css";
 import 'bootstrap/dist/css/bootstrap.css';
-import { Comment, Tooltip, Avatar,Tag} from 'antd';
+import { Comment, Tooltip, Avatar, message} from 'antd';
 import moment from 'moment';
 import RatingResult from './RatingResult';
 import AddReply from '../components/AddReply';
@@ -28,7 +28,9 @@ const CommentCard = (props) => {
         const hadDisLike = props.thumbcount.already_down;
         const loginUser = props.login_user;
         const replies = props.reply;
-        console.log(replies)
+
+        console.log(replies);
+
         var action = null;
         if (hadLike === 1){
           action = 'liked'
@@ -37,8 +39,16 @@ const CommentCard = (props) => {
           action = 'disliked'
         }
         console.log(likes,dislikes,action,hadLike);
+
+        const warning = () => {
+          message.warning('Please login to access this feature!');
+        };
       
         const like = () => {
+            if (!loginUser) {
+              warning();
+              return;
+            }
             console.log(likes,thumbup);
             //no like or dislike
             if ((hadDisLike === 0 && hadLike === 0 && likes === thumbup) || (hadLike === 0 && hadDisLike === 1 && likes === thumbup) || (hadLike === 1 && likes !== thumbup)){
@@ -81,6 +91,10 @@ const CommentCard = (props) => {
         };
 
         const dislike = () => {
+          if (!loginUser) {
+            warning();
+            return;
+          }
             console.log(likes,thumbup,hadDisLike)
             /*if (likes > 0 && ((hadDisLike === 0 && hadLike === 0 && likes > thumbup) || (hadLike === 0 && hadDisLike === 1 && likes > thumbup) || (hadLike === 1 && likes === thumbup))){
               //setLikes(likes - 1);
@@ -119,6 +133,10 @@ const CommentCard = (props) => {
             
         };
         const addReply = () => {
+          if (!loginUser) {
+            warning();
+            return;
+          }
             console.log(reply);
             if(reply === true){
                 setReply(false);
@@ -144,6 +162,10 @@ const CommentCard = (props) => {
         ];
 
         const goOtherProfile = (user) => {
+          if (!loginUser) {
+            warning();
+            return;
+          }
             fetch("/home")
       .then((r) => r.json())
       .then((r) => {
