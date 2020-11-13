@@ -42,6 +42,49 @@ class Home extends Component {
     }
   }
 
+  displayLog = (name) => {
+    if (name === "Visitor") {
+      return "Login/Register"
+    }
+    else {
+      return "Logout";
+    }
+  }
+
+  handleLog = () => {
+    let name = this.state.username;
+    if (name === "Visitor") {
+      this.props.history.push("/login");
+    }
+    else {
+      const data = {logout: 1};
+
+      fetch("/logout", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => console.log(response))
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      
+      setTimeout(() => {
+        fetch("/home")
+      .then((r) => r.json())
+      .then((r) => {
+        this.setUser(r.username);
+      });
+      }, 500);
+    }
+  }
+
   goLogin = () => {
     this.props.history.push("/login");
   };
@@ -107,8 +150,8 @@ class Home extends Component {
             <a className="py-2 d-none d-md-inline-block" href="#/history">
               History
             </a>
-            <a className="py-2 d-none d-md-inline-block" href="#/login">
-              Login/Register
+            <a className="py-2 d-none d-md-inline-block" onClick={this.handleLog.bind(this)}>
+              {this.displayLog(this.state.username)}
             </a>
             {/* <a className="py-2 d-none d-md-inline-block" href="#">Pricing</a>
     <a className="py-2 d-none d-md-inline-block" href="#">Cart</a> */}

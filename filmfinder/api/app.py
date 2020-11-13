@@ -15,7 +15,7 @@ def get_followers(me, users):
         followers_str = u[6]
         followers = followers_str.split(" ")
         if me in followers:
-            res.append(name)
+            res.append({"user": name})
     return res
 
 
@@ -138,6 +138,17 @@ def login():
     else:
         return guid
 
+@app.route('/logout', methods=['POST', 'GET'])
+def logout():
+    if request.method == 'POST':
+        guid['username'] = ""
+        guid['nickname'] = ""
+        guid['email'] = ""
+        guid['password'] = ""
+        guid['bio'] = ""
+        return "Reset user"
+    else:
+        return "-"
 
 @app.route('/home', methods=['GET'])
 # @as_json
@@ -1061,7 +1072,7 @@ def replyreview():
 """get followers of current user"""
 @app.route("/showFollowers", methods=["GET", "POST"])
 def showFollowers():
-    if request.methods == "GET":
+    if request.method == "GET":
         me = guid["username"]
         db = connect_db()
         c = db.cursor()
