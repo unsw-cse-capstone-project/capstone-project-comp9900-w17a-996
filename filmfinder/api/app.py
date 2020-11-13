@@ -569,7 +569,7 @@ def hotmovie():
 
     result = {"hotMovies": res}
     # hot_movie['hotMovies'] = recommendation.sort_film(movie_list)
-    print("hotmovie:\n", result)
+    # print("hotmovie:\n", result)
     return jsonify(result)
 
 """follow another user"""
@@ -615,8 +615,13 @@ def followUser():
         # # print("user", user)
         sql = "SELECT FOLLOW FROM USER WHERE USERNAME = ?"
         # # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
-        followers = c.execute(sql, (user, )).fetchall()[0][0]
-        f_l = followers.split(" ")
+
+        try:
+            followers = c.execute(sql, (user, )).fetchall()[0][0]
+            f_l = followers.split(" ")
+        except IndexError:
+            f_l = []
+        
         otheruser = otherUserName["content"]
         if otheruser in f_l:
             return {"isfollower": True}
@@ -664,13 +669,17 @@ def blockUser():
         # user = follow_block_action["user"]
         sql = "SELECT BLOCK FROM USER WHERE USERNAME = ?"
         # # print("test 1111", c.execute(sql, (user, )).fetchall()[0])
-        blockers = c.execute(sql, (user, )).fetchall()[0][0]
-        b_l = blockers.split(" ")
+        try:
+            blockers = c.execute(sql, (user, )).fetchall()[0][0]
+            b_l = blockers.split(" ")
+        except IndexError:
+            b_l = []
         otheruser = otherUserName["content"]
         if otheruser in b_l:
             return {"isblocker": True}
         else:
             return {"isblocker": False}
+
 
 recommendation_list = {}
 choice = {'c': ''}
