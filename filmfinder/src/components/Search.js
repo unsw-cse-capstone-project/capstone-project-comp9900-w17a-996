@@ -53,36 +53,36 @@ class Search extends Component {
         // });
       });
 
-    let newFound = this.state.found;
-    let notFind = true;
-    var re = new RegExp(value, "g");
-    console.log(notFind);
-    if (value !== "") {
-      const newResult = this.state.title.filter((k, i) => {
-        if (k.match(re)) {
-          notFind = false;
-        }
-        return k.match(re);
-      });
-      if (!notFind) {
-        newFound = true;
-        notFind = false;
-        this.setState({
-          found: newFound,
-          result: newResult,
-          display: newFound ? "block" : "none",
-        });
-      }
-    }
-    console.log(notFind);
-    if (notFind) {
-      console.log("not");
-      this.setState({
-        found: false,
-        result: [],
-        display: "none",
-      });
-    }
+    // let newFound = this.state.found;
+    // let notFind = true;
+    // var re = new RegExp(value, "g");
+    // console.log(notFind);
+    // if (value !== "") {
+    //   const newResult = this.state.title.filter((k, i) => {
+    //     if (k.match(re)) {
+    //       notFind = false;
+    //     }
+    //     return k.match(re);
+    //   });
+    //   if (!notFind) {
+    //     newFound = true;
+    //     notFind = false;
+    //     this.setState({
+    //       found: newFound,
+    //       result: newResult,
+    //       display: newFound ? "block" : "none",
+    //     });
+    //   }
+    // }
+    // console.log(notFind);
+    // if (notFind) {
+    //   console.log("not");
+    //   this.setState({
+    //     found: false,
+    //     result: [],
+    //     display: "none",
+    //   });
+    // }
     // console.log("result", this.state.result);
   };
   
