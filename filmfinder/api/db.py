@@ -80,7 +80,7 @@ for i in reviews:
     print(i)
 
 
-conn.close()
+# conn.close()
 
 
 # otherName = "Kong"
@@ -112,3 +112,21 @@ conn.close()
 
 
 # get_rate_without_blockers("test", "Clouds")
+
+# user = "jia"
+# users = c.execute("SELECT * FROM USER").fetchall()
+#
+#
+# def get_followers(me, users):
+#     print(users)
+#     res = []
+#     for u in users:
+#         name = u[0]
+#         followers_str = u[6]
+#         followers = followers_str.split(" ")
+#         if me in followers:
+#             res.append(name)
+#     return res
+#
+#
+# print("result", get_followers("kk", users))

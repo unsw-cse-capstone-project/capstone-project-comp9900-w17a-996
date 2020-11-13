@@ -7,6 +7,18 @@ import datetime
 import recommendation
 import json
 
+def get_followers(me, users):
+    print(users)
+    res = []
+    for u in users:
+        name = u[0]
+        followers_str = u[6]
+        followers = followers_str.split(" ")
+        if me in followers:
+            res.append(name)
+    return res
+
+
 def get_rate_wihout_blockers(reviews, blockers):
     rating = 0.0
     counter = 0
@@ -912,6 +924,8 @@ def searchByOther():
                             "rating": get_rate_wihout_blockers(reviews, blockers)}
                     res_des.append(item)
 
+
+
         if default == 0:
 
             # sort by character
@@ -933,6 +947,10 @@ def searchByOther():
             res_title = sorted(res_title, key=lambda x: x["rating"], reverse=True)
             res_genre = sorted(res_genre, key=lambda x: x["rating"], reverse=True)
             res_des = sorted(res_des, key=lambda x: x["rating"], reverse=True)
+
+            # print("res_title", res_title)
+            # print("res_genre", res_genre)
+            # print("res_des", res_des)
 
             # print("result................", {"title": res_title, "genre": res_genre, "description": res_des})
             return {"title": res_title, "genre": res_genre, "description": res_des}
@@ -1038,6 +1056,21 @@ def replyreview():
                 dic['reply'][user].append(tmp_dic_2)
             #dic['reply'][user]=tmp_dic
         return dic
+
+
+"""get followers of current user"""
+@app.route("/showFollowers", methods=["GET", "POST"])
+def showFollowers():
+    if request.methods == "GET":
+        me = guid["username"]
+        db = connect_db()
+        c = db.cursor()
+        all_user = c.execute("SELECT * FROM USER").fetchall()
+
+        my_followers = get_followers(me, all_user)
+
+        return {"followers": my_followers}
+
 
 if __name__ == "__main__":
     app.run(
