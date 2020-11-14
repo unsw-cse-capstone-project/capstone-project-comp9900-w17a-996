@@ -16,14 +16,14 @@
 
 ## Built with
 The following list shows the software and packages required with recommended versions to run this web application.<br/>
-OS Terminal or IDE Terminal (Microsoft VS code or PyCharm)<br/>
-Developer Friendly Browser (Chrome or Firefox)<br/>
-git 2.29.2<br/>
-Python 3.7.3<br/>
-Flask 1.1.2<br/>
-npm 6.14.6<br/>
-Bootstrap 4.5.2<br/>
-Ant Design 4.6.6<br/>
+`OS Terminal` or `IDE Terminal (Microsoft VS code or PyCharm)`<br/>
+`Developer Friendly Browser (Chrome or Firefox)`<br/>
+`git 2.29.2`<br/>
+`Python 3.7.3`<br/>
+`Flask 1.1.2`<br/>
+`npm 6.14.6`<br/>
+`Bootstrap 4.5.2`<br/>
+`Ant Design 4.6.6`<br/>
 
 ## Set up Guidelines
 A step by step series of instructions that tell you how to prepare for the development environment running is displayed below. Please skip the second step if you are accessing this project through a zip file.
@@ -55,7 +55,7 @@ npm install copy-to-clipboard --save
 
 
 ## Configuration
-After finishing the setup processes, you are able to run the project now. Open your Terminal and change directory to the project default path that you have just created in step 1 of the last section. Then, open another separate terminal and do the same operation.
+After finishing the setup processes, you are able to run the project now. Open your Terminal and change directory to the project default path that you have just created in step 1 of the last section. Then, open another separate terminal and do the same operation.<br/>
 For the first Terminal, type in the following command to start the front-end React app:
 ```
 cd capstone-project-comp9900-w17a-996/filmfinder && npm start 
