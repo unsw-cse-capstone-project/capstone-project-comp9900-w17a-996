@@ -49,7 +49,7 @@ class Login extends Component {
      console.log(a, b);
     if (a === b && a !== ''){
       console.log("Allow Login");
-      this.props.history.push("/home");
+      this.props.history.push("/");
     }
     else{
       console.log("Reject!");

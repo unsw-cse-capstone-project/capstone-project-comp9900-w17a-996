@@ -26,7 +26,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
     </Form.Item>
   </>
 );
-
+//add a reply to the comment
 class AddReply extends Component {
 
   state = {
@@ -35,7 +35,7 @@ class AddReply extends Component {
     value: ''
   };
 
-
+  // submit the content of reply to back-end
   handleSubmit = () => {
     if (!this.state.value) {
       return;

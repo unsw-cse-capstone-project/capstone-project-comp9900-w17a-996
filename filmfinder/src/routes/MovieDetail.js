@@ -55,7 +55,7 @@ class MovieDetail extends Component {
       reply: {},
     };
   }
-
+  //update comments
   setPare = () => {
     setTimeout(() => {
       console.log("My child is calling me.");
@@ -92,7 +92,7 @@ class MovieDetail extends Component {
         });
     }, 500);
   };
-
+  //update the moviedeltail page
   setPare2 = (title) => {
     const data = {
       title: title,
@@ -138,18 +138,7 @@ class MovieDetail extends Component {
         });
     }, 500);
   };
-  setPare3 = () => {
-    console.log("update thumbupordown");
-    fetch("/thumbupordown")
-      .then((r) => r.json())
-      .then((r) => {
-        this.setState({
-          thumb_count: r.thumb_count,
-          login_user: r.login_user,
-        });
-        console.log(r);
-      });
-  };
+  // add to wishlist and fetch post data
   handleOk = () => {
     this.setState({
       confirmLoading: true,
@@ -183,7 +172,7 @@ class MovieDetail extends Component {
       });
     }, 2000);
   };
-
+  // cancel add to wishlist and close the modal
   handleCancel = () => {
     console.log("Clicked cancel button");
     this.setState({
@@ -200,7 +189,7 @@ class MovieDetail extends Component {
     const data = {
       title: title,
     };
-
+    //fetch the information of the movie
     fetch("/movieDetail", {
       method: "POST",
       headers: {
@@ -261,7 +250,7 @@ class MovieDetail extends Component {
         });
     }, 500);
   }
-
+  // if not login, warning
   warning = () => {
     message.warning('Please login to access this feature!');
   };
@@ -283,7 +272,7 @@ class MovieDetail extends Component {
     this.myWish = checkedValues;
     console.log("checked = ", checkedValues);
   }
-
+  // show the share modal
   showShare = () => {
     this.setState({
       shareVisible: true,
@@ -291,14 +280,14 @@ class MovieDetail extends Component {
 
     copy("http://localhost:3000/#/movie" + this.props.location.search);
   };
-
+  // if click the share ok, copy the link
   shareOk = (e) => {
     console.log(e);
     this.setState({
       shareVisible: false,
     });
   };
-
+  //cancel share and close the modal
   shareCancel = (e) => {
     console.log(e);
     this.setState({

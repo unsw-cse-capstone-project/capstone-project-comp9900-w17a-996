@@ -9,7 +9,7 @@ class RegisterSuccess extends Component {
     }
 
     goHome = () => {
-        window.location.href = "/#/home";
+        window.location.href = "/#/";
     }
 
     render() { 

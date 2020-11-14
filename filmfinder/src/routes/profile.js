@@ -76,7 +76,7 @@ class Profile extends Component {
         console.error("Error:", error);
       });
 
-    this.props.history.push("/home");
+    this.props.history.push("/");
   }
 
   render() {
