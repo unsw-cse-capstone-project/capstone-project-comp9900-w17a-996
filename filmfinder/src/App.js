@@ -36,7 +36,7 @@ class App extends React.Component {
           <Route path="/profile" component={Profile} />
           <Route component={MovieDetail} path="/movie"/>
           <Route component={WishList} path="/wishList"/>
-          <Route component={Home} path=""/>
+
           <Route component={Result} path="/result"/>
           <Route path="/history" component={History} />
           <Route path="/register.success=True" component={RegisterSuccess}/>
@@ -50,6 +50,7 @@ class App extends React.Component {
           <Route path="/myFollower" component={MyFollower}/>
           <Route path="/myFollowing" component={MyFollowing}/>
           <Route path="/myBlock" component={MyBlock}/>
+          <Route component={Home} path=""/>
         </Switch>
       </HashRouter>
     )

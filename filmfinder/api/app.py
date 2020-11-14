@@ -54,7 +54,7 @@ def default():
 # @as_json
 def api():
     if request.method=='GET':
-        return('<form action="/test" method="post"><input type="submit" value=a /></form>')
+        return ('<form action="/test" method="post"><input type="submit" value=a /></form>')
 
     elif request.method=='POST':
         db = connect_db()
@@ -103,7 +103,7 @@ def api():
         db.commit()
         return request.get_json()
     else:
-        return("ok")
+        return ("ok")
 
 """login page, get user name and password then check with data in db"""
 guid = {'username': '', 'nickname': '', 'email': '', 'password': '', 'bio': ''}
@@ -136,7 +136,7 @@ def login():
             guid['password'] = ''
             return '-'
     else:
-        return guid
+        return jsonify(guid)
 
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
@@ -215,7 +215,7 @@ def profile():
             (user_data["username"], user_data["nickname"], user_data["email"], user_data["password"], user_data["bio"], "", "", "")
         )
         db.commit()
-        return user_data
+        return jsonify(user_data)
     except sqlite3.OperationalError:
         return '-'
     # else:
@@ -253,10 +253,10 @@ def movieDetail():
         movie_detail_res["movie"]["rating"] = recommendation.cal_mark(title)
         movie_detail_res["movie"]["description"] = details[0][8]
         # # # print("detail result:", movie_detail_res)
-        return movie_detail_res
+        return jsonify(movie_detail_res)
     else:
         
-        return movie_detail_res
+        return jsonify(movie_detail_res)
 
 
 @app.route('/history', methods=['GET', 'POST'])
@@ -289,7 +289,7 @@ def history():
         # query = "SELECT * FROM REVIEW"
         # content = c.execute(query).fetchall()
         # # # print(content)
-        return request.get_json()
+        return "ok"
     else:
         review_res = []
 
@@ -318,7 +318,7 @@ def history():
         for review in review_res:
             review["key"] = str(counter)
             counter += 1
-        return {"data": review_res}
+        return jsonify({"data": review_res})
 
 """history page, get user name and user action then post comments, rating"""
 """do not show review of people who is in block list"""
@@ -402,7 +402,7 @@ def checkReview():
         else:
             rate = round(total_rating / len(review_res), 1)
 
-        return {"user": review_res, "rating": rate}
+        return jsonify({"user": review_res, "rating": rate})
 
 """movie page, add to wish list function, add to db"""
 @app.route('/addtoWishList', methods=['POST'])
@@ -480,7 +480,7 @@ def wishlist():
         for k, v in dict_json.items():
             res[k] = list(v.keys())
         # # # print(res.values())
-        return res
+        return jsonify(res)
 
 
 otherUserName = {"content": ""}
@@ -512,7 +512,7 @@ def otherWishList():
             res["movies"] = list(value.keys())
             result.append(res)
 
-        return {"wishlist": result}
+        return jsonify({"wishlist": result})
 
 
 otherUserName = {"content": ""}
@@ -557,7 +557,7 @@ def otherReview():
         for review in review_res:
             review["key"] = str(counter)
             counter += 1
-        return {"data": review_res}
+        return jsonify({"data": review_res})
 
 
 @app.route('/hotmovie', methods=['GET'])
@@ -607,7 +607,7 @@ def followUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = otherUserName['content']
+        follow_block_action["user"] = data["user"]
         # # print("data", data)
         # return "-"
     # else:
@@ -647,9 +647,9 @@ def followUser():
         
         otheruser = otherUserName["content"]
         if otheruser in f_l:
-            return {"isfollower": True}
+            return jsonify({"isfollower": True})
         else:
-            return {"isfollower": False}
+            return jsonify({"isfollower": False})
 
         
 
@@ -664,7 +664,7 @@ def blockUser():
     if request.method == "POST":
         data = request.get_json()
         follow_block_action["action"] = data["action"]
-        follow_block_action["user"] = otherUserName['content']
+        follow_block_action["user"] = data['user']
         # return "-"
     # else:
         
@@ -699,9 +699,9 @@ def blockUser():
             b_l = []
         otheruser = otherUserName["content"]
         if otheruser in b_l:
-            return {"isblocker": True}
+            return jsonify({"isblocker": True})
         else:
-            return {"isblocker": False}
+            return jsonify({"isblocker": False})
 
 
 recommendation_list = {}
@@ -739,8 +739,9 @@ def recommendmovie():
     else:
         if choice['c'] == '':
             userName = guid['username']
-            return {'recommendmovie': recommendation.recommend(userName)}
-        return recommendation_list
+            return jsonify({'recommendmovie': recommendation.recommend(userName)})
+        return jsonify(recommendation_list)
+
 
 @app.route('/blocklist', methods=['GET', 'POST'])
 # @as_json
@@ -760,7 +761,8 @@ def blocklist():
     for b in b_l:
         res.append({"user": b})
 
-    return {"blocks": res}
+    return jsonify({"blocks": res})
+
 
 @app.route('/followinglist', methods=['GET', 'POST'])
 # @as_json
@@ -780,7 +782,7 @@ def followinglist():
     for f in f_l:
         res.append({"user": f})
 
-    return {"followings": res}
+    return jsonify({"followings": res})
 
 
 
@@ -833,7 +835,7 @@ def searchByOther():
         searchByOther_data["type"] = data["type"]
         searchByOther_data["content"] = data["content"]
         
-        return searchByOther_data
+        return jsonify(searchByOther_data)
     else:
         db = connect_db()
         c = db.cursor()
@@ -947,7 +949,7 @@ def searchByOther():
 
         
         
-            return {"movies": res}
+            return jsonify({"movies": res})
         else:
             # sort by character
             res_title = sorted(res_title, key=lambda x: x["title"], reverse=False)
@@ -964,7 +966,7 @@ def searchByOther():
             # print("res_des", res_des)
 
             # print("result................", {"title": res_title, "genre": res_genre, "description": res_des})
-            return {"title": res_title, "genre": res_genre, "description": res_des}
+            return jsonify({"title": res_title, "genre": res_genre, "description": res_des})
             
 
 
@@ -1014,7 +1016,7 @@ def thumbupordown():
             tmp_dic2 = {}
             tmp_dic2[user] = tmp_dic
             dic['thumb_count'][user] = tmp_dic
-        return dic
+        return jsonify(dic)
 
 
 import random
@@ -1066,7 +1068,7 @@ def replyreview():
                 tmp_dic_2['date'] = reply[n][5]
                 dic['reply'][user].append(tmp_dic_2)
             #dic['reply'][user]=tmp_dic
-        return dic
+        return jsonify(dic)
 
 
 """get followers of current user"""
@@ -1080,7 +1082,7 @@ def showFollowers():
 
         my_followers = get_followers(me, all_user)
 
-        return {"followers": my_followers}
+        return jsonify({"followers": my_followers})
 
 
 if __name__ == "__main__":
