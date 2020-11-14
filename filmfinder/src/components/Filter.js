@@ -4,8 +4,8 @@ import { Button, Select } from 'antd';
 const { Option } = Select;
 const typeData = ['Director', 'Genre', 'Year', 'Language'];
 const contentData = {
-  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei', 'Justin Baldoni', 'Aaron Sorkin', 'Rusty Cundieff', 'Radha Blank', 'James Foley'],
-  Genre: ['Melody', 'Music', 'Drama', 'Action', 'Comedy'],
+  Director: ['Anthony Russo', 'Yimou Zhang', 'Yan Fei', 'Justin Baldoni', 'Lei Huang', 'Aaron Sorkin', 'Rusty Cundieff', 'Radha Blank', 'James Foley'],
+  Genre: ['Action', 'Adventure', 'Biography', 'Comedy', 'Drama','History', 'Horror', 'Melody', 'Music', 'Romance', 'Thriller' ],
   Year: ['2020', '2015'],
   Language: ['English', 'Chinese'],
 };

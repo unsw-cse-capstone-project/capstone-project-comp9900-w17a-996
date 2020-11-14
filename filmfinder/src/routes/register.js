@@ -136,7 +136,7 @@ class Register extends Component {
                         rows="3"
                         cols="3"
                         ref="bio"
-                        placeholder="Add something intersting..."
+                        placeholder="Add something interesting..."
                         required
                       />
                     </div>
