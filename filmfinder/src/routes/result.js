@@ -10,6 +10,7 @@ class Result extends Component {
       genre: [],
       title: [],
       url: "The Forty-Year-Old Version",
+      movies: []
     };
   }
 
@@ -17,6 +18,7 @@ class Result extends Component {
     fetch("/searchByOther")
       .then((r) => r.json())
       .then((r) => {
+        this.clearFilter(r);
         this.setState(r);
         console.log("Result UI:", r);
       });
@@ -26,10 +28,19 @@ class Result extends Component {
     fetch("/searchByOther")
       .then((r) => r.json())
       .then((r) => {
+        this.clearFilter(r);
         this.setState(r);
         console.log("Result UI:", r);
       });
   };
+
+  clearFilter(data) {
+    if (data.hasOwnProperty("genre")) {
+      this.setState({
+        movies: [],
+      })
+    }
+  }
 
   // componentDidUpdate() {
   //   fetch("/search")
@@ -82,7 +93,7 @@ class Result extends Component {
   // }
 
   render() {
-    if (this.state.movies) {
+    if (this.state.movies.length !== 0) {
       const movies = this.state.movies;
       return (<React.Fragment>
         <NavBar setPare={this.setPare}></NavBar>
