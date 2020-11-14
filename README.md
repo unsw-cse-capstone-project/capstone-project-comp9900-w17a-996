@@ -36,22 +36,32 @@ git clone https://github.com/unsw-cse-capstone-project/capstone-project-comp9900
 ```
 
 3. Install Flask using the following command:
+```
 pip install Flask==1.1.2
+```
 
 4. Install the node modules to React:
+```
 cd capstone-project-comp9900-w17a-996/filmfinder && npm install
+```
 
 5. Install other required packages through npm:
+```
 npm install bootstrap --save
 npm install antd --save
 npm install slick-carousel --save
 npm install copy-to-clipboard --save
+```
 
 
 ## Configuration
 After finishing the setup processes, you are able to run the project now. Open your Terminal and change directory to the project default path that you have just created in step 1 of the last section. Then, open another separate terminal and do the same operation.
 For the first Terminal, type in the following command to start the front-end React app:
+```
 cd capstone-project-comp9900-w17a-996/filmfinder && npm start 
+```
 For the second Terminal, type in the following command to start the back-end Flask app:
+```
 cd capstone-project-comp9900-w17a-996/filmfinder/api && python app.py
+```
 By now, you should see that the React application pops up in your default browser, which means you are ready to enjoy the functionalities of the website.
