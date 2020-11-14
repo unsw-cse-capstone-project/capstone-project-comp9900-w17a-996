@@ -44,3 +44,7 @@ Restruct profile page. Manually merge teammates' work to master. Another busy we
 Week 8
 Spint 4 started. Finish filter front-end and connect to back-end. Resolve search fetch issues.
 Main functions are almost completed. Next week, I will focus on UI optimisation.
+
+
+Week 9
+Fix new bugs. Final Wrap up of the project. Write readme file and final report. See you ~
