@@ -66,6 +66,9 @@ cd capstone-project-comp9900-w17a-996/filmfinder/api && python app.py
 By now, you should see that the React application pops up in your default browser, which means you are ready to enjoy the functionalities of the website.<br/>
 GLHF! :)
 
+## User Manual
+[PDF version]
+
 ## Report a Bug
 Bug reports are kindly welcomed, please send an email with issues to `chec98qu@gmail.com`.
 
