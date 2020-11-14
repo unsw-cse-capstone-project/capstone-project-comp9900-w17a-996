@@ -15,15 +15,15 @@
 `Final Wrap-up`: 14/11/2020                 ✅<br/>
 
 ## Built with
-The following list shows the software and packages required with recommended versions to run this web application.
-OS Terminal or IDE Terminal (Microsoft VS code or PyCharm)
-Developer Friendly Browser (Chrome or Firefox)
-git 2.29.2
-Python 3.7.3
-Flask 1.1.2
-npm 6.14.6
-Bootstrap 4.5.2
-Ant Design 4.6.6
+The following list shows the software and packages required with recommended versions to run this web application.<br/>
+OS Terminal or IDE Terminal (Microsoft VS code or PyCharm)<br/>
+Developer Friendly Browser (Chrome or Firefox)<br/>
+git 2.29.2<br/>
+Python 3.7.3<br/>
+Flask 1.1.2<br/>
+npm 6.14.6<br/>
+Bootstrap 4.5.2<br/>
+Ant Design 4.6.6<br/>
 
 ## Set up Guidelines
 A step by step series of instructions that tell you how to prepare for the development environment running is displayed below. Please skip the second step if you are accessing this project through a zip file.
