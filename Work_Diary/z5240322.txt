@@ -19,7 +19,6 @@ Week 4
 This week, I was fimiliar with the framework of our website in both ends and helped design the database in back-end, also fixed some bugs like embed movie trailer in movie detail page.
 Next week, I plan to finish some functions and focus on next sprint functions. 
 
-
 Week 5
 
 This week, I am working on recommandation, hot movie and calculate the rating of movie function of our website. Also modifying and improving the database and re-design the structure of databae.
@@ -28,8 +27,17 @@ Next week, we will focus on next sprint.
 Week 6
 
 This week, I fixed some bugs of recommandation, because of the various functions added, some database table need to be modified. Also, I kept working on thumb up comment function.
-
-
+Next week, I will working on next sprint functions.
 
 Week 7
-Working on thumb up/down to review and 
+
+Working on thumb up/down to review function and rating.
+Next week I will finish the basic function of review.
+
+Week 8
+This week, I working on thumbing up/down function and reply of the review. Also redesign the recommendation of the film.
+Next week, I will finalize the project and writing the report. 
+
+Week 9
+This week, I finalize the project with other group members, write the report and prepare the presentation.
+
