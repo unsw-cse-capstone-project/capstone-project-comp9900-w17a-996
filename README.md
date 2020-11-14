@@ -53,7 +53,6 @@ npm install slick-carousel --save
 npm install copy-to-clipboard --save
 ```
 
-
 ## Configuration
 After finishing the setup processes, you are able to run the project now. Open your Terminal and change directory to the project default path that you have just created in step 1 of the last section. Then, open another separate terminal and do the same operation.<br/>
 For the first Terminal, type in the following command to start the front-end React app:
@@ -67,9 +66,12 @@ cd capstone-project-comp9900-w17a-996/filmfinder/api && python app.py
 By now, you should see that the React application pops up in your default browser, which means you are ready to enjoy the functionalities of the website.<br/>
 GLHF! :)
 
+## Report a Bug
+Bug reports are kindly welcomed, please send an email with issues to `chec98qu@gmail.com`.
+
 ## Contributors (Sorted by alphabet)
-Binbin Xu<br/>
+[Binbin Xu](https://github.com/udxbb)<br/>
 [Chenqu Zhao](http://github.com/chenquzhao)<br/>
-Jiaqi Ma<br/>
-Piao Li<br/>
-Yueyang Li<br/>
+[Jiaqi Ma](https://github.com/jiaqima-1)<br/>
+[Piao Li](https://github.com/lilaobiaolipiao)<br/>
+[Yueyang Li](https://github.com/gyvslyy)<br/>
