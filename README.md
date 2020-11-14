@@ -69,7 +69,7 @@ GLHF! :)
 
 ## Contributors (Sorted by alphabet)
 Binbin Xu<br/>
-[Chenqu Zhao](github.com/chenquzhao)<br/>
+[Chenqu Zhao](http://github.com/chenquzhao)<br/>
 Jiaqi Ma<br/>
 Piao Li<br/>
 Yueyang Li<br/>
