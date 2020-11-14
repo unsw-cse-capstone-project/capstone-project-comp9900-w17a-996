@@ -64,4 +64,11 @@ For the second Terminal, type in the following command to start the back-end Fla
 ```
 cd capstone-project-comp9900-w17a-996/filmfinder/api && python app.py
 ```
-By now, you should see that the React application pops up in your default browser, which means you are ready to enjoy the functionalities of the website.
+By now, you should see that the React application pops up in your default browser, which means you are ready to enjoy the functionalities of the website. GLHF! :)
+
+## Contributors (Sorted by alphabet)
+Binbin Xu
+Chenqu Zhao
+Jiaqi Ma
+Piao Li
+Yueyang Li
