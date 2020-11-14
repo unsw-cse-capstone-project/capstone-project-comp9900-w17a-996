@@ -2,15 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import { Button, Tooltip } from 'antd';
 import { UserAddOutlined,UndoOutlined, StopOutlined } from '@ant-design/icons';
 
-function BlockAction(b){
-    if(b){
-        //fetch user/block
-    }
-    else{
-        //fetch user/unblock
-    }
-}
-
+// block users and you will not see any information of them
 export default function BlockButton(props){
     const [block, setblock] = useState(props.block);
 

@@ -8,6 +8,7 @@ import AddReply from '../components/AddReply';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, MessageOutlined, ThunderboltFilled} from '@ant-design/icons';
 import { OmitProps } from 'antd/lib/transfer/ListBody';
 
+// show comments of the movie
 const CommentCard = (props) => {
 
         //const [likes, setLikes] = useState(parseInt(props.thumbcount.up));

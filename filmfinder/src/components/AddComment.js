@@ -27,7 +27,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
     </Form.Item>
   </>
 );
-
+// add a new comment to the movie
 class AddComment extends Component {
   state = {
     username: '',
@@ -44,11 +44,11 @@ class AddComment extends Component {
         this.setState(r);
       });
   }
-
+  //if not login
   warning = () => {
     message.warning('Please login to access this feature!');
   };
-
+  //submit the content of comment to the back-end
   handleSubmit(movieTitle) {
     if (this.state.username === "") {
       this.warning();
@@ -120,7 +120,7 @@ class AddComment extends Component {
         value: e.target.value,
       });
     };
-
+    // get the rating from the Rating component
     getRating = (rates) => {
       //console.log(rates.state.value);
       this.setState({
