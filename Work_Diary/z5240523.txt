@@ -22,3 +22,6 @@ Week5 -Week7
 
 Week8
 add filter by genre, year, language, directors function
+
+Wee 9
+debug, clean database, add final test data to database, test project on vlab
