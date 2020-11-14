@@ -12,6 +12,7 @@
 `Demo B`:     04/11/2020                    ✅<br/>
 `Sprint 4`:   05/11/2020 ~ 12/11/2020       ✅<br/>
 `Retro 4`:    13/11/2020                    ✅<br/>
+`Final Wrap-up`: 14/11/2020                 ✅<br/>
 
 ## Built with
 The following list shows the software and packages required with recommended versions to run this web application.
@@ -30,7 +31,9 @@ A step by step series of instructions that tell you how to prepare for the devel
 1. Make a new directory for the project and change the current directory into it. 
 
 2. Clone the repository to your local workplace using the following command:
+```
 git clone https://github.com/unsw-cse-capstone-project/capstone-project-comp9900-w17a-996.git
+```
 
 3. Install Flask using the following command:
 pip install Flask==1.1.2
