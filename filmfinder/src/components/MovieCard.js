@@ -31,7 +31,7 @@ class MovieCard extends Component {
     };
 
     if (this.props.title === "") {
-      var url_1 = "My people, My Homeland(2020)";
+      var url_1 = "no_picture";
     } else {
       var url_1 = this.props.title;
       if (this.props.title.indexOf(":") !== -1) {
