@@ -127,15 +127,16 @@ class MovieDetail extends Component {
           console.log(r);
         });
 
-      fetch("/checkReview")
-        .then((r) => {
-          console.log("review", r);
-          return r.json();
-        })
-        .then((r) => {
-          this.setState(r);
-          console.log(r);
-        });
+      // fetch("/checkReview")
+      //   .then((r) => {
+      //     console.log("review", r);
+      //     return r.json();
+      //   })
+      //   .then((r) => {
+      //     this.setState(r);
+      //     console.log(r);
+      //   });
+      this.setPare();
     }, 500);
   };
   // add to wishlist and fetch post data
@@ -408,7 +409,7 @@ class MovieDetail extends Component {
                   </div>
                   <Divider orientation="left">Recommend List</Divider>
                   <div className="recommendMovies">
-                    <RecommendList setPare2={this.setPare2} />
+                    <RecommendList setPare={this.setPare2} />
                   </div>
                 </Sider>
               </Layout>

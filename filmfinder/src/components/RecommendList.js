@@ -78,6 +78,36 @@ class RecommendList extends Component {
       }, 500)
   }
 
+  handleNewClick(title) {
+    
+
+    // const data = {
+    //   title: title,
+    // };
+
+    // fetch("/movieDetail", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => console.log(response))
+    //   .then((data) => {
+    //     console.log("Success:", data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
+
+    
+
+    setTimeout(() => {
+    this.props.setPare(title);}, );
+    
+  }
+
   render() {
     const data = this.state.recommendmovie;
     return (
@@ -93,7 +123,7 @@ class RecommendList extends Component {
                 // avatar={<Avatar src={item.src} style={{height:'50px',width:'50px'}}/>}
                 title={<a>{item.title}</a>}
                 description={item.reason}
-                onClick={() => this.props.setPare2(item.title)}
+                onClick={() => this.handleNewClick(item.title)}
               />
             </List.Item>
           )}
