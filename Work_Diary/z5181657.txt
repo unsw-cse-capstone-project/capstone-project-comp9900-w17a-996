@@ -43,3 +43,9 @@ Week8
 We finished our second progressive demo (B) and our group also had a meeting after the demo. We conclude that what did well,
 what didn't well, try to do and how about the previous 'try to do'. We have completed the whole structrue of the filmfinder
 project, the next we will do is to care about the detail and test. In the next week, we will do the fifth sprint.
+
+Week 9
+
+In this week, we completed this project, and did some tests for it. We also had a meeting for assigning the report task.
+Then, we wrote the text and draw diagrams for the report. In the next week, we will have our last representing. I hope
+we will have a happy ending.
