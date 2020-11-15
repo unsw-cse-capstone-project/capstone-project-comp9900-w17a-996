@@ -404,7 +404,7 @@ class MovieDetail extends Component {
                     </div>
                   </div>
                   <div className="tabs">
-                    <Tabs />
+                    {/* <Tabs /> */}
                   </div>
                   <Divider orientation="left">Recommend List</Divider>
                   <div className="recommendMovies">
@@ -414,7 +414,7 @@ class MovieDetail extends Component {
               </Layout>
             </Content>
           </Layout>
-          <Footer className="footer">footer</Footer>
+          <Footer className="footer"></Footer>
         </Layout>
         <Modal
           title="Select your wishlist"

@@ -248,7 +248,7 @@ class WishList extends Component{
                             </Content>
                         </Layout>
                     </Layout>
-                    <Footer>footer</Footer>
+                    <Footer></Footer>
                 </Layout>
             </div>
         )
