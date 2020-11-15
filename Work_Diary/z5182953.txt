@@ -29,3 +29,11 @@ Learned and completed the connection of the front-end import back-end database i
 Week7
 Conducted a second review with the team members and made a lot of corrections and improvements to the current work.
 Tested at this stage to see if the code and page can run relatively completely.
+
+Week8
+Test code and find the insufficient of the project.
+
+Week9
+Assign report tasks, complete overview and part of functionalities.
+Prepare for the final demo.
+
