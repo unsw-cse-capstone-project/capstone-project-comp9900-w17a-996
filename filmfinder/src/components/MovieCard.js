@@ -49,6 +49,7 @@ class MovieCard extends Component {
                 width="100%"
                 height="100%"
                 src={require(`../${url_1}.jpg`)}
+                alt={url_1}
               />
             </div>
             <div className="video">
