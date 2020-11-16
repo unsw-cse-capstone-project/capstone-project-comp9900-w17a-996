@@ -27,6 +27,8 @@ def recommend(username):
     i = 0
     hotmovies = hotmovie()
     while n > 0:
+        if i >= len(hotmovies):
+            break
         if hotmovies[i]['title'] not in final_recommand_list and hotmovies[i]['title'] not in watched_movie:
             final_recommand_list.append(hotmovies[i]['title'])
             final_recommand_dic[hotmovies[i]['title']] = 'Hot Movie Recommended!'
