@@ -101,7 +101,7 @@ def api():
             (user_data["userName"], user_data["nickName"], user_data["email"], user_data["password"], user_data["bio"], wishlists, "", "")
         )
         db.commit()
-        return request.get_json()
+        return "-"
     else:
         return ("ok")
 
@@ -345,7 +345,7 @@ def checkReview():
         else:
             return "-"
 
-        return request.get_json()
+        return "-"
     else:
         review_res = []
         movie_title = movie_detail_res['movie']['title']
@@ -473,7 +473,7 @@ def wishlist():
 
         db.commit()
 
-        return request.get_json()
+        return "-"
     else:
         pass
         # get_list_sql = "SELECT WISHLIST FROM USER WHERE USERNAME = ?"
