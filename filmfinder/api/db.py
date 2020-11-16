@@ -130,3 +130,9 @@ for i in reviews:
 #
 #
 # print("result", get_followers("kk", users))
+
+# userName = "Chenqu"
+# movieTitle = "Couds"
+# exist_review = c.execute("SELECT * FROM REVIEW WHERE USER = ? AND MOVIE = ?", (userName, movieTitle)).fetchall()
+
+# print(exist_review)

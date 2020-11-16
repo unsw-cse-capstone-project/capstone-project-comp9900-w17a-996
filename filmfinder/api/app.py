@@ -336,9 +336,14 @@ def checkReview():
         userName = guid['username']
         time = str(datetime.datetime.now())[:19]
 
-        c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME, UPUSER, DOWNUSER, UPNUMBER, DOWNNUMBER ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        (userName, movieTitle,review,rating,time,'','','0','0'))
-        db.commit()
+        exist_review = c.execute("SELECT * FROM REVIEW WHERE USER = ? AND MOVIE = ?", (userName, movieTitle)).fetchall()
+
+        if len(exist_review) < 1:
+            c.execute("INSERT INTO REVIEW (USER, MOVIE, COMMENT, RATE, TIME, UPUSER, DOWNUSER, UPNUMBER, DOWNNUMBER ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+            (userName, movieTitle,review,rating,time,'','','0','0'))
+            db.commit()
+        else:
+            return "-"
 
         return request.get_json()
     else:
